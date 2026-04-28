@@ -7,3 +7,6 @@ ta
 flask
 flask-cors
 gunicorn
+vaderSentiment
+beautifulsoup4
+lxml
