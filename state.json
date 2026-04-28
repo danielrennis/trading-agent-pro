@@ -130,7 +130,7 @@
                 "news": 9.5
             },
             "price": 2750.0,
-            "timestamp": "00:14:31"
+            "timestamp": "00:20:10"
         },
         "MELI": {
             "score": 5.9,
@@ -140,17 +140,17 @@
                 "news": 7.1
             },
             "price": 23360.0,
-            "timestamp": "00:14:37"
+            "timestamp": "00:20:25"
         },
         "PYPL": {
             "score": 5.0,
             "metrics": {
                 "technical": 3.0,
                 "fundamental": 5.4,
-                "news": 9.4
+                "news": 9.6
             },
             "price": 9390.0,
-            "timestamp": "00:14:42"
+            "timestamp": "00:20:31"
         },
         "NVDA": {
             "score": 9.8,
