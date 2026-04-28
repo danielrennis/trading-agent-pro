@@ -48,10 +48,10 @@
             "multiplier": 1,
             "daily_var": 1.74,
             "technical": {
-                "daily_trend": "BULLISH",
+                "daily_trend": "BEARISH",
                 "1h_rsi": 70.6,
                 "1h_stoch": 97.5,
-                "1d_ema200": 21287.29
+                "1d_ema200": 21285.05
             }
         },
         "NVDA": {
@@ -123,24 +123,24 @@
     ],
     "opportunities": {
         "AMZN": {
-            "score": 7.3,
+            "score": 7.4,
             "metrics": {
                 "technical": 6.0,
                 "fundamental": 8.4,
-                "news": 8.9
+                "news": 9.5
             },
             "price": 2750.0,
-            "timestamp": "23:41:27"
+            "timestamp": "00:14:31"
         },
         "MELI": {
-            "score": 5.8,
+            "score": 5.9,
             "metrics": {
                 "technical": 3.0,
                 "fundamental": 10.0,
-                "news": 6.7
+                "news": 7.1
             },
             "price": 23360.0,
-            "timestamp": "23:41:34"
+            "timestamp": "00:14:37"
         },
         "PYPL": {
             "score": 5.0,
@@ -150,7 +150,7 @@
                 "news": 9.4
             },
             "price": 9390.0,
-            "timestamp": "23:41:40"
+            "timestamp": "00:14:42"
         },
         "NVDA": {
             "score": 9.8,

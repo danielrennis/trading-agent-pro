@@ -4849,3 +4849,54 @@ Login successful.
 [23:39:03] Loop: Trading Enabled=False
 ⚠️ Radar Analysis Error for META: Not enough Daily data
 [23:40:53] Loop: Trading Enabled=False
+⚠️ Radar Analysis Error for META: Not enough Daily data
+[23:42:42] Loop: Trading Enabled=False
+⚠️ Radar Analysis Error for META: Not enough Daily data
+[23:44:35] Loop: Trading Enabled=False
+[23:45:49] Loop: Trading Enabled=False
+[23:47:03] Loop: Trading Enabled=False
+[23:48:18] Loop: Trading Enabled=False
+Login successful.
+⚠️ Radar Analysis Error for META: Not enough Daily data
+[23:49:49] Loop: Trading Enabled=False
+⚠️ Radar Analysis Error for META: Not enough Daily data
+[23:51:40] Loop: Trading Enabled=False
+⚠️ Radar Analysis Error for META: Not enough Daily data
+[23:53:29] Loop: Trading Enabled=False
+⚠️ Radar Analysis Error for META: Not enough Daily data
+[23:55:21] Loop: Trading Enabled=False
+⚠️ Radar Analysis Error for META: Not enough Daily data
+[23:57:12] Loop: Trading Enabled=False
+⚠️ Radar Analysis Error for META: Not enough Daily data
+[23:59:04] Loop: Trading Enabled=False
+⚠️ Radar Analysis Error for META: Not enough Daily data
+[00:00:55] Loop: Trading Enabled=False
+⚠️ Radar Analysis Error for META: Not enough Daily data
+[00:02:45] Loop: Trading Enabled=False
+⚠️ Radar Analysis Error for META: Not enough Daily data
+[00:04:34] Loop: Trading Enabled=False
+INFO:     127.0.0.1:52379 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52379 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52379 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52383 - "GET /api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52379 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52379 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52379 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52379 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52379 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52379 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52413 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52416 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52418 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52426 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52430 - "GET /api/status HTTP/1.1" 200 OK
+[00:05:47] Loop: Trading Enabled=False
+[00:06:59] Loop: Trading Enabled=False
+Login successful.
+[00:08:14] Loop: Trading Enabled=False
+⚠️ Radar Analysis Error for META: Not enough Daily data
+[00:10:12] Loop: Trading Enabled=False
+⚠️ Radar Analysis Error for META: Not enough Daily data
+[00:12:00] Loop: Trading Enabled=False
+⚠️ Radar Analysis Error for META: Not enough Daily data
+[00:13:54] Loop: Trading Enabled=False
