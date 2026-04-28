@@ -4,8 +4,8 @@
         "initial_tp_pct": 1.015,
         "trailing_sl_pct": 0.988,
         "trailing_tp_pct": 1.01,
-        "risk_balance_pct": 0.2,
-        "min_buy_score": 8.6
+        "risk_balance_pct": 0.1,
+        "min_buy_score": 9
     },
     "symbols": [
         "NVDA",
@@ -23,6 +23,7 @@
         "MELI",
         "PYPL",
         "NVDA",
-        "PBR"
+        "PBR",
+        "KO"
     ]
 }

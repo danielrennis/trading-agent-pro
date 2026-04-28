@@ -54,20 +54,32 @@ class IOLClient:
             "Content-Type": "application/json"
         }
 
-    def get_balance(self):
-        """Fetch available cash balance."""
+    def get_balances_all(self):
+        """Fetch all available balances by liquidation timeframe."""
         url = f"{self.base_url}/api/v2/estadocuenta"
+        balances = {"t0": 0, "t1": 0, "t2": 0}
         try:
             response = requests.get(url, headers=self.get_headers())
             if response.status_code == 200:
                 data = response.json()
                 for item in data.get("cuentas", []):
                     if item.get("moneda") == "peso_Argentino":
-                        return item.get("disponible", 0)
-            return 0
+                        saldos = item.get("saldos", [])
+                        for s in saldos:
+                            liq = s.get("liquidacion")
+                            if liq == "inmediato": balances["t0"] = s.get("disponibleOperar", 0)
+                            elif liq == "hrs24": balances["t1"] = s.get("disponibleOperar", 0)
+                            elif liq == "hrs48": balances["t2"] = s.get("disponibleOperar", 0)
+                return balances
+            return balances
         except Exception as e:
-            print(f"Error fetching balance: {e}")
-            return 0
+            print(f"Error fetching balances: {e}")
+            return balances
+
+    def get_balance(self):
+        """Fetch available cash balance specifically for Contado Inmediato (T0)."""
+        balances = self.get_balances_all()
+        return balances["t0"]
 
     def get_portfolio(self):
         """Fetch current portfolio."""

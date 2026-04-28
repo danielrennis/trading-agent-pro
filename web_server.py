@@ -14,9 +14,9 @@ ORCHESTRATOR_PROC = None
 
 @app.on_event("startup")
 async def startup_event():
-    # Optional: Start orchestrator automatically
-    # restart_orchestrator()
-    pass
+    print("🚀 Iniciando orquestador de trading en segundo plano...")
+    restart_orchestrator()
+    print("✅ Orquestador iniciado correctamente.")
 
 def restart_orchestrator():
     global ORCHESTRATOR_PROC
@@ -200,6 +200,105 @@ async def cancel_sl(symbol: str):
                 json.dump(state, f, indent=4)
             return {"status": "success", "message": "Venta cancelada. SL ajustado -0.5%."}
     return {"status": "error", "message": "Símbolo no encontrado."}
+
+@app.post("/api/buy")
+async def manual_buy(symbol: str):
+    iol = IOLClient()
+    if not iol.login():
+        return {"status": "error", "message": "No se pudo conectar con IOL."}
+    
+    # Obtener configuración y estado
+    with open(CONFIG_FILE, "r") as f:
+        config = json.load(f)
+    with open(STATE_FILE, "r") as f:
+        state = json.load(f)
+        
+    # Calcular cantidad (Misma lógica que orquestador)
+    balance = iol.get_balance()
+    total_equity = balance
+    for s, p in state.get("positions", {}).items():
+        total_equity += p["qty"] * p.get("current_price", p["entry_price"])
+    
+    target_amount = total_equity * config["strategy"]["risk_balance_pct"]
+    amount = min(target_amount, balance * 0.95)
+    
+    # Obtener precio actual
+    ticker = iol.get_quote(symbol, plazo="t0")
+    if not ticker:
+        return {"status": "error", "message": f"No se pudo obtener precio de {symbol}."}
+    
+    current_price = ticker['ultimoPrecio']
+    qty = int(amount / current_price)
+    
+    if qty <= 0:
+        return {"status": "error", "message": f"Saldo insuficiente para comprar {symbol}."}
+
+    # Ejecutar compra (Redondeo BYMA)
+    buy_price = int(current_price) if current_price > 100 else round(current_price, 2)
+    res = iol.place_order(symbol, qty, buy_price, action="comprar", validity="t0")
+    
+    if isinstance(res, dict) and "numeroOperacion" in res:
+        # Registrar en estado local para que el orquestador lo gestione
+        from datetime import datetime
+        state["positions"][symbol] = {
+            "entry_price": current_price, "qty": qty, "step": 0,
+            "sl": current_price * config["strategy"]["initial_sl_pct"],
+            "tp": current_price * config["strategy"]["initial_tp_pct"],
+            "buy_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        }
+        with open(STATE_FILE, "w") as f:
+            json.dump(state, f, indent=4)
+            
+        return {"status": "success", "message": f"Compra forzada de {qty} {symbol} ejecutada."}
+    
+    return {"status": "error", "message": f"IOL rechazó la compra: {res}"}
+
+@app.post("/api/exclude")
+async def exclude_symbol(symbol: str):
+    if os.path.exists(STATE_FILE):
+        with open(STATE_FILE, "r") as f:
+            state = json.load(f)
+        
+        if "excluded_symbols" not in state:
+            state["excluded_symbols"] = []
+        
+        if symbol not in state["excluded_symbols"]:
+            state["excluded_symbols"].append(symbol)
+            
+        with open(STATE_FILE, "w") as f:
+            json.dump(state, f, indent=4)
+            
+        return {"status": "success", "message": f"{symbol} excluido por hoy."}
+    return {"status": "error", "message": "No se pudo acceder al estado."}
+
+@app.post("/api/add_symbol")
+async def add_symbol(symbol: str):
+    iol = IOLClient()
+    if not iol.login():
+        return {"status": "error", "message": "No se pudo conectar con IOL."}
+    
+    # Validar si el símbolo existe en IOL
+    ticker = iol.get_quote(symbol)
+    if not ticker:
+        return {"status": "error", "message": f"El símbolo {symbol} no es válido o no existe en IOL."}
+    
+    # Agregar a config.json
+    if os.path.exists(CONFIG_FILE):
+        with open(CONFIG_FILE, "r") as f:
+            config = json.load(f)
+        
+        if "watchlist" not in config:
+            config["watchlist"] = []
+            
+        if symbol not in config["watchlist"]:
+            config["watchlist"].append(symbol)
+            with open(CONFIG_FILE, "w") as f:
+                json.dump(config, f, indent=4)
+            return {"status": "success", "message": f"{symbol} agregado a la watchlist."}
+        else:
+            return {"status": "error", "message": f"{symbol} ya está en la watchlist."}
+            
+    return {"status": "error", "message": "No se pudo acceder a la configuración."}
 
 if __name__ == "__main__":
     import uvicorn

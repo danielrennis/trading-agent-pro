@@ -1,0 +1,156 @@
+/Users/hugodanielrennis/Desktop/Inversion/trading-agent/venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+/Users/hugodanielrennis/Desktop/Inversion/trading-agent/web_server.py:15: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+INFO:     Started server process [50840]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:3000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:60689 - "GET /api/status HTTP/1.1" 200 OK
+Login successful.
+INFO:     127.0.0.1:60694 - "POST /api/add_symbol?symbol=KO HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60689 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60729 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60754 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60768 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60768 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60768 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60778 - "GET /api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60855 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60855 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60855 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60879 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60895 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60913 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60929 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60947 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60976 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60996 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61008 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61024 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61041 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61057 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61071 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61083 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61097 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61104 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61112 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61131 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61150 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61166 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61182 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61199 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61215 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61229 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61229 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61229 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61237 - "GET /api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61229 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61229 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61229 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61229 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61229 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61229 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61324 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61336 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61350 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61367 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61382 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61398 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61415 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61415 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61415 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61420 - "GET /api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61415 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61415 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61415 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61415 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61493 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61493 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61518 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61530 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61538 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61571 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61602 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61602 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61602 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61602 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61602 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61624 - "GET /api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61640 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61640 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61640 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61640 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61699 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61729 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61759 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61768 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61773 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61797 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61814 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61831 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61855 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61879 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61900 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61917 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61938 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61954 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61972 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61989 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62004 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62012 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62021 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62031 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62031 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62031 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62047 - "GET /api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62031 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62031 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62031 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62031 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62031 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62135 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62169 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62187 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62207 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62243 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62292 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62357 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62383 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62401 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62417 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62429 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62445 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62459 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62474 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62498 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62517 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62546 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62599 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62670 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62706 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62924 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62948 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62948 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62948 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62956 - "GET /api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62971 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62971 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62971 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63019 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63019 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63050 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63070 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63096 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [50840]

@@ -78,7 +78,7 @@ def start_background_bot():
 if __name__ == "__main__":
     start_background_bot()
     
-    # Cambiado a 5001 para evitar conflictos con AirPlay en macOS
-    port = int(os.environ.get("PORT", 5001))
+    # Cambiado a 3000 por pedido del usuario
+    port = int(os.environ.get("PORT", 3000))
     print(f"🚀 Panel disponible en: http://localhost:{port}")
     app.run(host='0.0.0.0', port=port)
