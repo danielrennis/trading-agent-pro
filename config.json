@@ -1,0 +1,28 @@
+{
+    "strategy": {
+        "initial_sl_pct": 0.99,
+        "initial_tp_pct": 1.015,
+        "trailing_sl_pct": 0.988,
+        "trailing_tp_pct": 1.01,
+        "risk_balance_pct": 0.2,
+        "min_buy_score": 8.6
+    },
+    "symbols": [
+        "NVDA",
+        "AMD",
+        "MSFT",
+        "TLCPO"
+    ],
+    "watchlist": [
+        "AAPL",
+        "MSFT",
+        "GOOGL",
+        "AMZN",
+        "META",
+        "TSLA",
+        "MELI",
+        "PYPL",
+        "NVDA",
+        "PBR"
+    ]
+}

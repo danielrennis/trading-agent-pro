@@ -1,0 +1,581 @@
+// panel/index.html
+// Panel de control — abre en http://localhost:3001/panel o desde el archivo directamente
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trading Agent</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;500;700&display=swap');
+
+    :root {
+      --bg:       #0a0c10;
+      --bg2:      #111520;
+      --bg3:      #1a1f2e;
+      --border:   #232840;
+      --accent:   #3b82f6;
+      --green:    #22c55e;
+      --red:      #ef4444;
+      --yellow:   #f59e0b;
+      --text:     #e2e8f0;
+      --muted:    #64748b;
+      --font:     'Space Grotesk', sans-serif;
+      --mono:     'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg2);
+    }
+    .logo { font-size: 18px; font-weight: 700; letter-spacing: -0.5px; }
+    .logo span { color: var(--accent); }
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: pulse 2s infinite;
+      display: inline-block; margin-right: 8px;
+    }
+    .status-dot.offline { background: var(--red); box-shadow: 0 0 8px var(--red); animation: none; }
+    .status-dot.paused  { background: var(--yellow); box-shadow: 0 0 8px var(--yellow); }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .time { font-family: var(--mono); font-size: 13px; color: var(--muted); }
+
+    /* Layout */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      padding: 20px 24px;
+    }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .card.wide { grid-column: span 2; }
+    .card.full { grid-column: span 3; }
+    @media (max-width: 900px) { .card.wide, .card.full { grid-column: span 1; } }
+
+    .card-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    /* P&L */
+    .pnl-big {
+      font-family: var(--mono);
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .pnl-big.pos { color: var(--green); }
+    .pnl-big.neg { color: var(--red); }
+    .pnl-sub { font-size: 13px; color: var(--muted); margin-top: 6px; font-family: var(--mono); }
+
+    /* Score bars */
+    .score-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .score-label { font-size: 13px; width: 80px; }
+    .score-bar-wrap { flex: 1; background: var(--bg3); border-radius: 4px; height: 8px; }
+    .score-bar {
+      height: 8px; border-radius: 4px;
+      transition: width .6s ease;
+    }
+    .score-val { font-family: var(--mono); font-size: 13px; width: 32px; text-align: right; }
+
+    /* Posición */
+    .pos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .pos-item { }
+    .pos-item .label { font-size: 11px; color: var(--muted); margin-bottom: 3px; }
+    .pos-item .value { font-family: var(--mono); font-size: 16px; font-weight: 600; }
+
+    /* SL/TP sliders */
+    .slider-row {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+    }
+    .slider-label { font-size: 13px; width: 100px; }
+    input[type=range] {
+      flex: 1;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .slider-val {
+      font-family: var(--mono);
+      font-size: 13px;
+      width: 52px;
+      text-align: right;
+    }
+    .slider-val.red { color: var(--red); }
+    .slider-val.grn { color: var(--green); }
+
+    /* Botones */
+    .btn-row { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+    button {
+      padding: 9px 18px;
+      border-radius: 8px;
+      border: none;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+    button:hover { opacity: .85; }
+    .btn-apply   { background: var(--accent); color: #fff; }
+    .btn-pause   { background: var(--yellow); color: #000; }
+    .btn-resume  { background: var(--green);  color: #000; }
+    .btn-danger  { background: var(--red);    color: #fff; }
+
+    /* Asset selector */
+    .asset-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    .chip {
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* Log */
+    #log {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      max-height: 200px;
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 12px;
+      line-height: 1.8;
+    }
+    .log-green { color: var(--green); }
+    .log-red   { color: var(--red); }
+    .log-blue  { color: var(--accent); }
+    .log-yellow{ color: var(--yellow); }
+
+    /* Score indicator chip */
+    .trend-chip {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-left: 8px;
+    }
+    .trend-bullish { background: rgba(34,197,94,.15); color: var(--green); }
+    .trend-bearish { background: rgba(239,68,68,.15);  color: var(--red); }
+    .trend-neutral { background: rgba(100,116,139,.15); color: var(--muted); }
+
+    /* Step indicator */
+    .steps-row { display: flex; gap: 6px; margin-top: 10px; }
+    .step-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+    }
+    .step-dot.done { background: var(--green); border-color: var(--green); }
+    .step-dot.current { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 6px var(--accent); }
+
+    /* News */
+    .news-item { padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .news-item:last-child { border-bottom: none; }
+    .news-sentiment {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-right: 8px;
+    }
+    .news-summary { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">trading<span>agent</span></div>
+  <div class="header-right">
+    <span><span class="status-dot" id="dot"></span><span id="status-text">Conectando...</span></span>
+    <span class="time" id="clock"></span>
+  </div>
+</header>
+
+<div class="grid">
+
+  <!-- P&L del día -->
+  <div class="card">
+    <div class="card-title">P&L del día</div>
+    <div class="pnl-big" id="daily-pnl">$0</div>
+    <div class="pnl-sub" id="pnl-sub">0 trades hoy</div>
+  </div>
+
+  <!-- Score activos -->
+  <div class="card wide">
+    <div class="card-title">Scores en tiempo real</div>
+    <div id="scores-container">
+      <div class="score-row">
+        <div class="score-label">Cargando...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Posición abierta -->
+  <div class="card full" id="position-card">
+    <div class="card-title">Posición abierta</div>
+    <div id="position-content">
+      <span style="color:var(--muted);font-size:13px">Sin posición activa</span>
+    </div>
+  </div>
+
+  <!-- Control SL/TP -->
+  <div class="card wide">
+    <div class="card-title">Control SL / TP (en tiempo real)</div>
+
+    <div class="slider-row">
+      <span class="slider-label">Stop Loss</span>
+      <input type="range" id="sl-slider" min="-5" max="-0.1" step="0.1" value="-1">
+      <span class="slider-val red" id="sl-val">−1.0%</span>
+    </div>
+
+    <div class="slider-row">
+      <span class="slider-label">Take Profit</span>
+      <input type="range" id="tp-slider" min="0.5" max="10" step="0.1" value="2.1">
+      <span class="slider-val grn" id="tp-val">+2.1%</span>
+    </div>
+
+    <div class="slider-row">
+      <span class="slider-label">Trailing SL</span>
+      <input type="range" id="tsl-slider" min="-5" max="-0.1" step="0.1" value="-1">
+      <span class="slider-val red" id="tsl-val">−1.0%</span>
+    </div>
+
+    <div class="slider-row">
+      <span class="slider-label">Score mínimo</span>
+      <input type="range" id="score-slider" min="5" max="9" step="0.5" value="7">
+      <span class="slider-val" id="score-val">7.0</span>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-apply" onclick="applyConfig()">Aplicar cambios</button>
+      <button class="btn-pause"  id="btn-pause"  onclick="togglePause()">⏸ Pausar</button>
+    </div>
+  </div>
+
+  <!-- Activos -->
+  <div class="card">
+    <div class="card-title">Activos monitoreados</div>
+    <div class="asset-chips" id="asset-chips"></div>
+    <div class="btn-row" style="margin-top:14px">
+      <button class="btn-apply" onclick="applyAssets()">Guardar selección</button>
+    </div>
+  </div>
+
+  <!-- Noticias -->
+  <div class="card wide">
+    <div class="card-title">Análisis de noticias</div>
+    <div id="news-content">
+      <span style="color:var(--muted);font-size:13px">Esperando primer análisis...</span>
+    </div>
+  </div>
+
+  <!-- Log -->
+  <div class="card full">
+    <div class="card-title">Log de actividad</div>
+    <div id="log"></div>
+  </div>
+
+</div>
+
+<script>
+  const API = 'http://localhost:3001'
+  const ALL_ASSETS = ['NVDA', 'AMD', 'MSFT', 'INTC', 'META', 'AAPL']
+  let selectedAssets = ['NVDA', 'AMD']
+  let paused = false
+  let lastState = null
+
+  // Reloj
+  setInterval(() => {
+    document.getElementById('clock').textContent =
+      new Date().toLocaleTimeString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' })
+  }, 1000)
+
+  // WebSocket
+  let ws
+  function connectWS() {
+    ws = new WebSocket('ws://localhost:3001')
+    ws.onopen = () => {
+      document.getElementById('dot').className = 'status-dot'
+      document.getElementById('status-text').textContent = 'Conectado'
+      addLog('Conectado al agente', 'blue')
+    }
+    ws.onmessage = e => {
+      const msg = JSON.parse(e.data)
+      if (msg.type === 'state') renderState(msg.data)
+    }
+    ws.onclose = () => {
+      document.getElementById('dot').className = 'status-dot offline'
+      document.getElementById('status-text').textContent = 'Desconectado'
+      setTimeout(connectWS, 3000)
+    }
+  }
+  connectWS()
+
+  // ── Render estado ──────────────────────────────────────────────────────────
+  function renderState(state) {
+    lastState = state
+    paused = state.config?.paused ?? false
+
+    // P&L
+    const pnl = state.dailyPnL ?? 0
+    const pnlEl = document.getElementById('daily-pnl')
+    pnlEl.textContent = '$' + pnl.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    pnlEl.className = 'pnl-big ' + (pnl >= 0 ? 'pos' : 'neg')
+    document.getElementById('pnl-sub').textContent = `${state.totalTrades ?? 0} trades hoy`
+
+    // Scores
+    renderScores(state.scores ?? {})
+
+    // Posición
+    renderPosition(state.positions ?? {})
+
+    // Noticias
+    renderNews(state.newsCache ?? {})
+
+    // Config
+    if (state.config) {
+      const cfg = state.config
+      setSlider('sl-slider',    'sl-val',    cfg.sl    * 100, true)
+      setSlider('tp-slider',    'tp-val',    cfg.tp    * 100, false)
+      setSlider('tsl-slider',   'tsl-val',   cfg.trailingSL * 100, true)
+      setSlider('score-slider', 'score-val', cfg.minScore, false, false)
+      selectedAssets = cfg.activeAssets ?? selectedAssets
+    }
+
+    // Activos chips
+    renderAssetChips()
+
+    // Botón pausa
+    const btn = document.getElementById('btn-pause')
+    btn.textContent = paused ? '▶ Reanudar' : '⏸ Pausar'
+    btn.className   = paused ? 'btn-resume' : 'btn-pause'
+
+    // Status dot
+    document.getElementById('dot').className = 'status-dot' + (paused ? ' paused' : '')
+    document.getElementById('status-text').textContent = paused ? 'Pausado' : 'Corriendo'
+  }
+
+  function setSlider(sliderId, valId, val, isNeg, isPct = true) {
+    const slider = document.getElementById(sliderId)
+    const valEl  = document.getElementById(valId)
+    if (!slider) return
+    slider.value = val
+    const sign   = isNeg ? (val < 0 ? '−' : '+') : (val >= 0 ? '+' : '−')
+    valEl.textContent = isPct
+      ? `${sign}${Math.abs(val).toFixed(1)}%`
+      : val.toFixed(1)
+  }
+
+  function renderScores(scores) {
+    const el  = document.getElementById('scores-container')
+    const keys = Object.keys(scores)
+    if (!keys.length) return
+    el.innerHTML = keys.map(sym => {
+      const s      = scores[sym]
+      const score  = s.combined ?? s.score ?? 5
+      const pct    = (score / 10 * 100).toFixed(0)
+      const color  = score >= 7 ? '#22c55e' : score <= 4 ? '#ef4444' : '#f59e0b'
+      const trend  = score >= 6 ? 'bullish' : score <= 4 ? 'bearish' : 'neutral'
+      const tLabel = trend === 'bullish' ? '↑ Alcista' : trend === 'bearish' ? '↓ Bajista' : '→ Neutral'
+      return `
+        <div class="score-row">
+          <div class="score-label">${sym}<span class="trend-chip trend-${trend}">${tLabel}</span></div>
+          <div class="score-bar-wrap">
+            <div class="score-bar" style="width:${pct}%;background:${color}"></div>
+          </div>
+          <div class="score-val">${score.toFixed(1)}</div>
+        </div>`
+    }).join('')
+  }
+
+  function renderPosition(positions) {
+    const el   = document.getElementById('position-content')
+    const keys = Object.keys(positions)
+    if (!keys.length) {
+      el.innerHTML = '<span style="color:var(--muted);font-size:13px">Sin posición activa</span>'
+      return
+    }
+    el.innerHTML = keys.map(sym => {
+      const p      = positions[sym]
+      const pnlPct = p.currentPrice && p.entryPrice
+        ? ((p.currentPrice - p.entryPrice) / p.entryPrice * 100)
+        : 0
+      const pnlColor = pnlPct >= 0 ? 'var(--green)' : 'var(--red)'
+      const steps  = Array.from({ length: 8 }, (_, i) =>
+        `<div class="step-dot ${i < p.step ? 'done' : i === p.step ? 'current' : ''}"></div>`
+      ).join('')
+
+      return `
+        <div style="margin-bottom:16px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+            <div style="font-size:20px;font-weight:700">${sym}</div>
+            <div style="font-family:var(--mono);font-size:22px;font-weight:700;color:${pnlColor}">
+              ${pnlPct >= 0 ? '+' : ''}${pnlPct.toFixed(2)}%
+            </div>
+          </div>
+          <div class="pos-grid">
+            <div class="pos-item">
+              <div class="label">Entrada</div>
+              <div class="value">$${(p.entryPrice ?? 0).toFixed(2)}</div>
+            </div>
+            <div class="pos-item">
+              <div class="label">Precio actual</div>
+              <div class="value">$${(p.currentPrice ?? 0).toFixed(2)}</div>
+            </div>
+            <div class="pos-item">
+              <div class="label">Stop Loss</div>
+              <div class="value" style="color:var(--red)">$${(p.sl ?? 0).toFixed(2)}</div>
+            </div>
+            <div class="pos-item">
+              <div class="label">Take Profit</div>
+              <div class="value" style="color:var(--green)">$${(p.tp ?? 0).toFixed(2)}</div>
+            </div>
+          </div>
+          <div style="margin-top:12px">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:6px">ESCALONES (${p.step ?? 0} completados)</div>
+            <div class="steps-row">${steps}</div>
+          </div>
+        </div>`
+    }).join('')
+  }
+
+  function renderNews(cache) {
+    const el   = document.getElementById('news-content')
+    const keys = Object.keys(cache)
+    if (!keys.length) return
+    el.innerHTML = keys.map(sym => {
+      const n   = cache[sym]
+      const s   = n.sentiment ?? 0
+      const bg  = s > 0 ? 'rgba(34,197,94,.15)'  : s < 0 ? 'rgba(239,68,68,.15)' : 'rgba(100,116,139,.15)'
+      const col = s > 0 ? 'var(--green)' : s < 0 ? 'var(--red)' : 'var(--muted)'
+      return `
+        <div class="news-item">
+          <div>
+            <span style="font-weight:700">${sym}</span>
+            <span class="news-sentiment" style="background:${bg};color:${col}">
+              ${s > 0 ? '+' : ''}${s.toFixed(1)}
+            </span>
+            ${n.critical ? '<span style="color:var(--yellow);font-size:12px">⚠️ EVENTO CRÍTICO</span>' : ''}
+            ${n.avoid    ? '<span style="color:var(--red);font-size:12px">🚫 NO OPERAR</span>' : ''}
+          </div>
+          <div class="news-summary">${n.summary ?? ''}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:3px">
+            ${n.time ? new Date(n.time).toLocaleTimeString('es-AR') : ''}
+          </div>
+        </div>`
+    }).join('')
+  }
+
+  function renderAssetChips() {
+    const el = document.getElementById('asset-chips')
+    el.innerHTML = ALL_ASSETS.map(a => `
+      <div class="chip ${selectedAssets.includes(a) ? 'active' : ''}"
+           onclick="toggleAsset('${a}')">${a}</div>
+    `).join('')
+  }
+
+  // ── Controles ──────────────────────────────────────────────────────────────
+
+  // Actualizar labels de sliders en tiempo real
+  document.getElementById('sl-slider').oninput    = e => document.getElementById('sl-val').textContent    = `−${Math.abs(e.target.value).toFixed(1)}%`
+  document.getElementById('tp-slider').oninput    = e => document.getElementById('tp-val').textContent    = `+${parseFloat(e.target.value).toFixed(1)}%`
+  document.getElementById('tsl-slider').oninput   = e => document.getElementById('tsl-val').textContent   = `−${Math.abs(e.target.value).toFixed(1)}%`
+  document.getElementById('score-slider').oninput = e => document.getElementById('score-val').textContent = parseFloat(e.target.value).toFixed(1)
+
+  async function applyConfig() {
+    const sl    = parseFloat(document.getElementById('sl-slider').value)    / 100
+    const tp    = parseFloat(document.getElementById('tp-slider').value)    / 100
+    const tsl   = parseFloat(document.getElementById('tsl-slider').value)   / 100
+    const score = parseFloat(document.getElementById('score-slider').value)
+    await fetch(`${API}/api/config`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sl, tp, trailingSL: tsl, minScore: score })
+    })
+    addLog(`Config actualizada: SL ${(sl*100).toFixed(1)}% | TP ${(tp*100).toFixed(1)}% | Score mín ${score}`, 'green')
+  }
+
+  async function togglePause() {
+    const endpoint = paused ? '/api/resume' : '/api/pause'
+    await fetch(`${API}${endpoint}`, { method: 'POST' })
+    addLog(paused ? 'Agente reanudado' : 'Agente pausado', paused ? 'green' : 'yellow')
+  }
+
+  function toggleAsset(a) {
+    if (selectedAssets.includes(a)) {
+      if (selectedAssets.length > 1) selectedAssets = selectedAssets.filter(x => x !== a)
+    } else {
+      if (selectedAssets.length < 2) selectedAssets.push(a)
+      else { selectedAssets[1] = a }
+    }
+    renderAssetChips()
+  }
+
+  async function applyAssets() {
+    await fetch(`${API}/api/config`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ activeAssets: selectedAssets })
+    })
+    addLog(`Activos: ${selectedAssets.join(', ')}`, 'blue')
+  }
+
+  // ── Log ────────────────────────────────────────────────────────────────────
+  function addLog(msg, type = '') {
+    const el   = document.getElementById('log')
+    const time = new Date().toLocaleTimeString('es-AR')
+    el.innerHTML += `<div class="log-${type}">[${time}] ${msg}</div>`
+    el.scrollTop = el.scrollHeight
+    if (el.children.length > 100) el.removeChild(el.firstChild)
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+{
+    "positions": {
+        "TSLA": {
+            "entry_price": 37360.0,
+            "qty": 30.0,
+            "sl": 38018.24,
+            "tp": 38526.0056,
+            "step": 1,
+            "buy_time": "2026-04-24 10:00:00",
+            "current_price": 38500.0,
+            "profit_pct": 3.051391862955022,
+            "multiplier": 1,
+            "daily_var": 2.44,
+            "technical": {
+                "daily_trend": "BULLISH",
+                "1h_rsi": 60.3,
+                "1h_stoch": 99.2,
+                "1d_ema200": 37712.38
+            }
+        },
+        "AAPL": {
+            "entry_price": 20160.0,
+            "qty": 1.0,
+            "sl": 19960.416,
+            "tp": 20583.359999999997,
+            "step": 0,
+            "buy_time": "2026-04-24 16:09:52",
+            "current_price": 20320.0,
+            "profit_pct": 0.7936507936507908,
+            "multiplier": 1,
+            "daily_var": 0.24,
+            "technical": {
+                "daily_trend": "BULLISH",
+                "1h_rsi": 65.0,
+                "1h_stoch": 32.0,
+                "1d_ema200": 18276.22
+            }
+        },
+        "MSFT": {
+            "entry_price": 20006.169,
+            "qty": 248.0,
+            "sl": 21340.446634455082,
+            "tp": 21771.08344994857,
+            "step": 6,
+            "buy_time": "2026-04-24 16:43:15",
+            "current_price": 21570.0,
+            "profit_pct": 7.8167439253362225,
+            "multiplier": 1,
+            "daily_var": 1.74,
+            "technical": {
+                "daily_trend": "BULLISH",
+                "1h_rsi": 70.6,
+                "1h_stoch": 97.5,
+                "1d_ema200": 21287.29
+            }
+        },
+        "NVDA": {
+            "entry_price": 13440.0,
+            "current_price": 13600.0,
+            "qty": 61.0,
+            "sl": 13306.944,
+            "tp": 13722.239999999998,
+            "step": 0,
+            "buy_time": "2026-04-27 13:54:37",
+            "profit_pct": 1.1904761904761862,
+            "multiplier": 1,
+            "daily_var": 5.18,
+            "technical": {
+                "daily_trend": "BULLISH",
+                "1h_rsi": 84.0,
+                "1h_stoch": 98.8,
+                "1d_ema200": 10686.06
+            }
+        },
+        "PBR": {
+            "entry_price": 31920.0,
+            "current_price": 31720.0,
+            "qty": 17.0,
+            "sl": 31603.992,
+            "tp": 32398.799999999996,
+            "step": 0,
+            "buy_time": "2026-04-27 15:02:09",
+            "profit_pct": -0.6265664160400974,
+            "multiplier": 1,
+            "daily_var": 4.3,
+            "technical": {
+                "daily_trend": "BULLISH",
+                "1h_rsi": 48.2,
+                "1h_stoch": 63.8,
+                "1d_ema200": 15.19
+            }
+        },
+        "GOOGL": {
+            "entry_price": 9185.0,
+            "current_price": 9180.0,
+            "qty": 39.0,
+            "sl": 9093.15,
+            "tp": 9322.775,
+            "step": 0,
+            "buy_time": "2026-04-27 17:03:43",
+            "profit_pct": -0.05443658138268859,
+            "multiplier": 1,
+            "daily_var": 3.9,
+            "technical": {
+                "daily_trend": "BULLISH",
+                "1h_rsi": 80.7,
+                "1h_stoch": 87.2,
+                "1d_ema200": 7026.69
+            }
+        }
+    },
+    "history": [
+        {
+            "symbol": "TLCPO",
+            "type": "SELL (Rotation)",
+            "entry_price": 157751.58,
+            "exit_price": 164940.0,
+            "qty": 922,
+            "profit_pct": 4.556797465990514,
+            "profit_amount": 66277.23240000011,
+            "date": "2026-04-24 15:40:23"
+        }
+    ],
+    "opportunities": {
+        "AMZN": {
+            "score": 7.3,
+            "metrics": {
+                "technical": 6.0,
+                "fundamental": 8.4,
+                "news": 8.9
+            },
+            "price": 2750.0,
+            "timestamp": "23:41:27"
+        },
+        "MELI": {
+            "score": 5.8,
+            "metrics": {
+                "technical": 3.0,
+                "fundamental": 10.0,
+                "news": 6.7
+            },
+            "price": 23360.0,
+            "timestamp": "23:41:34"
+        },
+        "PYPL": {
+            "score": 5.0,
+            "metrics": {
+                "technical": 3.0,
+                "fundamental": 5.4,
+                "news": 9.4
+            },
+            "price": 9390.0,
+            "timestamp": "23:41:40"
+        },
+        "NVDA": {
+            "score": 9.8,
+            "metrics": {
+                "technical": 10,
+                "fundamental": 9.5,
+                "news": 10
+            },
+            "price": 850.25,
+            "timestamp": "20:29:14"
+        }
+    },
+    "balance": 2619582.41
+}

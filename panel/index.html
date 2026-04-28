@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Bot Ultra-Premium</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            background: radial-gradient(circle at top right, #0f172a, #020617); 
+            color: #f8fafc; 
+            font-family: 'Fira Sans', sans-serif;
+            min-height: 100vh;
+        }
+        h1, h2, h3, .font-code { font-family: 'Fira Code', monospace; }
+        .glass { 
+            background: rgba(15, 23, 42, 0.4); 
+            backdrop-filter: blur(24px); 
+            border: 1px solid rgba(255, 255, 255, 0.12); 
+            box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.4);
+        }
+        .card-glow:hover {
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.15);
+            border-color: rgba(59, 130, 246, 0.4);
+            transform: translateY(-2px);
+            background: rgba(15, 23, 42, 0.6);
+        }
+        .tag-card {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        /* Ocultar flechas en inputs numéricos */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+        @keyframes pulse-blue {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .animate-pulse-slow { animation: pulse-blue 3s infinite; }
+    </style>
+    <audio id="alarm-sound" loop src="https://actions.google.com/sounds/v1/alarms/emergency_siren.ogg"></audio>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function App() {
+            const [status, setStatus] = useState({ positions: {}, opportunities: {}, history: [], balance: 0 });
+            const [config, setConfig] = useState({ strategy: {}, watchlist: [] });
+            const [editConfig, setEditConfig] = useState(null);
+            const [newSymbol, setNewSymbol] = useState("");
+
+            const fetchStatus = async () => {
+                try {
+                    const res = await fetch('/api/status');
+                    const data = await res.json();
+                    setStatus(data);
+                } catch(e) { console.error(e); }
+            };
+
+            const fetchConfig = async () => {
+                try {
+                    const res = await fetch('/api/config');
+                    const data = await res.json();
+                    setConfig(data);
+                    setEditConfig(data);
+                } catch(e) { console.error(e); }
+            };
+
+            const saveConfig = async () => {
+                await fetch('/api/config', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(editConfig)
+                });
+                fetchConfig();
+            };
+
+            const restartAgent = async () => {
+                if(confirm("¿Reiniciar orquestador?")) {
+                    await fetch('/api/restart', { method: 'POST' });
+                    alert("Reiniciado.");
+                }
+            };
+
+            const cancelSL = async (symbol) => {
+                await fetch(`/api/cancel_sl?symbol=${symbol}`, { method: 'POST' });
+                fetchStatus();
+            };
+
+            useEffect(() => {
+                const anyPending = Object.values(status.positions || {}).some(p => p.pending_sl);
+                const intervalTime = anyPending ? 1000 : 5000;
+                fetchStatus(); fetchConfig();
+                const interval = setInterval(fetchStatus, intervalTime);
+                return () => clearInterval(interval);
+            }, [Object.values(status.positions || {}).some(p => p.pending_sl)]);
+
+            useEffect(() => {
+                const anyPending = Object.values(status.positions || {}).some(p => p.pending_sl);
+                const sound = document.getElementById('alarm-sound');
+                if(sound) {
+                    if(anyPending) sound.play().catch(()=>{});
+                    else { sound.pause(); sound.currentTime = 0; }
+                }
+            }, [status.positions]);
+
+            const unrealizedProfit = Object.values(status.positions || {}).reduce((acc, pos) => {
+                return acc + (((pos.current_price || pos.entry_price) - pos.entry_price) * pos.qty * (pos.multiplier || 1));
+            }, 0);
+
+            const securedProfit = Object.values(status.positions || {}).reduce((acc, pos) => {
+                return acc + (((pos.sl || pos.entry_price) - pos.entry_price) * pos.qty * (pos.multiplier || 1));
+            }, 0);
+
+            return (
+                <div className="max-w-[1700px] mx-auto p-6">
+                    {/* TOP BAR */}
+                    <header className="flex justify-between items-center mb-10">
+                        <div>
+                            <h1 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 tracking-tighter uppercase italic font-code">Inversion <span className="text-white not-italic">Trading</span></h1>
+                            <div className="flex items-center gap-3 mt-1 text-slate-500 font-bold uppercase tracking-[0.2em] text-[9px] font-code">
+                                <span className="flex h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                                Motor del Sistema Activo
+                            </div>
+                        </div>
+                        <div className="flex gap-4 items-center">
+                            <button 
+                                onClick={async () => {
+                                    const newStatus = !config.trading_paused;
+                                    const newConf = {...config, trading_paused: newStatus};
+                                    await fetch('/api/config', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify(newConf)
+                                    });
+                                    fetchConfig();
+                                }}
+                                className={`px-10 py-5 rounded-[2.5rem] font-black text-xs uppercase tracking-[0.2em] transition-all duration-500 shadow-2xl font-code ${
+                                    config.trading_paused 
+                                    ? 'bg-red-600 text-white animate-pulse shadow-red-900/40 scale-105 border-2 border-white/20' 
+                                    : 'bg-slate-900 text-slate-500 border border-slate-800 hover:bg-red-900/20 hover:text-red-400'
+                                }`}
+                            >
+                                {config.trading_paused ? '🚨 REANUDAR TRADING' : '🛡️ PAUSAR TRADING'}
+                            </button>
+                            <button 
+                                onClick={() => {
+                                    const sound = document.getElementById('alarm-sound');
+                                    sound.play().then(() => {
+                                        sound.pause();
+                                        sound.currentTime = 0;
+                                        alert("Audio Activado. Las alarmas sonarán correctamente.");
+                                    }).catch(e => console.error(e));
+                                }}
+                                className="bg-slate-900 hover:bg-slate-800 text-slate-500 px-8 py-5 rounded-[2.5rem] border border-slate-800 transition duration-300 font-bold text-[10px] uppercase tracking-[0.2em] font-code"
+                            >
+                                🔊 Activar Audio
+                            </button>
+                            <button onClick={restartAgent} className="bg-slate-900 hover:bg-slate-800 text-slate-500 px-8 py-5 rounded-[2.5rem] border border-slate-800 transition duration-300 font-bold text-[10px] uppercase tracking-[0.2em] font-code">Reiniciar</button>
+                        </div>
+                    </header>
+
+                    {/* ALERTS */}
+                    {Object.entries(status.positions || {}).filter(([_, p]) => p.pending_sl).map(([sym, p]) => (
+                        <div key={sym} className="mb-8 bg-gradient-to-r from-red-600 to-red-800 border-2 border-red-500 p-8 rounded-[2.5rem] flex justify-between items-center shadow-[0_0_60px_rgba(220,38,38,0.3)] animate-pulse">
+                            <div>
+                                <h2 className="text-3xl font-black italic uppercase">⚠️ ALERTA: {sym} tocó piso</h2>
+                                <p className="text-red-100 font-bold text-sm uppercase tracking-tighter">Venta automática en <span className="text-white text-4xl font-black mx-2">{p.sl_countdown ?? '...'}</span> segundos</p>
+                            </div>
+                            <button onClick={() => cancelSL(sym)} className="bg-white text-red-700 px-12 py-5 rounded-2xl font-black hover:scale-105 transition-transform shadow-2xl">CANCELAR VENTA</button>
+                        </div>
+                    ))}
+
+                    <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 items-start">
+                        {/* MAIN (80%) */}
+                        <div className="lg:col-span-4 space-y-10">
+                            
+                            {/* POSICIONES */}
+                            <section>
+                                <div className="flex justify-between items-end mb-8 px-2">
+                                    <h2 className="text-3xl font-bold flex items-center gap-4 font-code tracking-tighter uppercase italic">Cartera Activa <span className="text-[9px] bg-blue-500/10 text-blue-400 border border-blue-500/20 px-3 py-1 rounded-full uppercase tracking-widest font-sans not-italic">{Object.keys(status.positions).length} Activos</span></h2>
+                                    <div className="flex gap-10 items-end">
+                                        <div className="text-right">
+                                            <div className="text-[9px] text-slate-500 font-black uppercase tracking-widest mb-1 font-code">Profit de Mercado</div>
+                                            <div className={`text-2xl font-black font-code ${unrealizedProfit >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                                                ${Math.round(unrealizedProfit).toLocaleString()}
+                                            </div>
+                                        </div>
+                                        <div className="text-right">
+                                            <div className="text-[9px] text-slate-500 font-black uppercase tracking-widest mb-1 font-code">Profit Asegurado</div>
+                                            <div className={`text-2xl font-black font-code ${securedProfit >= 0 ? 'text-blue-400' : 'text-red-400'}`}>
+                                                ${Math.round(securedProfit).toLocaleString()}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-1 gap-5">
+                                    {Object.entries(status.positions || {}).map(([sym, pos]) => {
+                                        const current = pos.current_price || pos.entry_price;
+                                        const win = current >= pos.entry_price;
+                                        const range = (pos.tp || current) - (pos.sl || current);
+                                        const pct = range > 0 ? Math.min(Math.max(((current - pos.sl) / range) * 100, 0), 100) : 50;
+                                        const profit_val = (current - pos.entry_price) * pos.qty * (pos.multiplier || 1);
+
+                                        return (
+                                            <div key={sym} className="glass p-8 rounded-[2.5rem] border border-slate-800/50 flex items-center gap-10 card-glow transition-all duration-500 relative overflow-hidden">
+                                                <div className={`absolute left-0 top-0 h-full w-2 ${win ? 'bg-green-500 shadow-[0_0_20px_#22c55e]' : 'bg-red-500 shadow-[0_0_20px_#ef4444]'}`}></div>
+                                                
+                                                <div className="w-64">
+                                                    <div className="flex items-center gap-4 mb-3">
+                                                        <span className="text-4xl font-black tracking-tighter uppercase italic font-code">{sym}</span>
+                                                        {pos.technical && (
+                                                            <span className={`text-[9px] px-2 py-0.5 font-black rounded-md font-code ${pos.technical.daily_trend === 'BULLISH' ? 'bg-green-500/20 text-green-400 border border-green-500/20' : 'bg-red-500/20 text-red-400 border border-red-500/20'}`}>
+                                                                {pos.technical.daily_trend === 'BULLISH' ? 'ALCISTA' : 'BAJISTA'}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                    <div className="text-xs font-bold uppercase flex flex-col gap-2 font-code">
+                                                        <div className="text-slate-500 text-[10px]">Precio de compra: <span className="text-white">${pos.entry_price.toLocaleString()}</span></div>
+                                                        <div className={`text-[11px] ${pos.step > 0 ? 'text-green-400 font-black' : 'text-slate-600'}`}>
+                                                            Acciones: {pos.qty} | Saltos: {pos.step}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex-1 px-10 text-center">
+                                                    <div className="flex justify-between text-[10px] text-slate-500 font-black uppercase tracking-tighter mb-4 px-1 font-code">
+                                                        <span>PISO: ${Math.round(pos.sl).toLocaleString()}</span>
+                                                        <span>TECHO: ${Math.round(pos.tp).toLocaleString()}</span>
+                                                    </div>
+                                                    <div className="h-5 bg-slate-950 rounded-full relative border border-slate-900 shadow-inner">
+                                                        <div className="absolute top-1/2 -translate-y-1/2 h-8 w-2.5 bg-yellow-400 shadow-[0_0_20px_#facc15] rounded-full z-10 transition-all duration-700" style={{left: `${pct}%`}}></div>
+                                                        <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 via-transparent to-green-500/10 rounded-full"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="w-72 text-right">
+                                                    <div className="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em] mb-2 font-code">Profit Actual</div>
+                                                    <div className={`text-5xl font-black tracking-tighter font-code ${win ? 'text-green-400' : 'text-red-400'}`}>
+                                                        {win ? '+' : ''}${Math.round(profit_val).toLocaleString()}
+                                                    </div>
+                                                    <div className={`text-xl font-bold font-code ${win ? 'text-green-400' : 'text-red-400'} flex items-center justify-end gap-2 mt-2`}>
+                                                        {win ? '▲' : '▼'} {pos.profit_pct?.toFixed(2)}%
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </section>
+
+                            {/* RADAR & WATCHLIST */}
+                            <section className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                <div>
+                                    <h3 className="text-xl font-bold mb-6 flex items-center gap-3 px-2 font-code uppercase italic tracking-tighter">Radar de Oportunidades</h3>
+                                    <div className="grid grid-cols-1 gap-3">
+                                        {Object.entries(status.opportunities || {}).length === 0 ? (
+                                            <div className="flex flex-col items-center justify-center py-16 glass rounded-[2.5rem] border-dashed border-slate-800 text-slate-700">
+                                                <div className="h-10 w-10 rounded-full border-2 border-slate-800 border-t-blue-500 animate-spin mb-4"></div>
+                                                <p className="text-[10px] font-black uppercase tracking-[0.4em] animate-pulse-slow font-code">Escaneando Mercado...</p>
+                                            </div>
+                                        ) : (
+                                            Object.entries(status.opportunities)
+                                                .sort((a, b) => b[1].score - a[1].score)
+                                                .slice(0, 8)
+                                                .map(([sym, opt]) => (
+                                                    <div key={sym} className="glass p-5 rounded-[2rem] border border-slate-800/50 flex flex-col gap-3 hover:bg-blue-500/5 transition group card-glow">
+                                                        <div className="flex justify-between items-center">
+                                                            <div className="flex items-center gap-5">
+                                                                <span className="text-2xl font-black italic tracking-tighter text-slate-300 group-hover:text-blue-400 uppercase font-code">{sym}</span>
+                                                                <span className="text-[10px] text-slate-600 font-code tracking-tight">${opt.price?.toLocaleString()}</span>
+                                                            </div>
+                                                            <div className="flex items-center gap-4">
+                                                                <div className="flex flex-col items-end">
+                                                                    <span className={`text-lg font-black font-code ${opt.score >= 7.5 ? 'text-blue-400' : 'text-slate-600'}`}>{opt.score?.toFixed(1)}</span>
+                                                                    <span className="text-[8px] text-slate-700 font-bold uppercase tracking-widest font-code">PUNTAJE</span>
+                                                                </div>
+                                                                <div className="w-12 h-1.5 bg-slate-950 rounded-full overflow-hidden">
+                                                                    <div className={`h-full ${opt.score >= 7.5 ? 'bg-blue-500 shadow-[0_0_10px_#3b82f6]' : 'bg-slate-800'}`} style={{width: `${opt.score * 10}%`}}></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {opt.metrics && (
+                                                            <div className="flex justify-between border-t border-slate-800/20 pt-3 px-1">
+                                                                <div className="text-center">
+                                                                    <div className="text-[7px] text-slate-600 font-bold uppercase font-code mb-0.5">Técnico</div>
+                                                                    <div className={`text-[10px] font-black font-code ${opt.metrics.technical >= 7 ? 'text-blue-400' : opt.metrics.technical <= 4 ? 'text-red-400' : 'text-slate-400'}`}>{opt.metrics.technical}</div>
+                                                                </div>
+                                                                <div className="text-center">
+                                                                    <div className="text-[7px] text-slate-600 font-bold uppercase font-code mb-0.5">Fundam.</div>
+                                                                    <div className={`text-[10px] font-black font-code ${opt.metrics.fundamental >= 7 ? 'text-blue-400' : opt.metrics.fundamental <= 4 ? 'text-red-400' : 'text-slate-400'}`}>{opt.metrics.fundamental}</div>
+                                                                </div>
+                                                                <div className="text-center">
+                                                                    <div className="text-[7px] text-slate-600 font-bold uppercase font-code mb-0.5">Noticias</div>
+                                                                    <div className={`text-[10px] font-black font-code ${opt.metrics.news >= 7 ? 'text-blue-400' : opt.metrics.news <= 4 ? 'text-red-400' : 'text-slate-400'}`}>{opt.metrics.news}</div>
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                ))
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h3 className="text-xl font-bold mb-6 flex items-center gap-3 px-2 font-code uppercase italic tracking-tighter">Activos en Watchlist</h3>
+                                    {editConfig && (
+                                        <div className="grid grid-cols-2 gap-4 mb-6">
+                                            {(editConfig.watchlist || []).map(sym => (
+                                                <div key={sym} className="tag-card p-5 rounded-[2rem] flex justify-between items-center group hover:border-blue-500/30 transition shadow-xl relative overflow-hidden">
+                                                    <div className="absolute left-0 top-0 h-full w-1 bg-slate-800 group-hover:bg-blue-500 transition"></div>
+                                                    <span className="text-xl font-black tracking-tighter text-slate-300 group-hover:text-white uppercase italic ml-2 font-code">{sym}</span>
+                                                    <button onClick={() => setEditConfig({...editConfig, watchlist: editConfig.watchlist.filter(s => s !== sym)})} className="h-8 w-8 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-600 hover:bg-red-900/40 hover:text-red-400 transition">×</button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                    <div className="flex gap-3">
+                                        <input type="text" value={newSymbol} onChange={e => setNewSymbol(e.target.value.toUpperCase())} placeholder="NUEVO SÍMBOLO..." className="flex-1 bg-slate-950 border border-slate-800 rounded-[2rem] p-5 text-[10px] font-bold font-code focus:border-blue-500/50 outline-none transition" />
+                                        <button onClick={() => { if(newSymbol && !editConfig.watchlist.includes(newSymbol)) setEditConfig({...editConfig, watchlist: [...editConfig.watchlist, newSymbol]}); setNewSymbol(""); }} className="bg-blue-600 px-10 rounded-[2rem] font-black text-xs hover:bg-blue-500 transition shadow-lg shadow-blue-900/20 uppercase tracking-widest font-code">Añadir</button>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        {/* SIDEBAR (20%) */}
+                        <div className="space-y-6 pt-[85px]">
+                            {/* RESUMEN FINANCIERO */}
+                            <div className="glass p-8 rounded-[2.5rem] border border-blue-500/10 shadow-2xl">
+                                <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 mb-8 px-2 font-code italic">Resumen Financiero</h3>
+                                <div className="space-y-6">
+                                    <div className="px-2">
+                                        <div className="text-[9px] text-slate-600 font-bold uppercase tracking-widest mb-2 font-code">Saldo Disponible</div>
+                                        <div className="text-2xl font-black text-white text-right font-code tracking-tighter">${Math.round(status.balance || 0).toLocaleString()}</div>
+                                    </div>
+                                    <div className="px-2 border-t border-slate-800/50 pt-6">
+                                        <div className="text-[9px] text-slate-600 font-bold uppercase tracking-widest mb-2 font-code">Inversión Estimada</div>
+                                        <div className="text-2xl font-black text-blue-400 text-right font-code tracking-tighter">
+                                            ${Math.round((status.balance || 0) * (editConfig?.strategy?.risk_balance_pct || 0)).toLocaleString()}
+                                        </div>
+                                    </div>
+                                    <div className="px-2 border-t border-slate-800/50 pt-6">
+                                        <div className="text-[9px] text-slate-600 font-bold uppercase tracking-widest mb-2 font-code">Profit Cerrado</div>
+                                        <div className={`text-2xl font-black text-right font-code tracking-tighter ${(status.history || []).reduce((acc, h) => acc + (h.profit_amount || 0), 0) >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                                            ${Math.round((status.history || []).reduce((acc, h) => acc + (h.profit_amount || 0), 0)).toLocaleString()}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* PARÁMETROS */}
+                            <div className="glass p-8 rounded-[2.5rem] border border-slate-800/50 sticky top-6">
+                                <div className="flex justify-between items-center mb-10 px-2">
+                                    <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 font-code italic">Parámetros del Motor</h3>
+                                    <button onClick={() => alert("ESTRATEGIA D (Escalones Dinámicos):\n\n1. Compras a $1.000 (SL 1%, TP 2%).\n2. Si baja a $990 -> Vende (Stop Loss).\n3. Si sube a $1.020 (Escalón #1):\n   - El nuevo PISO (SL) sube a $1.010 (1% abajo de $1020).\n   - El nuevo TECHO (TP) sube a $1.030 (1% arriba).\n4. El proceso se repite en cada escalón, bloqueando ganancias automáticamente.")} className="h-7 w-7 rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center hover:bg-blue-500/20 transition font-black text-[10px] font-code">?</button>
+                                </div>
+                                
+                                {editConfig && (
+                                    <div className="space-y-8">
+                                        <div className="space-y-4">
+                                            <div className="p-5 bg-slate-950/50 rounded-[2rem] border border-slate-900 flex justify-between items-center gap-2">
+                                                <label className="text-[9px] text-slate-600 font-black uppercase tracking-widest font-code whitespace-nowrap">SL Inicial</label>
+                                                <div className="flex items-end gap-2">
+                                                    <input type="number" step="0.1" value={Math.round((1 - (editConfig.strategy?.initial_sl_pct || 1)) * 1000) / 10} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, initial_sl_pct: 1 - (parseFloat(e.target.value)/100)}})} className="w-12 bg-transparent border-b border-slate-800 focus:border-blue-500 outline-none text-base font-black transition text-right font-code pb-0.5" />
+                                                    <span className="text-slate-500 font-code text-sm font-bold pb-0.5">%</span>
+                                                </div>
+                                            </div>
+                                            <div className="p-5 bg-slate-950/50 rounded-[2rem] border border-slate-900 flex justify-between items-center gap-2">
+                                                <label className="text-[9px] text-slate-600 font-black uppercase tracking-widest font-code whitespace-nowrap">TP Inicial</label>
+                                                <div className="flex items-end gap-2">
+                                                    <input type="number" step="0.1" value={Math.round(((editConfig.strategy?.initial_tp_pct || 1) - 1) * 1000) / 10} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, initial_tp_pct: 1 + (parseFloat(e.target.value)/100)}})} className="w-12 bg-transparent border-b border-slate-800 focus:border-blue-500 outline-none text-base font-black transition text-right font-code pb-0.5" />
+                                                    <span className="text-slate-500 font-code text-sm font-bold pb-0.5">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="p-6 bg-blue-500/5 rounded-[2.5rem] border border-blue-500/10 space-y-4">
+                                            <div className="flex justify-between items-center gap-2">
+                                                <label className="text-[9px] text-blue-400 font-black uppercase tracking-widest font-code whitespace-nowrap">Salto de Piso</label>
+                                                <div className="flex items-end gap-2">
+                                                    <input type="number" step="0.1" value={Math.round((1 - (editConfig.strategy?.trailing_sl_pct || 0.988)) * 1000) / 10} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, trailing_sl_pct: 1 - (parseFloat(e.target.value)/100)}})} className="w-12 bg-transparent border-b border-blue-500/20 focus:border-blue-500 outline-none text-base font-black text-blue-400 transition text-right font-code pb-0.5" />
+                                                    <span className="text-blue-400 font-code text-sm font-bold pb-0.5">%</span>
+                                                </div>
+                                            </div>
+                                            <div className="flex justify-between items-center gap-2">
+                                                <label className="text-[9px] text-slate-500 font-black uppercase tracking-widest font-code whitespace-nowrap">Próximo Salto</label>
+                                                <div className="flex items-end gap-2">
+                                                    <input type="number" step="0.1" value={Math.round(((editConfig.strategy?.trailing_tp_pct || 1.01) - 1) * 1000) / 10} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, trailing_tp_pct: 1 + (parseFloat(e.target.value)/100)}})} className="w-12 bg-transparent border-b border-slate-800 focus:border-blue-500 outline-none text-base font-black transition text-right font-code pb-0.5" />
+                                                    <span className="text-slate-500 font-code text-sm font-bold pb-0.5">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button onClick={saveConfig} className="w-full bg-gradient-to-br from-blue-600 to-indigo-700 py-5 rounded-[2rem] font-black uppercase tracking-[0.2em] text-[10px] shadow-lg shadow-blue-900/30 hover:brightness-110 active:scale-95 transition-all font-code">Guardar Config</button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* HISTORY */}
+                    <section className="mt-16 glass rounded-[3rem] border border-slate-800/50 overflow-hidden">
+                        <div className="p-8 border-b border-slate-800/50 px-10">
+                            <h2 className="text-2xl font-bold">📜 Historial de Operaciones</h2>
+                        </div>
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-sm text-left">
+                                <thead className="bg-slate-950/50 text-slate-600 text-[10px] uppercase font-black tracking-[0.3em]">
+                                    <tr>
+                                        <th className="px-10 py-6">Fecha</th>
+                                        <th className="px-10 py-6">Símbolo</th>
+                                        <th className="px-10 py-6 text-right">Cant.</th>
+                                        <th className="px-10 py-6 text-right">P. Compra</th>
+                                        <th className="px-10 py-6 text-right">P. Venta</th>
+                                        <th className="px-10 py-6 text-right">Profit (%)</th>
+                                        <th className="px-10 py-6 text-right">Profit ($)</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-slate-800/50">
+                                    {(status.history || []).slice().reverse().map((h, i) => (
+                                        <tr key={i} className="hover:bg-blue-400/[0.02] transition">
+                                            <td className="px-10 py-6 text-slate-500 font-mono text-[10px] tracking-tight">{h.date}</td>
+                                            <td className="px-10 py-6 font-black italic tracking-tighter text-xl uppercase">{h.symbol}</td>
+                                            <td className="px-10 py-6 text-right font-bold text-slate-400">{h.qty}</td>
+                                            <td className="px-10 py-6 text-right text-slate-600 font-mono italic text-xs">${h.entry_price?.toLocaleString()}</td>
+                                            <td className="px-10 py-6 text-right text-slate-300 font-mono font-bold text-xs">${h.exit_price?.toLocaleString()}</td>
+                                            <td className={`px-10 py-6 text-right font-black ${h.profit_pct >= 0 ? 'text-green-400' : 'text-red-400'}`}>{h.profit_pct?.toFixed(2)}%</td>
+                                            <td className={`px-10 py-6 text-right font-black ${h.profit_pct >= 0 ? 'text-green-400' : 'text-red-400'}`}>${h.profit_amount?.toLocaleString()}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
