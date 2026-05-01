@@ -389,6 +389,7 @@
                     </section>
 
                     <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                        {/* COLUMNA IZQUIERDA: GESTIÓN */}
                         <div className="flex flex-col gap-8">
                             {/* CONFIGURACIÓN */}
                             <div className="glass p-10 rounded-[3rem] border border-slate-800/50">
@@ -447,7 +448,7 @@
                                             </div>
                                         </div>
 
-                                        {/* BLOQUE EOD SELECTOR (ABAJO) */}
+                                        {/* BLOQUE EOD SELECTOR */}
                                         <div className="bg-slate-950/40 p-6 rounded-3xl border border-slate-900/50">
                                             <label className="text-[13px] font-black text-slate-400 uppercase mb-4 block tracking-widest font-code">🛡️ Control de Riesgo EOD (End of Day)</label>
                                             <div className="grid grid-cols-3 gap-3 mb-6">
@@ -465,53 +466,57 @@
                                                     </button>
                                                 ))}
                                             </div>
-                                            
                                             <div className="bg-slate-900/50 p-5 rounded-2xl border border-slate-800/50 text-[13px] font-medium leading-relaxed">
-                                                {editConfig.strategy?.eod_strategy === 'off' && (
-                                                    <p className="text-slate-400 italic">
-                                                        <span className="text-white font-black not-italic block mb-1 uppercase tracking-widest">⚠️ Riesgo Overnight Activo</span>
-                                                        El bot no liquidará posiciones al cierre. Ideal si confiás en la tendencia a largo plazo.
-                                                    </p>
-                                                )}
-                                                {editConfig.strategy?.eod_strategy === 'selective' && (
-                                                    <p className="text-blue-400/90 italic">
-                                                        <span className="text-blue-400 font-black not-italic block mb-1 uppercase tracking-widest">🎯 Asegurar Ganancias</span>
-                                                        Se cierran posiciones con profit > {editConfig.strategy?.eod_profit_threshold || 1.5}%. Mitigamos caídas fuertes tras el cierre.
-                                                    </p>
-                                                )}
-                                                {editConfig.strategy?.eod_strategy === 'full' && (
-                                                    <p className="text-rose-400/90 italic">
-                                                        <span className="text-rose-400 font-black not-italic block mb-1 uppercase tracking-widest">💣 Seguridad Total</span>
-                                                        Se liquida TODA la cartera a las 16:50 hs. Cero exposición a gaps matutinos.
-                                                    </p>
-                                                )}
+                                                {editConfig.strategy?.eod_strategy === 'off' && <p className="text-slate-400 italic"><span className="text-white font-black not-italic block mb-1 uppercase tracking-widest">⚠️ Riesgo Overnight Activo</span>El bot no liquidará posiciones al cierre.</p>}
+                                                {editConfig.strategy?.eod_strategy === 'selective' && <p className="text-blue-400/90 italic"><span className="text-blue-400 font-black not-italic block mb-1 uppercase tracking-widest">🎯 Asegurar Ganancias</span>Cierres con profit > {editConfig.strategy?.eod_profit_threshold || 1.5}%.</p>}
+                                                {editConfig.strategy?.eod_strategy === 'full' && <p className="text-rose-400/90 italic"><span className="text-rose-400 font-black not-italic block mb-1 uppercase tracking-widest">💣 Seguridad Total</span>Se liquida TODA la cartera.</p>}
                                             </div>
                                         </div>
                                     </div>
                                 )}
                             </div>
 
+                            {/* WATCHLIST REUBICADA */}
+                            <section className="glass p-10 rounded-[3rem] border border-slate-800/50">
+                                <div className="flex justify-between items-center mb-8 border-b border-slate-800/30 pb-6">
+                                    <h3 className="text-2xl font-black text-white font-code uppercase italic tracking-tighter">Centro de Activos</h3>
+                                    <div className="flex gap-2 bg-slate-950 p-1 rounded-xl border border-slate-900">
+                                        <input type="text" value={newSymbol} onChange={e => setNewSymbol(e.target.value.toUpperCase())} placeholder="SÍMBOLO..." className="bg-transparent text-[13px] font-black text-white px-4 py-2 outline-none w-32 font-code uppercase" />
+                                        <button onClick={addSymbol} className="bg-blue-600 px-6 py-2 rounded-lg text-white font-black text-xs hover:bg-blue-500 transition shadow-lg shadow-blue-500/20">+</button>
+                                    </div>
+                                </div>
+                                <div className="flex flex-wrap gap-3">
+                                    {(editConfig?.watchlist || []).map(s => (
+                                        <div key={s} className="tag-card px-5 py-3 rounded-2xl flex items-center gap-4 group hover:border-blue-500/30 transition-all bg-slate-900/50 border border-slate-800">
+                                            <span className="text-sm font-black text-slate-300 group-hover:text-white font-code uppercase tracking-tighter">{s}</span>
+                                            <button onClick={() => setEditConfig({...editConfig, watchlist: editConfig.watchlist.filter(x => x !== s)})} className="h-6 w-6 rounded-full bg-slate-950 border border-slate-800 text-xs text-slate-600 hover:bg-rose-600/20 hover:text-rose-400 transition flex items-center justify-center font-bold">×</button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        </div>
 
-
+                        {/* COLUMNA DERECHA: INTELIGENCIA */}
+                        <div className="flex flex-col">
                             {/* RADAR DE OPORTUNIDADES REDISEÑADO */}
-                            <div className="glass p-10 rounded-[3rem] border border-slate-800/50 flex flex-col">
+                            <div className="glass p-10 rounded-[3rem] border border-slate-800/50 flex flex-col h-full shadow-2xl">
                                 <div className="flex justify-between items-center mb-8 border-b border-slate-800/50 pb-6">
                                     <div>
                                         <h3 className="text-2xl font-black text-blue-400 font-code uppercase italic tracking-tighter">📡 Radar Táctico</h3>
                                         <p className="text-slate-500 text-[12px] font-code uppercase mt-1">Señales de Alta Probabilidad</p>
                                     </div>
-                                    <div className="bg-blue-500/10 px-4 py-2 rounded-xl text-[12px] text-blue-400 font-black font-code uppercase border border-blue-500/20 shadow-lg shadow-blue-500/5">
-                                        Score Min: {config.strategy?.min_buy_score}
+                                    <div className="bg-blue-500/10 px-4 py-2 rounded-xl text-[12px] text-blue-400 font-black font-code uppercase border border-blue-500/20">
+                                        Min Score: {config.strategy?.min_buy_score}
                                     </div>
                                 </div>
                                 
-                                <div className="overflow-x-auto custom-scrollbar">
+                                <div className="overflow-x-auto custom-scrollbar flex-1">
                                     <table className="w-full text-left border-collapse">
                                         <thead>
                                             <tr className="border-b border-slate-900">
                                                 <th className="py-5 px-3 text-[12px] font-black text-slate-400 uppercase font-code tracking-widest">Activo</th>
-                                                <th className="py-5 px-3 text-[12px] font-black text-slate-400 uppercase font-code tracking-widest">Score</th>
-                                                <th className="py-5 px-3 text-[12px] font-black text-slate-400 uppercase font-code tracking-widest">Indicadores</th>
+                                                <th className="py-5 px-3 text-[12px] font-black text-slate-400 uppercase font-code tracking-widest text-center">Score</th>
+                                                <th className="py-5 px-3 text-[12px] font-black text-slate-400 uppercase font-code tracking-widest">Métricas</th>
                                                 <th className="py-5 px-3 text-[12px] font-black text-slate-400 uppercase font-code tracking-widest text-right">Cotización</th>
                                                 <th className="py-5 px-3 text-[12px] font-black text-slate-400 uppercase font-code tracking-widest text-right">Acción</th>
                                             </tr>
@@ -522,40 +527,34 @@
                                                 .map(([symbol, opp]) => (
                                                 <tr key={symbol} className="group hover:bg-blue-500/5 transition-all">
                                                     <td className="py-6 px-3">
-                                                        <div className="text-3xl font-black font-code text-white group-hover:text-blue-400 transition italic uppercase tracking-tighter">{symbol}</div>
-                                                        <div className="text-[11px] text-slate-500 font-bold mt-1 uppercase">{opp.timestamp}</div>
+                                                        <div className="text-4xl font-black font-code text-white group-hover:text-blue-400 transition italic uppercase tracking-tighter leading-none">{symbol}</div>
+                                                        <div className="text-[10px] text-slate-600 font-bold mt-1 uppercase tracking-widest font-code">{opp.timestamp?.split(' ')[1]}</div>
                                                     </td>
-                                                    <td className="py-6 px-3">
-                                                        <div className={`text-2xl font-black font-code ${opp.score >= 9 ? 'text-emerald-400' : opp.score >= 7 ? 'text-blue-400' : 'text-slate-500'}`}>
+                                                    <td className="py-6 px-3 text-center">
+                                                        <div className={`text-3xl font-black font-code ${opp.score >= 9 ? 'text-emerald-400' : opp.score >= 7 ? 'text-blue-400' : 'text-slate-500'}`}>
                                                             {opp.score?.toFixed(1)}
                                                         </div>
                                                     </td>
                                                     <td className="py-6 px-3">
                                                         <div className="flex flex-col gap-1">
                                                             <div className="flex items-center gap-2">
-                                                                <span className="text-[12px] font-bold text-slate-300 font-code bg-slate-900 px-2 py-0.5 rounded border border-slate-800">RSI: {opp.metrics?.rsi?.toFixed(0) || 'N/A'}</span>
+                                                                <span className="text-[11px] font-bold text-slate-400 font-code bg-slate-900 px-2 py-0.5 rounded border border-slate-800">RSI: {opp.metrics?.rsi?.toFixed(0) || 'N/A'}</span>
                                                             </div>
-                                                            <span className={`text-[11px] font-black font-code uppercase px-2 py-0.5 rounded inline-block w-fit ${opp.metrics?.trend_score > 0 ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500'}`}>
-                                                                {opp.metrics?.trend_score > 0 ? '↗ Tendencia Alcista' : '↘ Tendencia Bajista'}
+                                                            <span className={`text-[10px] font-black font-code uppercase px-2 py-0.5 rounded inline-block w-fit ${opp.metrics?.trend_score > 0 ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500'}`}>
+                                                                {opp.metrics?.trend_score > 0 ? '↗ Alcista' : '↘ Bajista'}
                                                             </span>
                                                         </div>
                                                     </td>
                                                     <td className="py-6 px-3 text-right">
-                                                        <div className="text-2xl font-black font-code text-slate-200">${opp.price?.toLocaleString()}</div>
+                                                        <div className="text-2xl font-black font-code text-slate-200 tracking-tighter">${opp.price?.toLocaleString()}</div>
                                                     </td>
                                                     <td className="py-6 px-3">
-                                                        <div className="flex justify-end gap-3">
-                                                            <button 
-                                                                onClick={() => manualBuy(symbol)}
-                                                                className="p-3 rounded-2xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 hover:bg-emerald-500 hover:text-black transition-all shadow-lg hover:shadow-emerald-500/20"
-                                                            >
-                                                                <span className="text-lg">🚀</span>
+                                                        <div className="flex justify-end gap-2">
+                                                            <button onClick={() => manualBuy(symbol)} className="p-3 rounded-2xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 hover:bg-emerald-500 hover:text-black transition-all shadow-lg hover:shadow-emerald-500/20">
+                                                                🚀
                                                             </button>
-                                                            <button 
-                                                                onClick={() => fetch(`/api/exclude?symbol=${symbol}`, {method: 'POST'})}
-                                                                className="p-3 rounded-2xl bg-rose-500/10 text-rose-500 border border-rose-500/20 hover:bg-rose-500 hover:text-white transition-all shadow-lg hover:shadow-rose-500/20"
-                                                            >
-                                                                <span className="text-lg">🚫</span>
+                                                            <button onClick={() => fetch(`/api/exclude?symbol=${symbol}`, {method: 'POST'})} className="p-3 rounded-2xl bg-rose-500/10 text-rose-500 border border-rose-500/20 hover:bg-rose-500 hover:text-white transition-all shadow-lg hover:shadow-rose-500/20">
+                                                                🚫
                                                             </button>
                                                         </div>
                                                     </td>
@@ -568,24 +567,6 @@
                         </div>
                     </div>
 
-                    {/* WATCHLIST */}
-                    <section className="glass p-10 rounded-[3rem] border border-slate-800/50">
-                        <div className="flex justify-between items-center mb-8 border-b border-slate-800/30 pb-6">
-                            <h3 className="text-2xl font-black text-white font-code uppercase italic tracking-tighter">Símbolos Activos</h3>
-                            <div className="flex gap-2 bg-slate-950 p-1 rounded-xl border border-slate-900">
-                                <input type="text" value={newSymbol} onChange={e => setNewSymbol(e.target.value.toUpperCase())} placeholder="SÍMBOLO..." className="bg-transparent text-sm font-black text-white px-4 py-2 outline-none w-32 font-code" />
-                                <button onClick={addSymbol} className="bg-blue-600 px-6 py-2 rounded-lg text-white font-black text-xs">+</button>
-                            </div>
-                        </div>
-                        <div className="flex flex-wrap gap-3">
-                            {(editConfig?.watchlist || []).map(s => (
-                                <div key={s} className="tag-card px-5 py-3 rounded-2xl flex items-center gap-4 group hover:border-blue-500/30 transition-all">
-                                    <span className="text-sm font-black text-slate-300 group-hover:text-white font-code">{s}</span>
-                                    <button onClick={() => setEditConfig({...editConfig, watchlist: editConfig.watchlist.filter(x => x !== s)})} className="h-6 w-6 rounded-full bg-slate-900 border border-slate-800 text-xs text-slate-600 hover:bg-red-600/20 hover:text-red-400 transition">×</button>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
 
                     {/* HISTORY */}
                     <section className="glass rounded-[3rem] border border-slate-800/50 overflow-hidden shadow-2xl">
