@@ -16,8 +16,8 @@
             "current_price": 32920.0,
             "technical": {
                 "daily_trend": "BULLISH",
-                "1h_rsi": 55.4,
-                "1h_stoch": 84.8,
+                "1h_rsi": 83.2,
+                "1h_stoch": 92.0,
                 "1d_ema200": 0
             },
             "profit_pct": 1.7934446505875057
@@ -32,8 +32,8 @@
             "buy_time": "2026-04-30 12:59:07",
             "technical": {
                 "daily_trend": "BULLISH",
-                "1h_rsi": 55.4,
-                "1h_stoch": 84.8,
+                "1h_rsi": 70.8,
+                "1h_stoch": 82.5,
                 "1d_ema200": 0
             },
             "profit_pct": 0.8924144769459685,
@@ -87,8 +87,8 @@
             "current_price": 10850.0,
             "technical": {
                 "daily_trend": "BEARISH",
-                "1h_rsi": 55.4,
-                "1h_stoch": 84.8,
+                "1h_rsi": 83.2,
+                "1h_stoch": 92.0,
                 "1d_ema200": 0
             },
             "profit_pct": 0.8364312267657992
@@ -1093,27 +1093,27 @@
                 "news": 9.6
             },
             "price": 2755.0,
-            "timestamp": "13:38:47"
+            "timestamp": "13:40:07"
         },
         "MELI": {
-            "score": 3.9,
+            "score": 3.2,
             "metrics": {
-                "technical": 3.0,
+                "technical": 1.5,
                 "fundamental": 5.0,
                 "news": 4.7
             },
             "price": 22400.0,
-            "timestamp": "13:38:41"
+            "timestamp": "13:40:00"
         },
         "PYPL": {
-            "score": 7.1,
+            "score": 4.6,
             "metrics": {
-                "technical": 8.0,
+                "technical": 3.0,
                 "fundamental": 5.0,
                 "news": 8.0
             },
             "price": 9345.0,
-            "timestamp": "13:38:41"
+            "timestamp": "13:40:00"
         },
         "NVDA": {
             "score": 7.0,
@@ -1123,7 +1123,7 @@
                 "news": 2.4
             },
             "price": 12500.0,
-            "timestamp": "13:38:47"
+            "timestamp": "13:40:07"
         },
         "META": {
             "score": 7.3,
@@ -1136,14 +1136,14 @@
             "timestamp": "15:46:35"
         },
         "TSLA": {
-            "score": 6.9,
+            "score": 6.7,
             "metrics": {
-                "technical": 8.0,
+                "technical": 7.5,
                 "fundamental": 5.0,
                 "news": 7.0
             },
             "price": 38120.0,
-            "timestamp": "13:38:41"
+            "timestamp": "13:40:01"
         },
         "GOOGL": {
             "score": 6.9,
@@ -1166,14 +1166,14 @@
             "timestamp": "12:32:23"
         },
         "KO": {
-            "score": 8.1,
+            "score": 7.9,
             "metrics": {
-                "technical": 8.0,
+                "technical": 7.5,
                 "fundamental": 7.2,
                 "news": 9.9
             },
             "price": 23650.0,
-            "timestamp": "13:38:40"
+            "timestamp": "13:40:01"
         },
         "NU": {
             "score": 9.5,
@@ -1186,24 +1186,24 @@
             "timestamp": "14:56:05"
         },
         "AMD": {
-            "score": 5.9,
+            "score": 5.6,
             "metrics": {
-                "technical": 8.0,
+                "technical": 7.5,
                 "fundamental": 4.8,
                 "news": 2.1
             },
             "price": 53025.0,
-            "timestamp": "13:38:40"
+            "timestamp": "13:40:01"
         },
         "INTC": {
-            "score": 7.2,
+            "score": 6.7,
             "metrics": {
-                "technical": 8.0,
-                "fundamental": 5.0,
+                "technical": 7.0,
+                "fundamental": 5,
                 "news": 8.3
             },
             "price": 28300.0,
-            "timestamp": "13:38:40"
+            "timestamp": "13:40:00"
         },
         "MSFT": {
             "score": 4.9,
