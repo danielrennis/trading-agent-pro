@@ -1,47 +1,31 @@
-# 💹 TRADING BOT PRO - Memoria del Proyecto
+# 🛸 Trading Bot Agent Pro - Consola de Gestión Táctica
 
-## 📌 Estado Actual (01/05/2026 - 13:22 AR)
-El sistema se encuentra en su versión **Premium de Alta Fidelidad**, con blindaje de código (Git) y auditoría financiera en tiempo real. Optimizado para el mercado argentino con control total de comisiones y riesgos EOD.
+## 📜 Estado del Proyecto
+- **Versión Actual:** 2.4.0 (Alpha)
+- **Estado:** 🚀 Totalmente Operativo y Consolidado
+- **Último Commit de Oro:** `1f83485` (Ordenamiento alfabético de cartera)
 
-## 🏆 PROTOCOLO DE SEGURIDAD (Blindaje de Oro)
-1. **Regla de Diamante:** Todo cambio exitoso se guarda mediante `git commit`. Es la base inamovible para avanzar.
-2. **Rollback Instantáneo:** Ante cualquier error, se ejecuta `git checkout .` para volver al estado estable.
-3. **Legibilidad Pro:** Tipografías grandes (Labels 13px, Valores 4xl) y alto contraste para monitoreo sin fatiga visual.
+## 🏗️ Arquitectura del Dashboard
+El sistema utiliza una grilla de alta densidad optimizada para monitoreo profesional:
+- **Columna Izquierda (Centro de Mando):**
+    - **Motor de Estrategia:** Control de inversión, Risk Management (SL/TP) y selector EOD.
+    - **Centro de Activos:** Watchlist ordenada alfabéticamente con buscador integrado.
+- **Columna Derecha (Radar de Oportunidades):**
+    - Listado expandido de señales con score técnico, RSI y tendencia.
+- **Sección Inferior (Inteligencia Histórica):**
+    - **Equity Curve:** Gráfico interactivo (Chart.js) de crecimiento acumulado.
+    - **Historial Detallado:** Registro completo de operaciones cerradas.
 
----
+## 💰 Auditoría Financiera Integrada
+- **Comisiones:** Calculadas al 1.0% (In/Out estimado) para reflejar ganancias NETAS reales.
+- **Break-even:** Indicador visual dinámico por cada posición abierta.
+- **Aseguramiento de Profit:** Seguimiento de ganancias blindadas mediante Trailing Stop.
 
-## 🚀 Hitos Alcanzados
-*   **Auditoría de Comisiones:** Cálculo automático del 1.0% (In/Out) y visualización del **Break-even** por posición.
-*   **Radar Táctico 📡:** Tabla de inteligencia profesional con RSI, Tendencia y ejecución rápida de compra/exclusión.
-*   **Centro de Mando 🕹️:** Control dinámico de Inversión por Trade y Sensibilidad del Radar desde la interfaz.
-*   **Protección EOD (End of Day):** Motor de liquidación programada para mitigar riesgos overnight.
+## 🛡️ Protocolo de Seguridad
+- **Base de Oro (Git):** Cada cambio funcional es precedido por un commit de respaldo.
+- **Autonomía:** El sistema realiza polling cada 5 segundos para mantener la independencia operativa.
 
----
-
-## 🛠️ Configuración del Motor (Estrategia)
-Los parámetros se gestionan desde el Dashboard y se persisten en `config.json`.
-
-### 1. Gestión de Capital
-- **Inversión por Trade:** Ajustable dinámicamente (Base: $1.000.000).
-- **Sensibilidad (Min Score):** Filtro algorítmico ajustable para el Radar (Base: 9.5).
-
-### 2. Protección EOD
-- `selective`: Cierra ganadoras > 1.5% a las 16:50 hs.
-- `full`: Liquida toda la cartera para dormir 100% en cash.
-- `off`: Mantiene posiciones abiertas.
-
----
-
-## 📊 Estado Financiero Global
-- **Rendimiento:** Monitoreo bimonetario (ARS/USD) con cotización histórica vs actual.
-- **Profit Neto:** Cálculo post-comisiones integrado en cada tarjeta de la cartera.
-
----
-
-## 🚀 Próximos Pasos
-1.  **Gráfico de Equity Histórico:** Visualización de la curva de patrimonio para análisis de drawdown.
-2.  **Optimización de Comisiones:** Lograr bajar la tasa al 0.1% mediante volumen negociado.
-3.  **Logs de Ejecución:** Panel dedicado para ver el razonamiento del bot en cada decisión.
-
----
-*Ultima actualización: 01/05/2026 13:22 AR - Versión: GOLD BASE*
+## 🚀 Próximos Pasos (Backlog)
+1.  **Panel de Logs de Ejecución:** Visualizar el "pensamiento" del bot en tiempo real.
+2.  **Alertas de Voz Avanzadas:** Notificaciones audibles específicas por tipo de evento (Compra/Venta).
+3.  **Optimización de Comisiones:** Escenarios de volumen para reducir tasas al 0.1%.

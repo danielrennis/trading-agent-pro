@@ -578,102 +578,102 @@
                     </div>
 
 
-                    {/* GRÁFICO DE CURVA DE PATRIMONIO */}
-                    <section className="glass p-10 rounded-[3rem] border border-slate-800/50 shadow-2xl overflow-hidden relative group">
-                        <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <span className="text-8xl font-black font-code italic italic">EQUITY</span>
-                        </div>
-                        <div className="flex justify-between items-end mb-8 relative z-10">
-                            <div>
-                                <h2 className="text-3xl font-black font-code tracking-tighter uppercase italic text-white">Curva de Rendimiento</h2>
-                                <p className="text-slate-500 text-[13px] font-code uppercase mt-1">Evolución del capital acumulado (ARS)</p>
+                        {/* GRÁFICO DE CURVA DE PATRIMONIO */}
+                        <section className="glass p-10 rounded-[3rem] border border-slate-800/50 shadow-2xl overflow-hidden relative group">
+                            <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                                <span className="text-8xl font-black font-code italic italic">EQUITY</span>
                             </div>
-                            <div className="text-right">
-                                <span className="text-[11px] font-black text-slate-500 uppercase tracking-widest block mb-1">Profit Histórico Total</span>
-                                <span className={`text-4xl font-black font-code ${status.history?.reduce((acc, h) => acc + (h.profit_amount || 0), 0) >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
-                                    ${Math.round(status.history?.reduce((acc, h) => acc + (h.profit_amount || 0), 0)).toLocaleString()}
-                                </span>
+                            <div className="flex justify-between items-end mb-8 relative z-10">
+                                <div>
+                                    <h2 className="text-3xl font-black font-code tracking-tighter uppercase italic text-white">Curva de Rendimiento</h2>
+                                    <p className="text-slate-500 text-[13px] font-code uppercase mt-1">Evolución del capital acumulado (ARS)</p>
+                                </div>
+                                <div className="text-right">
+                                    <span className="text-[11px] font-black text-slate-500 uppercase tracking-widest block mb-1">Profit Histórico Total</span>
+                                    <span className={`text-4xl font-black font-code ${status.history?.reduce((acc, h) => acc + (h.profit_amount || 0), 0) >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                                        ${Math.round(status.history?.reduce((acc, h) => acc + (h.profit_amount || 0), 0)).toLocaleString()}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="h-[400px] w-full mt-4">
-                            <canvas id="equityChart"></canvas>
-                        </div>
+                            <div className="h-[400px] w-full mt-4">
+                                <canvas id="equityChart"></canvas>
+                            </div>
 
-                        {React.useEffect(() => {
-                            const ctx = document.getElementById('equityChart')?.getContext('2d');
-                            if (!ctx || !status.history || status.history.length === 0) return;
+                            {React.useEffect(() => {
+                                // CANDADO: Si el gráfico ya existe en ventana, no lo volvemos a crear
+                                // Esto cumple con que solo se actualice al refrescar la página manualmente
+                                if (window.myChart) return; 
 
-                            // Procesar datos para la curva acumulada
-                            const sortedHistory = [...status.history].sort((a, b) => a.date.localeCompare(b.date));
-                            let cumulative = 0;
-                            const dataPoints = sortedHistory.map(h => {
-                                cumulative += (h.profit_amount || 0);
-                                return { x: h.date, y: cumulative };
-                            });
+                                const ctx = document.getElementById('equityChart')?.getContext('2d');
+                                if (!ctx || !status.history || status.history.length === 0) return;
 
-                            // Gradiente
-                            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-                            gradient.addColorStop(0, 'rgba(59, 130, 246, 0.4)');
-                            gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
+                                const sortedHistory = [...status.history].sort((a, b) => a.date.localeCompare(b.date));
+                                let cumulative = 0;
+                                const dataPoints = sortedHistory.map(h => {
+                                    cumulative += (h.profit_amount || 0);
+                                    return { x: h.date, y: cumulative };
+                                });
 
-                            if (window.myChart) window.myChart.destroy();
-                            
-                            window.myChart = new Chart(ctx, {
-                                type: 'line',
-                                data: {
-                                    labels: sortedHistory.map(h => h.date),
-                                    datasets: [{
-                                        label: 'Patrimonio Acumulado',
-                                        data: dataPoints.map(p => p.y),
-                                        borderColor: '#3b82f6',
-                                        borderWidth: 4,
-                                        pointBackgroundColor: '#3b82f6',
-                                        pointBorderColor: '#0f172a',
-                                        pointBorderWidth: 2,
-                                        pointRadius: 4,
-                                        pointHoverRadius: 8,
-                                        fill: true,
-                                        backgroundColor: gradient,
-                                        tension: 0.4
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                    plugins: {
-                                        legend: { display: false },
-                                        tooltip: {
-                                            backgroundColor: '#0f172a',
-                                            titleFont: { family: 'Fira Code', size: 14 },
-                                            bodyFont: { family: 'Fira Sans', size: 16, weight: 'bold' },
-                                            padding: 20,
-                                            borderColor: '#1e293b',
-                                            borderWidth: 1,
-                                            displayColors: false,
-                                            callbacks: {
-                                                label: (context) => `Total: $${Math.round(context.raw).toLocaleString()}`
-                                            }
-                                        }
+                                const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                                gradient.addColorStop(0, 'rgba(59, 130, 246, 0.4)');
+                                gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
+
+                                window.myChart = new Chart(ctx, {
+                                    type: 'line',
+                                    data: {
+                                        labels: sortedHistory.map(h => h.date),
+                                        datasets: [{
+                                            label: 'Patrimonio Acumulado',
+                                            data: dataPoints.map(p => p.y),
+                                            borderColor: '#3b82f6',
+                                            borderWidth: 4,
+                                            pointBackgroundColor: '#3b82f6',
+                                            pointBorderColor: '#0f172a',
+                                            pointBorderWidth: 2,
+                                            pointRadius: 4,
+                                            pointHoverRadius: 8,
+                                            fill: true,
+                                            backgroundColor: gradient,
+                                            tension: 0.4
+                                        }]
                                     },
-                                    scales: {
-                                        x: {
-                                            grid: { display: false },
-                                            ticks: { color: '#64748b', font: { family: 'Fira Code', size: 10 } }
+                                    options: {
+                                        responsive: true,
+                                        maintainAspectRatio: false,
+                                        plugins: {
+                                            legend: { display: false },
+                                            tooltip: {
+                                                backgroundColor: '#0f172a',
+                                                titleFont: { family: 'Fira Code', size: 14 },
+                                                bodyFont: { family: 'Fira Sans', size: 16, weight: 'bold' },
+                                                padding: 20,
+                                                borderColor: '#1e293b',
+                                                borderWidth: 1,
+                                                displayColors: false,
+                                                callbacks: {
+                                                    label: (context) => `Total: $${Math.round(context.raw).toLocaleString()}`
+                                                }
+                                            }
                                         },
-                                        y: {
-                                            grid: { color: 'rgba(255,255,255,0.05)' },
-                                            ticks: { 
-                                                color: '#64748b', 
-                                                font: { family: 'Fira Code', size: 11 },
-                                                callback: (value) => '$' + Math.round(value/1000) + 'k'
+                                        scales: {
+                                            x: {
+                                                grid: { display: false },
+                                                ticks: { color: '#64748b', font: { family: 'Fira Code', size: 10 } }
+                                            },
+                                            y: {
+                                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                                ticks: { 
+                                                    color: '#64748b', 
+                                                    font: { family: 'Fira Code', size: 11 },
+                                                    callback: (value) => '$' + Math.round(value/1000) + 'k'
+                                                }
                                             }
                                         }
                                     }
-                                }
-                            });
-                        }, [status.history])}
-                    </section>
+                                });
+                            }, [status.history])}
+                        </section>
 
                     {/* HISTORY */}
                     <section className="glass rounded-[3rem] border border-slate-800/50 overflow-hidden shadow-2xl">
