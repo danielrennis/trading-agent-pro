@@ -64,9 +64,9 @@
             "step": 1,
             "buy_time": "2026-04-30 14:53:24",
             "technical": {
-                "daily_trend": "BULLISH",
-                "1h_rsi": 62.5,
-                "1h_stoch": 62.2,
+                "daily_trend": "BEARISH",
+                "1h_rsi": 78.0,
+                "1h_stoch": 50.7,
                 "1d_ema200": 0
             },
             "profit_pct": 1.6974538192710886
@@ -87,8 +87,8 @@
             "current_price": 10850.0,
             "technical": {
                 "daily_trend": "BEARISH",
-                "1h_rsi": 54.5,
-                "1h_stoch": 84.3,
+                "1h_rsi": 58.0,
+                "1h_stoch": 96.9,
                 "1d_ema200": 0
             },
             "profit_pct": 0.8364312267657992
@@ -103,8 +103,8 @@
             "buy_time": "2026-04-30 15:46:44",
             "technical": {
                 "daily_trend": "BULLISH",
-                "1h_rsi": 26.6,
-                "1h_stoch": 26.7,
+                "1h_rsi": 29.1,
+                "1h_stoch": 46.1,
                 "1d_ema200": 0
             },
             "profit_pct": -1.03466114847387
@@ -1086,14 +1086,14 @@
     ],
     "opportunities": {
         "AMZN": {
-            "score": 8.4,
+            "score": 8.5,
             "metrics": {
                 "technical": 10,
                 "fundamental": 5.0,
-                "news": 9.6
+                "news": 9.8
             },
             "price": 2755.0,
-            "timestamp": "14:09:13"
+            "timestamp": "16:17:20"
         },
         "MELI": {
             "score": 4.6,
@@ -1103,27 +1103,27 @@
                 "news": 8.0
             },
             "price": 22400.0,
-            "timestamp": "14:09:06"
+            "timestamp": "16:17:33"
         },
         "PYPL": {
-            "score": 4.6,
+            "score": 5.9,
             "metrics": {
-                "technical": 3.0,
+                "technical": 7.0,
                 "fundamental": 5.0,
-                "news": 8.0
+                "news": 4.5
             },
             "price": 9345.0,
-            "timestamp": "14:09:07"
+            "timestamp": "16:17:32"
         },
         "NVDA": {
-            "score": 7.0,
+            "score": 5.4,
             "metrics": {
-                "technical": 10,
+                "technical": 6.5,
                 "fundamental": 5.0,
-                "news": 2.4
+                "news": 3.3
             },
             "price": 12500.0,
-            "timestamp": "14:09:13"
+            "timestamp": "16:17:18"
         },
         "META": {
             "score": 7.3,
@@ -1136,14 +1136,14 @@
             "timestamp": "15:46:35"
         },
         "TSLA": {
-            "score": 3.8,
+            "score": 7.3,
             "metrics": {
-                "technical": 3.0,
+                "technical": 10,
                 "fundamental": 5.0,
-                "news": 3.9
+                "news": 4.1
             },
             "price": 38120.0,
-            "timestamp": "14:09:07"
+            "timestamp": "16:17:32"
         },
         "GOOGL": {
             "score": 6.9,
@@ -1170,10 +1170,10 @@
             "metrics": {
                 "technical": 10,
                 "fundamental": 5.0,
-                "news": 9.9
+                "news": 9.8
             },
             "price": 23650.0,
-            "timestamp": "14:09:06"
+            "timestamp": "16:17:32"
         },
         "NU": {
             "score": 9.5,
@@ -1189,21 +1189,21 @@
             "score": 4.9,
             "metrics": {
                 "technical": 6.0,
-                "fundamental": 4.8,
+                "fundamental": 5.0,
                 "news": 2.1
             },
             "price": 53025.0,
-            "timestamp": "14:09:07"
+            "timestamp": "16:17:32"
         },
         "INTC": {
-            "score": 7.4,
+            "score": 6.5,
             "metrics": {
-                "technical": 8.5,
+                "technical": 8.0,
                 "fundamental": 5.0,
-                "news": 8.3
+                "news": 5.0
             },
             "price": 28300.0,
-            "timestamp": "14:09:06"
+            "timestamp": "16:17:32"
         },
         "MSFT": {
             "score": 4.9,
@@ -1226,25 +1226,24 @@
             "timestamp": "12:52:43"
         }
     },
-    "balance": 265.83,
+    "balance": 0,
     "excluded_symbols": [],
     "last_reset_date": "2026-05-01",
     "balances": {
-        "t0": 265.83,
-        "t1": 6625829.87,
-        "t2": 6625829.87,
+        "t0": 0,
+        "t1": 0,
+        "t2": 0,
         "total": 0,
-        "total_pesos": 13696179.870000001,
-        "activos_valorizados": 7070350.0,
-        "disponible_total": 6625829.87,
+        "total_pesos": 0,
+        "activos_valorizados": 0,
         "oficial": 1415,
-        "total_usd": 9679.279060070672
+        "total_usd": 0.0
     },
     "system_info": {
         "last_start": "2026-05-01 12:42:04",
         "status": "running",
         "last_shutdown": "2026-05-01 12:42:03",
-        "last_equity_snapshot": "2026-05-01 13:24:24"
+        "last_equity_snapshot": "2026-05-01 15:24:40"
     },
     "equity_history": [
         {
@@ -1261,6 +1260,14 @@
         },
         {
             "timestamp": "2026-05-01 13:24",
+            "value": 13696179.870000001
+        },
+        {
+            "timestamp": "2026-05-01 14:24",
+            "value": 0
+        },
+        {
+            "timestamp": "2026-05-01 15:24",
             "value": 13696179.870000001
         }
     ]

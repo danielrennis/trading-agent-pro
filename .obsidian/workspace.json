@@ -11,14 +11,10 @@
             "id": "057809104a55e03b",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "PROYECTO.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "PROYECTO"
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Vista gráfica"
             }
           }
         ]
@@ -94,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "PROYECTO.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +99,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Enlaces entrantes de PROYECTO"
+              "title": "Enlaces entrantes"
             }
           },
           {
@@ -113,12 +108,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "PROYECTO.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Enlaces salientes de PROYECTO"
+              "title": "Enlaces salientes"
             }
           },
           {
@@ -156,13 +150,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "PROYECTO.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Esquema de PROYECTO"
+              "title": "Esquema"
             }
           }
         ]
@@ -185,9 +178,13 @@
   },
   "active": "057809104a55e03b",
   "lastOpenFiles": [
+    "Base de Datos y Estados.md",
+    "Arquitectura Financiera.md",
+    "Manual de Estilo y UX.md",
+    "Reglas de Oro y Contexto.md",
+    "PROYECTO.md",
     "scratch/prev_index.html",
     "Pendientes y Mejoras.md",
-    "PROYECTO.md",
     "Estrategia y Reglas.md",
     "backups/last_stable/index.html_pre_eod_redesign",
     "backups/last_stable/index.html_pre_secured_card_add",
@@ -198,7 +195,6 @@
     "backups/last_stable/config.json_pre_usd_force_fix",
     "backups/last_stable/config.json_pre_usd_fix",
     "backups/last_stable/index.html_pre_font_fix",
-    "backups/last_stable/orchestrator.py_pre_usd_fix",
     "Bienvenido.md"
   ]
 }
