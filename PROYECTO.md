@@ -1,58 +1,47 @@
 # 💹 TRADING BOT PRO - Memoria del Proyecto
 
-## 📌 Estado Actual (01/05/2026)
-El sistema se encuentra operativo y optimizado para el mercado de Argentina (IOL), con foco en la precisión bimonetaria y la mitigación de riesgos por volatilidad nocturna (Overnight Gaps).
+## 📌 Estado Actual (01/05/2026 - 13:22 AR)
+El sistema se encuentra en su versión **Premium de Alta Fidelidad**, con blindaje de código (Git) y auditoría financiera en tiempo real. Optimizado para el mercado argentino con control total de comisiones y riesgos EOD.
 
-## 🎮 Modos de Operación (Presets)
-El bot soporta 3 perfiles tácticos seleccionables desde el Dashboard:
-- **🚀 AGRESIVO:** SL 1% | TP 1.5% | Trailing SL 0.5%. (Para scalping en mercados alcistas).
-- **⚖️ NORMAL:** SL 2% | TP 3% | Trailing SL 1.2%. (Estrategia equilibrada).
-- **🛡️ CONSERVADOR:** SL 4% | TP 8% | Trailing SL 3%. (Para capturar tendencias largas en mercados volátiles).
+## 🏆 PROTOCOLO DE SEGURIDAD (Blindaje de Oro)
+1. **Regla de Diamante:** Todo cambio exitoso se guarda mediante `git commit`. Es la base inamovible para avanzar.
+2. **Rollback Instantáneo:** Ante cualquier error, se ejecuta `git checkout .` para volver al estado estable.
+3. **Legibilidad Pro:** Tipografías grandes (Labels 13px, Valores 4xl) y alto contraste para monitoreo sin fatiga visual.
 
 ---
 
-## 🏆 PROTOCOLO DE SEGURIDAD (Blindaje de Oro)
-1. **Regla de Diamante (NUEVA):** Todo cambio exitoso confirmado por el usuario se guarda mediante `git commit`. Es la base inamovible para el siguiente paso.
-2. **Rollback Instantáneo:** Ante cualquier error o disconformidad, se ejecuta `git checkout .` para volver al último estado de "Oro".
-3. **Diseño Financiero:** Los montos siempre alineados a la **derecha** (`text-right`) y los u$d en **verde esmeralda** (`text-emerald-400`).
+## 🚀 Hitos Alcanzados
+*   **Auditoría de Comisiones:** Cálculo automático del 1.0% (In/Out) y visualización del **Break-even** por posición.
+*   **Radar Táctico 📡:** Tabla de inteligencia profesional con RSI, Tendencia y ejecución rápida de compra/exclusión.
+*   **Centro de Mando 🕹️:** Control dinámico de Inversión por Trade y Sensibilidad del Radar desde la interfaz.
+*   **Protección EOD (End of Day):** Motor de liquidación programada para mitigar riesgos overnight.
 
 ---
 
 ## 🛠️ Configuración del Motor (Estrategia)
-Los parámetros activos son gestionables desde el Dashboard y se persisten en `config.json`.
+Los parámetros se gestionan desde el Dashboard y se persisten en `config.json`.
 
-### 1. Gestión de Salida (Trailing Engine)
-- **Stop Loss Inicial:** 2.0% (Protección base al comprar).
-- **Take Profit Inicial:** 1.5% (Objetivo de ganancia base).
-- **Trailing Stop Loss:** 1.2% (Distancia del SL dinámico).
-- **Trailing Take Profit:** 1.0% (Distancia del TP dinámico).
+### 1. Gestión de Capital
+- **Inversión por Trade:** Ajustable dinámicamente (Base: $1.000.000).
+- **Sensibilidad (Min Score):** Filtro algorítmico ajustable para el Radar (Base: 9.5).
 
-### 2. Gestión de Riesgo y Capital
-- **Riesgo por Operación:** 10% del patrimonio total por cada activo.
-- **Monto Fijo:** Configurado en $1.000.000 para estandarizar entradas.
-- **Inversión Total Detectada (Histórica):** $12.300.000.
-- **Criterio de Valorización:** `Disponible para Operar + Activos Valorizados` (Ignora saldos proyectados de IOL).
-
-### 3. Protección EOD (End Of Day) - *NUEVO*
-Implementado para evitar pérdidas por malas noticias internacionales fuera de hora (Gap-down de Meta/MSFT).
-- **Modos:**
-    - `selective`: Liquida posiciones con ganancia > 1.5% a las 16:50 hs.
-    - `full`: Liquida toda la cartera a las 16:50 hs para dormir 100% en efectivo.
-    - `off`: Mantenimiento de posiciones.
+### 2. Protección EOD
+- `selective`: Cierra ganadoras > 1.5% a las 16:50 hs.
+- `full`: Liquida toda la cartera para dormir 100% en cash.
+- `off`: Mantiene posiciones abiertas.
 
 ---
 
-## 📊 Auditoría y Rendimiento
-- **Profit Real Total:** ~$1.4M (11.35% de rendimiento global en 4 días).
-- **Costo Operativo (Comisiones):** ~$406k (Representa el 3.2% del volumen movido).
-- **Conversión Bimonetaria:** Basada en **Dólar Oficial Real** (Fuente Ámbito/DolarApi) para cálculos históricos rigurosos.
+## 📊 Estado Financiero Global
+- **Rendimiento:** Monitoreo bimonetario (ARS/USD) con cotización histórica vs actual.
+- **Profit Neto:** Cálculo post-comisiones integrado en cada tarjeta de la cartera.
 
 ---
 
 ## 🚀 Próximos Pasos
-1.  **Refinamiento de Señales:** Analizar por qué el bot dio compra en META a $41.9k justo antes de la caída.
-2.  **Optimización de Comisiones:** Si se logra bajar la comisión al 0.1%, el ahorro proyectado es del 61% de los gastos actuales.
-3.  **UI Avanzada:** Dashboard con controles totales de variables de estrategia.
+1.  **Gráfico de Equity Histórico:** Visualización de la curva de patrimonio para análisis de drawdown.
+2.  **Optimización de Comisiones:** Lograr bajar la tasa al 0.1% mediante volumen negociado.
+3.  **Logs de Ejecución:** Panel dedicado para ver el razonamiento del bot en cada decisión.
 
 ---
-*Ultima actualización: 01/05/2026 11:45 AR*
+*Ultima actualización: 01/05/2026 13:22 AR - Versión: GOLD BASE*
