@@ -345,8 +345,8 @@
                                 const current = pos.current_price || pos.entry_price;
                                 const win = current >= pos.entry_price;
                                 const totalInvested = pos.entry_price * pos.qty * (pos.multiplier || 1);
-                                const totalCommissions = totalInvested * 0.01; // 1% Total
-                                const breakEven = pos.entry_price * 1.01; // Precio para cubrir 1%
+                                const totalCommissions = totalInvested * 0.0032; // Black: 0.1% + Derechos + IVA (In/Out)
+                                const breakEven = pos.entry_price * 1.0032; // Punto de equilibrio real
                                 const netProfit = ((current - pos.entry_price) * pos.qty * (pos.multiplier || 1)) - totalCommissions;
 
                                 return (
