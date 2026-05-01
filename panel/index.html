@@ -317,6 +317,76 @@
                             <button onClick={() => cancelSL(sym)} className="bg-white text-red-600 px-12 py-6 rounded-2xl font-black text-2xl uppercase tracking-widest shadow-xl hover:scale-105 transition active:scale-95 font-code">Cancelar Venta</button>
                         </div>
                     ))}
+                    {/* CARTERA ACTIVA (POSICIONES ABIERTAS) */}
+                    <section className="space-y-6">
+                        <div className="flex justify-between items-end border-l-8 border-indigo-500 pl-6">
+                            <div>
+                                <h2 className="text-3xl font-black font-code tracking-tighter uppercase italic text-white">Cartera Activa</h2>
+                                <p className="text-slate-500 text-[13px] font-code uppercase mt-1">Monitoreo de posiciones en tiempo real</p>
+                            </div>
+                            <div className="text-right">
+                                <span className="text-[11px] font-black text-slate-600 uppercase tracking-widest block mb-1">Costo Estimado Comisiones</span>
+                                <span className="text-xl font-black text-rose-400 font-code">1.0% (In/Out)</span>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-6">
+                            {Object.entries(status.positions || {}).map(([sym, pos]) => {
+                                const current = pos.current_price || pos.entry_price;
+                                const win = current >= pos.entry_price;
+                                const totalInvested = pos.entry_price * pos.qty * (pos.multiplier || 1);
+                                const totalCommissions = totalInvested * 0.01; // 1% Total
+                                const breakEven = pos.entry_price * 1.01; // Precio para cubrir 1%
+                                const netProfit = ((current - pos.entry_price) * pos.qty * (pos.multiplier || 1)) - totalCommissions;
+
+                                return (
+                                    <div key={sym} className="glass p-8 rounded-[2.5rem] border border-slate-800/50 flex items-center gap-10 card-glow transition-all relative overflow-hidden group">
+                                        <div className={`absolute left-0 top-0 h-full w-2 ${win ? 'bg-emerald-500' : 'bg-rose-500'}`}></div>
+                                        
+                                        {/* INFO PRINCIPAL */}
+                                        <div className="flex-1 min-w-[250px]">
+                                            <div className="flex items-center gap-4 mb-3">
+                                                <span className="text-6xl font-black tracking-tighter uppercase italic font-code text-white">{sym}</span>
+                                                <span className={`text-[12px] px-3 py-1 font-black rounded-xl font-code border ${pos.step > 0 ? 'bg-yellow-400/20 text-yellow-400 border-yellow-400/30' : 'bg-slate-800 text-slate-500 border-slate-700'}`}>
+                                                    {pos.step > 1 ? '🔥' : '🧊'} SALTO: {pos.step || 0}
+                                                </span>
+                                            </div>
+                                            <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-[13px] font-code font-bold uppercase tracking-tighter">
+                                                <div className="text-slate-500">Entrada: <span className="text-slate-200">${pos.entry_price.toLocaleString()}</span></div>
+                                                <div className="text-slate-500">Cantidad: <span className="text-slate-200">{pos.qty}</span></div>
+                                                <div className="text-rose-400/80">Comisión: <span className="font-black">-${Math.round(totalCommissions).toLocaleString()}</span></div>
+                                                <div className="text-blue-400">Break-even: <span className="font-black">${Math.round(breakEven).toLocaleString()}</span></div>
+                                            </div>
+                                        </div>
+
+                                        {/* TRAILING PROGRESS */}
+                                        <div className="flex-[1.5] px-10">
+                                            <div className="flex justify-between text-[11px] text-slate-500 font-black uppercase mb-3 font-code tracking-widest">
+                                                <span>Stop Loss: ${Math.round(pos.sl).toLocaleString()}</span>
+                                                <span>Take Profit: ${Math.round(pos.tp).toLocaleString()}</span>
+                                            </div>
+                                            <div className="h-4 bg-slate-950 rounded-full relative overflow-hidden border border-slate-900 shadow-inner">
+                                                <div className="absolute top-0 bottom-0 left-0 bg-gradient-to-r from-rose-500/20 via-transparent to-emerald-500/20 w-full"></div>
+                                                <div className="absolute top-0 bottom-0 w-2 bg-blue-400 shadow-[0_0_20px_#60a5fa] transition-all duration-500" style={{ left: `${Math.min(Math.max(((current - pos.sl) / (pos.tp - pos.sl)) * 100, 0), 100)}%` }}></div>
+                                            </div>
+                                            <div className="text-center text-sm font-black text-blue-400 font-code mt-2 tracking-[0.3em] uppercase">Cotización: ${current.toLocaleString()}</div>
+                                        </div>
+
+                                        {/* RENDIMIENTO NETO */}
+                                        <div className="w-80 text-right bg-slate-900/40 p-6 rounded-[2rem] border border-slate-800/50">
+                                            <div className="text-[12px] font-black text-slate-500 uppercase tracking-widest mb-1">Profit Neto (Post-Com.)</div>
+                                            <div className={`text-4xl font-black font-code tracking-tighter ${netProfit >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                                                {netProfit >= 0 ? '+' : ''}${Math.round(netProfit).toLocaleString()}
+                                            </div>
+                                            <div className={`text-[13px] font-bold font-code mt-1 ${win ? 'text-emerald-400/60' : 'text-rose-400/60'}`}>
+                                                {win ? '▲' : '▼'} {pos.profit_pct?.toFixed(2)}% (Bruto)
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </section>
 
                     <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
                         <div className="flex flex-col gap-8">
