@@ -16,8 +16,8 @@
             "current_price": 32920.0,
             "technical": {
                 "daily_trend": "BULLISH",
-                "1h_rsi": 58.9,
-                "1h_stoch": 27.3,
+                "1h_rsi": 55.4,
+                "1h_stoch": 84.8,
                 "1d_ema200": 0
             },
             "profit_pct": 1.7934446505875057
@@ -32,8 +32,8 @@
             "buy_time": "2026-04-30 12:59:07",
             "technical": {
                 "daily_trend": "BULLISH",
-                "1h_rsi": 72.2,
-                "1h_stoch": 84.2,
+                "1h_rsi": 55.4,
+                "1h_stoch": 84.8,
                 "1d_ema200": 0
             },
             "profit_pct": 0.8924144769459685,
@@ -49,8 +49,8 @@
             "buy_time": "2026-04-30 13:00:59",
             "technical": {
                 "daily_trend": "BULLISH",
-                "1h_rsi": 70.3,
-                "1h_stoch": 90.9,
+                "1h_rsi": 83.2,
+                "1h_stoch": 92.0,
                 "1d_ema200": 0
             },
             "profit_pct": 3.659174072138005
@@ -86,9 +86,9 @@
             },
             "current_price": 10850.0,
             "technical": {
-                "daily_trend": "BULLISH",
-                "1h_rsi": 80.5,
-                "1h_stoch": 44.1,
+                "daily_trend": "BEARISH",
+                "1h_rsi": 55.4,
+                "1h_stoch": 84.8,
                 "1d_ema200": 0
             },
             "profit_pct": 0.8364312267657992
@@ -1093,37 +1093,37 @@
                 "news": 9.6
             },
             "price": 2755.0,
-            "timestamp": "13:36:41"
+            "timestamp": "13:38:47"
         },
         "MELI": {
-            "score": 4.7,
+            "score": 3.9,
             "metrics": {
-                "technical": 4.5,
+                "technical": 3.0,
                 "fundamental": 5.0,
                 "news": 4.7
             },
             "price": 22400.0,
-            "timestamp": "13:36:32"
+            "timestamp": "13:38:41"
         },
         "PYPL": {
-            "score": 3.9,
+            "score": 7.1,
             "metrics": {
-                "technical": 1.5,
+                "technical": 8.0,
                 "fundamental": 5.0,
                 "news": 8.0
             },
             "price": 9345.0,
-            "timestamp": "13:36:35"
+            "timestamp": "13:38:41"
         },
         "NVDA": {
-            "score": 5.2,
+            "score": 7.0,
             "metrics": {
-                "technical": 6.5,
+                "technical": 10,
                 "fundamental": 5.0,
                 "news": 2.4
             },
             "price": 12500.0,
-            "timestamp": "13:36:41"
+            "timestamp": "13:38:47"
         },
         "META": {
             "score": 7.3,
@@ -1136,14 +1136,14 @@
             "timestamp": "15:46:35"
         },
         "TSLA": {
-            "score": 5.9,
+            "score": 6.9,
             "metrics": {
-                "technical": 6.0,
+                "technical": 8.0,
                 "fundamental": 5.0,
                 "news": 7.0
             },
             "price": 38120.0,
-            "timestamp": "13:36:39"
+            "timestamp": "13:38:41"
         },
         "GOOGL": {
             "score": 6.9,
@@ -1166,14 +1166,14 @@
             "timestamp": "12:32:23"
         },
         "KO": {
-            "score": 8.5,
+            "score": 8.1,
             "metrics": {
-                "technical": 10,
-                "fundamental": 5,
+                "technical": 8.0,
+                "fundamental": 7.2,
                 "news": 9.9
             },
             "price": 23650.0,
-            "timestamp": "13:36:30"
+            "timestamp": "13:38:40"
         },
         "NU": {
             "score": 9.5,
@@ -1186,24 +1186,24 @@
             "timestamp": "14:56:05"
         },
         "AMD": {
-            "score": 4.9,
+            "score": 5.9,
             "metrics": {
-                "technical": 6.0,
-                "fundamental": 5,
+                "technical": 8.0,
+                "fundamental": 4.8,
                 "news": 2.1
             },
             "price": 53025.0,
-            "timestamp": "13:35:38"
+            "timestamp": "13:38:40"
         },
         "INTC": {
-            "score": 6.9,
+            "score": 7.2,
             "metrics": {
-                "technical": 7.5,
-                "fundamental": 5,
+                "technical": 8.0,
+                "fundamental": 5.0,
                 "news": 8.3
             },
             "price": 28300.0,
-            "timestamp": "13:36:33"
+            "timestamp": "13:38:40"
         },
         "MSFT": {
             "score": 4.9,
