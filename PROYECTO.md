@@ -11,11 +11,10 @@ El bot soporta 3 perfiles tácticos seleccionables desde el Dashboard:
 
 ---
 
-## 🏆 REGLA DE ORO (Protocolo de Seguridad)
-1. **Backup Mandatorio:** Antes de CUALQUIER cambio, copiar archivos a `/backups/last_stable/`.
-2. **Validación:** El usuario debe confirmar que el cambio funciona.
-3. **Rollback Inmediato:** Si el cambio rompe el sistema o no es del agrado del usuario, se restaura el backup sin discusión.
-4. **Diseño Financiero:** Los montos numéricos/monetarios siempre deben estar alineados a la **derecha** (`text-right`).
+## 🏆 PROTOCOLO DE SEGURIDAD (Blindaje de Oro)
+1. **Regla de Diamante (NUEVA):** Todo cambio exitoso confirmado por el usuario se guarda mediante `git commit`. Es la base inamovible para el siguiente paso.
+2. **Rollback Instantáneo:** Ante cualquier error o disconformidad, se ejecuta `git checkout .` para volver al último estado de "Oro".
+3. **Diseño Financiero:** Los montos siempre alineados a la **derecha** (`text-right`) y los u$d en **verde esmeralda** (`text-emerald-400`).
 
 ---
 
