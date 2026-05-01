@@ -366,10 +366,8 @@
                                                 <div className="text-slate-500">Cantidad: <span className="text-slate-200">{pos.qty}</span></div>
                                                 <div className="text-rose-400/80">Comisión: <span className="font-black">-${Math.round(totalCommissions).toLocaleString()}</span></div>
                                                 <div className="text-blue-400">Break-even: <span className="font-black">${Math.round(breakEven).toLocaleString()}</span></div>
-                                                <div className="col-span-2 mt-2 pt-2 border-t border-slate-800/50 text-right">
-                                                    <span className="text-slate-500 font-bold uppercase tracking-tighter font-code text-[11px] mr-2 italic">Valorización Total:</span>
-                                                    <span className="text-slate-200 font-code font-bold text-base">${Math.round(current * pos.qty * (pos.multiplier || 1)).toLocaleString()}</span>
-                                                </div>
+                                                <div className="col-span-1"></div>
+                                                <div className="text-slate-500 mt-1 pt-1 border-t border-slate-800/50">Valor Total: <span className="text-slate-200 font-black">${Math.round(current * pos.qty * (pos.multiplier || 1)).toLocaleString()}</span></div>
                                             </div>
                                         </div>
 
