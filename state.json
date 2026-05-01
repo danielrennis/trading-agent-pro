@@ -1,27 +1,5 @@
 {
     "positions": {
-        "PBR": {
-            "entry_price": 32340.0,
-            "qty": 6.0,
-            "step": 1,
-            "sl": 32445.92,
-            "tp": 33168.4,
-            "buy_time": "2026-04-30 12:33:00",
-            "strategy_snapshot": {
-                "initial_sl_pct": 0.98,
-                "initial_tp_pct": 1.015,
-                "trailing_sl_pct": 0.988,
-                "trailing_tp_pct": 1.01
-            },
-            "current_price": 32920.0,
-            "technical": {
-                "daily_trend": "BULLISH",
-                "1h_rsi": 70.3,
-                "1h_stoch": 90.9,
-                "1d_ema200": 0
-            },
-            "profit_pct": 1.7934446505875057
-        },
         "AAPL": {
             "entry_price": 20170.0,
             "current_price": 20350.0,
@@ -39,38 +17,6 @@
             "profit_pct": 0.8924144769459685,
             "pending_sl": false
         },
-        "GOOGL": {
-            "entry_price": 9565.0,
-            "current_price": 9915.0,
-            "qty": 124.0,
-            "sl": 9726.86,
-            "tp": 9943.45,
-            "step": 2,
-            "buy_time": "2026-04-30 13:00:59",
-            "technical": {
-                "daily_trend": "BULLISH",
-                "1h_rsi": 83.2,
-                "1h_stoch": 92.0,
-                "1d_ema200": 0
-            },
-            "profit_pct": 3.659174072138005
-        },
-        "MSFT": {
-            "entry_price": 20030.0,
-            "current_price": 20370.0,
-            "qty": 111.0,
-            "sl": 20115.68,
-            "tp": 20563.6,
-            "step": 1,
-            "buy_time": "2026-04-30 14:53:24",
-            "technical": {
-                "daily_trend": "BEARISH",
-                "1h_rsi": 38.3,
-                "1h_stoch": 30.9,
-                "1d_ema200": 0
-            },
-            "profit_pct": 1.6974538192710886
-        },
         "NU": {
             "entry_price": 10760.0,
             "qty": 6.0,
@@ -87,8 +33,8 @@
             "current_price": 10850.0,
             "technical": {
                 "daily_trend": "BEARISH",
-                "1h_rsi": 59.3,
-                "1h_stoch": 97.4,
+                "1h_rsi": 60.3,
+                "1h_stoch": 31.3,
                 "1d_ema200": 0
             },
             "profit_pct": 0.8364312267657992
@@ -102,12 +48,62 @@
             "step": 0,
             "buy_time": "2026-04-30 15:46:44",
             "technical": {
-                "daily_trend": "BEARISH",
+                "daily_trend": "BULLISH",
                 "1h_rsi": 26.6,
                 "1h_stoch": 26.7,
                 "1d_ema200": 0
             },
             "profit_pct": -1.03466114847387
+        },
+        "GOOGL": {
+            "entry_price": 9585.968,
+            "current_price": 9915.0,
+            "qty": 124.0,
+            "sl": 9865.425,
+            "tp": 10014.15,
+            "step": 1,
+            "buy_time": "2026-05-01 16:50:40",
+            "technical": {
+                "daily_trend": "BULLISH",
+                "1h_rsi": 55.4,
+                "1h_stoch": 84.8,
+                "1d_ema200": 0
+            },
+            "profit_pct": 3.4324337406509198,
+            "pending_sl": false
+        },
+        "PBR": {
+            "entry_price": 32340.0,
+            "current_price": 32920.0,
+            "qty": 6.0,
+            "sl": 32755.4,
+            "tp": 33249.2,
+            "step": 1,
+            "buy_time": "2026-05-01 16:50:40",
+            "technical": {
+                "daily_trend": "BULLISH",
+                "1h_rsi": 55.4,
+                "1h_stoch": 84.8,
+                "1d_ema200": 0
+            },
+            "profit_pct": 1.7934446505875057,
+            "pending_sl": false
+        },
+        "MSFT": {
+            "entry_price": 20189.91,
+            "current_price": 20370.0,
+            "qty": 111.0,
+            "sl": 19988.0109,
+            "tp": 20492.758649999996,
+            "step": 0,
+            "buy_time": "2026-05-01 16:51:29",
+            "technical": {
+                "daily_trend": "BULLISH",
+                "1h_rsi": 62.5,
+                "1h_stoch": 62.2,
+                "1d_ema200": 0
+            },
+            "profit_pct": 0.8919802019919931
         }
     },
     "history": [
@@ -1082,6 +1078,39 @@
             "profit_amount": 0.0,
             "steps": 1,
             "date": "2026-04-30 16:50:01"
+        },
+        {
+            "symbol": "PBR",
+            "type": "SELL",
+            "entry_price": 32340.0,
+            "exit_price": 32920.0,
+            "qty": 6.0,
+            "profit_pct": 1.7934446505875057,
+            "profit_amount": 3480.0,
+            "steps": 1,
+            "date": "2026-05-01 16:50:21"
+        },
+        {
+            "symbol": "GOOGL",
+            "type": "SELL",
+            "entry_price": 9565.0,
+            "exit_price": 9915.0,
+            "qty": 124.0,
+            "profit_pct": 3.659174072138005,
+            "profit_amount": 43400.0,
+            "steps": 2,
+            "date": "2026-05-01 16:50:32"
+        },
+        {
+            "symbol": "MSFT",
+            "type": "SELL",
+            "entry_price": 20030.0,
+            "exit_price": 20370.0,
+            "qty": 111.0,
+            "profit_pct": 1.6974538192710886,
+            "profit_amount": 37740.0,
+            "steps": 1,
+            "date": "2026-05-01 16:50:42"
         }
     ],
     "opportunities": {
@@ -1093,17 +1122,17 @@
                 "news": 9.8
             },
             "price": 2755.0,
-            "timestamp": "16:22:11"
+            "timestamp": "16:56:15"
         },
         "MELI": {
-            "score": 4.6,
+            "score": 3.9,
             "metrics": {
-                "technical": 3.0,
+                "technical": 1.5,
                 "fundamental": 5.0,
                 "news": 8.0
             },
             "price": 22400.0,
-            "timestamp": "16:22:25"
+            "timestamp": "16:56:41"
         },
         "PYPL": {
             "score": 3.9,
@@ -1113,17 +1142,17 @@
                 "news": 4.5
             },
             "price": 9345.0,
-            "timestamp": "16:22:25"
+            "timestamp": "16:56:41"
         },
         "NVDA": {
-            "score": 3.7,
+            "score": 5.4,
             "metrics": {
-                "technical": 3.0,
+                "technical": 6.5,
                 "fundamental": 5.0,
                 "news": 3.3
             },
             "price": 12500.0,
-            "timestamp": "16:22:12"
+            "timestamp": "16:56:15"
         },
         "META": {
             "score": 7.3,
@@ -1136,14 +1165,14 @@
             "timestamp": "15:46:35"
         },
         "TSLA": {
-            "score": 5.3,
+            "score": 7.3,
             "metrics": {
-                "technical": 6.0,
+                "technical": 10,
                 "fundamental": 5.0,
                 "news": 4.1
             },
             "price": 38120.0,
-            "timestamp": "16:22:26"
+            "timestamp": "16:56:41"
         },
         "GOOGL": {
             "score": 6.9,
@@ -1166,14 +1195,14 @@
             "timestamp": "12:32:23"
         },
         "KO": {
-            "score": 7.1,
+            "score": 8.5,
             "metrics": {
-                "technical": 6.0,
-                "fundamental": 7.2,
+                "technical": 10,
+                "fundamental": 5.0,
                 "news": 9.8
             },
             "price": 23650.0,
-            "timestamp": "16:22:26"
+            "timestamp": "16:56:41"
         },
         "NU": {
             "score": 9.5,
@@ -1189,31 +1218,31 @@
             "score": 4.9,
             "metrics": {
                 "technical": 6.0,
-                "fundamental": 4.8,
+                "fundamental": 5.0,
                 "news": 2.1
             },
             "price": 53025.0,
-            "timestamp": "16:22:25"
+            "timestamp": "16:56:41"
         },
         "INTC": {
             "score": 6.8,
             "metrics": {
-                "technical": 8.5,
+                "technical": 8.0,
                 "fundamental": 5.0,
-                "news": 5.0
+                "news": 6.5
             },
             "price": 28300.0,
-            "timestamp": "16:22:25"
+            "timestamp": "16:56:42"
         },
         "MSFT": {
-            "score": 4.9,
+            "score": 4.5,
             "metrics": {
                 "technical": 3.0,
                 "fundamental": 5.0,
-                "news": 9.4
+                "news": 7.7
             },
-            "price": 20030.0,
-            "timestamp": "14:53:15"
+            "price": 20370.0,
+            "timestamp": "16:50:59"
         },
         "AAPL": {
             "score": 8.2,
@@ -1244,7 +1273,7 @@
         "last_start": "2026-05-01 12:42:04",
         "status": "running",
         "last_shutdown": "2026-05-01 12:42:03",
-        "last_equity_snapshot": "2026-05-01 15:24:40"
+        "last_equity_snapshot": "2026-05-01 16:25:02"
     },
     "equity_history": [
         {
@@ -1269,6 +1298,10 @@
         },
         {
             "timestamp": "2026-05-01 15:24",
+            "value": 13696179.870000001
+        },
+        {
+            "timestamp": "2026-05-01 16:25",
             "value": 13696179.870000001
         }
     ]

@@ -338,6 +338,14 @@ class Orchestrator:
                         pos['pending_sl'] = False
                         if 'sl_countdown' in pos: del pos['sl_countdown']
                     
+                    # Sincronización dinámica de niveles iniciales (Step 0) ante cambios de modo en el panel
+                    if pos.get('step', 0) == 0:
+                        initial_sl_pct = self.config["strategy"].get("initial_sl_pct", 0.99)
+                        new_sl = pos['entry_price'] * initial_sl_pct
+                        if abs(new_sl - pos['sl']) > 0.1: # Evitar micro-ajustes por redondeo
+                            print(f"🔄 [MODO] Ajustando SL inicial de {symbol} por cambio de estrategia: ${pos['sl']:.2f} -> ${new_sl:.2f}", flush=True)
+                            pos['sl'] = new_sl
+
                     # Priorizar valores globales del config para permitir ajustes en vivo sobre posiciones abiertas
                     tsl_val = self.config["strategy"].get("trailing_sl_pct", pos.get('strategy_snapshot', {}).get('trailing_sl_pct', 0.988))
                     ttp_val = self.config["strategy"].get("trailing_tp_pct", pos.get('strategy_snapshot', {}).get('trailing_tp_pct', 1.01))
