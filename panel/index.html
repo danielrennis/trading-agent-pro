@@ -336,7 +336,7 @@
                             </div>
                             <div className="text-right">
                                 <span className="text-[11px] font-black text-slate-600 uppercase tracking-widest block mb-1">Costo Estimado Comisiones</span>
-                                <span className="text-xl font-black text-rose-400 font-code">1.0% (In/Out)</span>
+                                <span className="text-xl font-black text-indigo-400 font-code tracking-tighter italic">0.32% (Black Tier)</span>
                             </div>
                         </div>
 
@@ -366,6 +366,10 @@
                                                 <div className="text-slate-500">Cantidad: <span className="text-slate-200">{pos.qty}</span></div>
                                                 <div className="text-rose-400/80">Comisión: <span className="font-black">-${Math.round(totalCommissions).toLocaleString()}</span></div>
                                                 <div className="text-blue-400">Break-even: <span className="font-black">${Math.round(breakEven).toLocaleString()}</span></div>
+                                                <div className="col-span-2 mt-2 pt-2 border-t border-slate-800/50 flex justify-between items-center text-[12px]">
+                                                    <span className="text-slate-500 font-bold uppercase tracking-wider font-code">Valorización Total</span>
+                                                    <span className="text-slate-200 font-code font-bold text-base">${Math.round(current * pos.qty * (pos.multiplier || 1)).toLocaleString()}</span>
+                                                </div>
                                             </div>
                                         </div>
 
