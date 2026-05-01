@@ -431,6 +431,14 @@
                                             <label className="text-[12px] font-black text-slate-400 uppercase mb-2 block tracking-widest">Take Profit (%)</label>
                                             <input type="number" step="0.1" value={Math.round(((editConfig.strategy?.initial_tp_pct || 1.015) - 1) * 1000)/10} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, initial_tp_pct: 1 + (e.target.value/100)}})} className="w-full bg-slate-900 p-4 rounded-xl text-white font-code text-xl outline-none border border-slate-800 focus:border-emerald-500" />
                                         </div>
+                                        <div className="bg-slate-950/40 p-5 rounded-3xl border border-slate-900/50">
+                                            <label className="text-[12px] font-black text-slate-400 uppercase mb-2 block tracking-widest">Inversión por Trade ($)</label>
+                                            <input type="number" step="10000" value={editConfig.strategy?.fixed_investment_amount || 0} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, fixed_investment_amount: parseInt(e.target.value)}})} className="w-full bg-slate-900 p-4 rounded-xl text-white font-code text-xl outline-none border border-slate-800 focus:border-blue-500" />
+                                        </div>
+                                        <div className="bg-slate-950/40 p-5 rounded-3xl border border-slate-900/50">
+                                            <label className="text-[12px] font-black text-slate-400 uppercase mb-2 block tracking-widest">Sensibilidad Radar (Min Score)</label>
+                                            <input type="number" step="0.1" value={editConfig.strategy?.min_buy_score || 0} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, min_buy_score: parseFloat(e.target.value)}})} className="w-full bg-slate-900 p-4 rounded-xl text-white font-code text-xl outline-none border border-slate-800 focus:border-cyan-500" />
+                                        </div>
                                         <div className="bg-slate-950/40 p-6 rounded-3xl border border-slate-900/50 col-span-2">
                                             <label className="text-[13px] font-black text-slate-400 uppercase mb-4 block tracking-widest font-code">🛡️ Control de Riesgo EOD (End of Day)</label>
                                             <div className="grid grid-cols-3 gap-3 mb-6">
@@ -477,6 +485,7 @@
                                     </div>
                                 )}
                             </div>
+
 
                             {/* RADAR DE OPORTUNIDADES REDISEÑADO */}
                             <div className="glass p-10 rounded-[3rem] border border-slate-800/50 flex flex-col">
