@@ -14,8 +14,18 @@ class StrategyAgent:
         Returns a score from 0 to 10.
         """
         try:
-            ticker = yf.Ticker(self.symbol)
+            # Lógica de sufijo para tickers argentinos
+            yf_sym = self.symbol
+            if len(self.symbol) > 3 and not self.symbol.endswith(".BA"):
+                yf_sym = self.symbol + ".BA"
+                
+            ticker = yf.Ticker(yf_sym)
             info = ticker.info
+            
+            # Si no hay info con .BA, probamos el original
+            if not info or len(info) < 5:
+                ticker = yf.Ticker(self.symbol)
+                info = ticker.info
             
             # 1. Recommendation Score
             rec_map = {
@@ -77,8 +87,10 @@ class StrategyAgent:
         # Weighted final score
         final_score = (tech_score * 0.5) + (fund_score * 0.3) + (news_score * 0.2)
         
+        # El Agente ahora solo reporta el score. La decisión final la toma el orquestador
+        # basándose en los parámetros de riesgo configurados por el usuario.
         decision = "HOLD"
-        if final_score >= 7.0:
+        if final_score >= 5.1: # Threshold interno mínimo para mostrar como 'BUY' visualmente
             decision = "BUY"
         elif final_score <= 3.0:
             decision = "SELL"

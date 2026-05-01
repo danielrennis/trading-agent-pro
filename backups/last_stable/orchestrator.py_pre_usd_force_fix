@@ -123,11 +123,8 @@ class Orchestrator:
                 elif "30/04" in fecha: rate = 1415
                 total_usd_hist += monto / rate
             
-            # Si el valor de ARS o USD cambió, actualizar config
-            current_ars = self.config.get("strategy", {}).get("total_invested", 0)
-            current_usd = self.config.get("strategy", {}).get("total_invested_usd", 0)
-            
-            if total_ars > 0 and (total_ars != current_ars or total_usd_hist != current_usd):
+            # Si el valor cambió, actualizar config
+            if total_ars > 0 and (total_ars != self.config.get("strategy", {}).get("total_invested", 0)):
                 if "strategy" not in self.config: self.config["strategy"] = {}
                 self.config["strategy"]["total_invested"] = total_ars
                 self.config["strategy"]["total_invested_usd"] = total_usd_hist

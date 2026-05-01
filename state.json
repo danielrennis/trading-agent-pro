@@ -1,88 +1,113 @@
 {
     "positions": {
-        "AAPL": {
-            "entry_price": 20160.0,
-            "qty": 1.0,
-            "sl": 19960.416,
-            "tp": 20583.359999999997,
-            "step": 0,
-            "buy_time": "2026-04-24 16:09:52",
-            "current_price": 20380.0,
-            "profit_pct": 1.0912698412698374,
-            "multiplier": 1,
-            "daily_var": 0.59,
+        "PBR": {
+            "entry_price": 32340.0,
+            "qty": 6.0,
+            "step": 1,
+            "sl": 32445.92,
+            "tp": 33168.4,
+            "buy_time": "2026-04-30 12:33:00",
+            "strategy_snapshot": {
+                "initial_sl_pct": 0.98,
+                "initial_tp_pct": 1.015,
+                "trailing_sl_pct": 0.988,
+                "trailing_tp_pct": 1.01
+            },
+            "current_price": 32920.0,
             "technical": {
                 "daily_trend": "BULLISH",
-                "1h_rsi": 61.7,
-                "1h_stoch": 14.8,
-                "1d_ema200": 0
-            }
-        },
-        "MSFT": {
-            "entry_price": 20006.169,
-            "qty": 249.0,
-            "sl": 21340.446634455082,
-            "tp": 21771.08344994857,
-            "step": 6,
-            "buy_time": "2026-04-24 16:43:15",
-            "current_price": 21380.0,
-            "profit_pct": 6.867036862479758,
-            "multiplier": 1,
-            "daily_var": -0.09,
-            "technical": {
-                "daily_trend": "BULLISH",
-                "1h_rsi": 64.4,
-                "1h_stoch": 60.2,
-                "1d_ema200": 0
-            }
-        },
-        "AMZN": {
-            "entry_price": 2710.0,
-            "qty": 758.0,
-            "step": 0,
-            "sl": 2682.9,
-            "tp": 2750.6499999999996,
-            "buy_time": "2026-04-28 12:56:27",
-            "current_price": 2697.5,
-            "technical": {
-                "daily_trend": "BULLISH",
-                "1h_rsi": 58.4,
-                "1h_stoch": 2.9,
+                "1h_rsi": 83.2,
+                "1h_stoch": 92.0,
                 "1d_ema200": 0
             },
-            "profit_pct": -0.46125461254612476
+            "profit_pct": 1.7934446505875057
+        },
+        "AAPL": {
+            "entry_price": 20170.0,
+            "current_price": 20350.0,
+            "qty": 22.0,
+            "sl": 20201.883,
+            "tp": 20755.5,
+            "step": 1,
+            "buy_time": "2026-04-30 12:59:07",
+            "technical": {
+                "daily_trend": "BULLISH",
+                "1h_rsi": 55.4,
+                "1h_stoch": 84.8,
+                "1d_ema200": 0
+            },
+            "profit_pct": 0.8924144769459685,
+            "pending_sl": false
         },
         "GOOGL": {
-            "entry_price": 9110.0,
-            "qty": 5.0,
-            "step": 0,
-            "sl": 9018.9,
-            "tp": 9246.65,
-            "buy_time": "2026-04-28 13:16:30",
-            "current_price": 9090.0,
+            "entry_price": 9565.0,
+            "current_price": 9915.0,
+            "qty": 124.0,
+            "sl": 9726.86,
+            "tp": 9943.45,
+            "step": 2,
+            "buy_time": "2026-04-30 13:00:59",
             "technical": {
                 "daily_trend": "BULLISH",
-                "1h_rsi": 69.5,
-                "1h_stoch": 2.7,
+                "1h_rsi": 83.2,
+                "1h_stoch": 92.0,
                 "1d_ema200": 0
             },
-            "profit_pct": -0.2195389681668547
+            "profit_pct": 3.659174072138005
         },
-        "NVDA": {
-            "entry_price": 13380.0,
-            "current_price": 13380.0,
-            "qty": 2.0,
-            "sl": 13246.2,
-            "tp": 13580.699999999999,
-            "step": 0,
-            "buy_time": "2026-04-28 15:48:52",
+        "MSFT": {
+            "entry_price": 20030.0,
+            "current_price": 20370.0,
+            "qty": 111.0,
+            "sl": 20115.68,
+            "tp": 20563.6,
+            "step": 1,
+            "buy_time": "2026-04-30 14:53:24",
             "technical": {
-                "daily_trend": "BULLISH",
-                "1h_rsi": 64.4,
-                "1h_stoch": 10.2,
+                "daily_trend": "BEARISH",
+                "1h_rsi": 70.8,
+                "1h_stoch": 30.0,
                 "1d_ema200": 0
             },
-            "profit_pct": 0.0
+            "profit_pct": 1.6974538192710886
+        },
+        "NU": {
+            "entry_price": 10760.0,
+            "qty": 6.0,
+            "step": 0,
+            "sl": 10544.8,
+            "tp": 10921.4,
+            "buy_time": "2026-04-30 14:56:07",
+            "strategy_snapshot": {
+                "initial_sl_pct": 0.98,
+                "initial_tp_pct": 1.015,
+                "trailing_sl_pct": 0.988,
+                "trailing_tp_pct": 1.01
+            },
+            "current_price": 10850.0,
+            "technical": {
+                "daily_trend": "BEARISH",
+                "1h_rsi": 70.3,
+                "1h_stoch": 90.9,
+                "1d_ema200": 0
+            },
+            "profit_pct": 0.8364312267657992
+        },
+        "META": {
+            "entry_price": 38660.0,
+            "current_price": 38260.0,
+            "qty": 75.0,
+            "sl": 37886.8,
+            "tp": 39239.899999999994,
+            "step": 0,
+            "buy_time": "2026-04-30 15:46:44",
+            "technical": {
+                "daily_trend": "BULLISH",
+                "1h_rsi": 26.6,
+                "1h_stoch": 26.7,
+                "1d_ema200": 0
+            },
+            "profit_pct": -1.03466114847387
         }
     },
     "history": [
@@ -135,106 +160,1103 @@
             "profit_pct": 0.25062656641603454,
             "profit_amount": 1360.0,
             "date": "2026-04-28 13:48:26"
+        },
+        {
+            "symbol": "NVDA",
+            "type": "VENTA",
+            "entry_price": 13380.0,
+            "exit_price": 13160.0,
+            "qty": 40.0,
+            "profit_pct": -1.6442451420029869,
+            "profit_amount": -8800.0,
+            "date": "2026-04-29 11:49:25"
+        },
+        {
+            "symbol": "KO",
+            "type": "COMPRA",
+            "entry_price": 23510.0,
+            "exit_price": 0,
+            "qty": 5,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 11:50:15"
+        },
+        {
+            "symbol": "NU",
+            "type": "COMPRA",
+            "entry_price": 10700.0,
+            "exit_price": 0,
+            "qty": 11,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 11:50:59"
+        },
+        {
+            "symbol": "INTC",
+            "type": "COMPRA (Sincro IOL)",
+            "entry_price": 28400.0,
+            "exit_price": 0,
+            "qty": 4.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 12:31:42.817"
+        },
+        {
+            "symbol": "INTC",
+            "type": "COMPRA (Sincro IOL)",
+            "entry_price": 27760.0,
+            "exit_price": 0,
+            "qty": 4.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 12:17:43.8"
+        },
+        {
+            "symbol": "NU",
+            "type": "COMPRA (Sincro IOL)",
+            "entry_price": 10700.0,
+            "exit_price": 0,
+            "qty": 11.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 11:50:59.75"
+        },
+        {
+            "symbol": "KO",
+            "type": "COMPRA (Sincro IOL)",
+            "entry_price": 23510.0,
+            "exit_price": 0,
+            "qty": 5.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 11:50:15.747"
+        },
+        {
+            "symbol": "NVDA",
+            "type": "VENTA (Sincro IOL)",
+            "entry_price": 13380.0,
+            "exit_price": 13164.0,
+            "qty": 40.0,
+            "profit_pct": -1.6143497757847514,
+            "profit_amount": -8640.0,
+            "date": "2026-04-29 11:49:25.257"
+        },
+        {
+            "symbol": "META",
+            "type": "COMPRA (Sincro IOL)",
+            "entry_price": 41940.0,
+            "exit_price": 0,
+            "qty": 3.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 11:37:30.09"
+        },
+        {
+            "symbol": "META",
+            "type": "COMPRA (Sincro IOL)",
+            "entry_price": 41940.0,
+            "exit_price": 0,
+            "qty": 4.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 11:36:18.483"
+        },
+        {
+            "symbol": "GOOGL",
+            "type": "COMPRA (Sincro IOL)",
+            "entry_price": 9130.0,
+            "exit_price": 0,
+            "qty": 19.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 11:20:10.79"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "COMPRA (Sincro IOL)",
+            "entry_price": 2700.0,
+            "exit_price": 0,
+            "qty": 66.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 10:44:55.94"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "VENTA (Sincro IOL)",
+            "entry_price": 2710.0,
+            "exit_price": 2688.54384133,
+            "qty": 479.0,
+            "profit_pct": -0.7917401723247286,
+            "profit_amount": -10277.500002930072,
+            "date": "2026-04-29 10:42:34.933"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "COMPRA (Sincro IOL)",
+            "entry_price": 2697.5,
+            "exit_price": 0,
+            "qty": 82.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 10:39:19.51"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "COMPRA (Sincro IOL)",
+            "entry_price": 2710.0,
+            "exit_price": 0,
+            "qty": 79.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 10:38:41.533"
+        },
+        {
+            "symbol": "NVDA",
+            "type": "COMPRA (Sincro IOL)",
+            "entry_price": 13200.0,
+            "exit_price": 0,
+            "qty": 18.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 10:38:13.503"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "COMPRA (Sincro IOL)",
+            "entry_price": 2710.0,
+            "exit_price": 0,
+            "qty": 88.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 10:37:59.797"
+        },
+        {
+            "symbol": "NVDA",
+            "type": "COMPRA (Sincro IOL)",
+            "entry_price": 13190.0,
+            "exit_price": 0,
+            "qty": 22.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 10:37:34.3"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "COMPRA (Sincro IOL)",
+            "entry_price": 2710.0,
+            "exit_price": 0,
+            "qty": 109.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 10:37:19.437"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "COMPRA (Sincro IOL)",
+            "entry_price": 2710.0,
+            "exit_price": 0,
+            "qty": 121.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 10:36:42.743"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "VENTA (Sincro IOL)",
+            "entry_price": 2710.0,
+            "exit_price": 2687.5,
+            "qty": 758.0,
+            "profit_pct": -0.8302583025830312,
+            "profit_amount": -17055.0,
+            "date": "2026-04-29 10:36:13.423"
+        },
+        {
+            "symbol": "NVDA",
+            "type": "VENTA (Sincro IOL)",
+            "entry_price": 13380.0,
+            "exit_price": 13170.0,
+            "qty": 2.0,
+            "profit_pct": -1.5695067264574036,
+            "profit_amount": -420.0,
+            "date": "2026-04-29 10:32:37.9"
+        },
+        {
+            "symbol": "GOOGL",
+            "type": "VENTA (Sincro IOL)",
+            "entry_price": 9110.0,
+            "exit_price": 8970.0,
+            "qty": 5.0,
+            "profit_pct": -1.5367727771679496,
+            "profit_amount": -700.0,
+            "date": "2026-04-29 10:32:33.997"
+        },
+        {
+            "symbol": "MSFT",
+            "type": "VENTA (Sincro IOL)",
+            "entry_price": 21400.0,
+            "exit_price": 21141.92771084,
+            "qty": 249.0,
+            "profit_pct": -1.2059452764486056,
+            "profit_amount": -64260.00000084042,
+            "date": "2026-04-29 10:32:28.923"
+        },
+        {
+            "symbol": "MSFT",
+            "type": "COMPRA (IOL)",
+            "entry_price": 20000.0,
+            "exit_price": 0,
+            "qty": 245.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-15 13:55:18.823"
+        },
+        {
+            "symbol": "MSFT",
+            "type": "COMPRA (IOL)",
+            "entry_price": 20510.0,
+            "exit_price": 0,
+            "qty": 3.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-23 16:10:49.763"
+        },
+        {
+            "symbol": "TSLA",
+            "type": "COMPRA (IOL)",
+            "entry_price": 37360.0,
+            "exit_price": 0,
+            "qty": 30.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-24 15:44:47.92"
+        },
+        {
+            "symbol": "TLCPO",
+            "type": "VENTA (IOL)",
+            "entry_price": 0,
+            "exit_price": 164800.0,
+            "qty": 922.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-24 15:54:02.013"
+        },
+        {
+            "symbol": "AAPL",
+            "type": "COMPRA (IOL)",
+            "entry_price": 20160.0,
+            "exit_price": 0,
+            "qty": 1.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-24 15:57:25.58"
+        },
+        {
+            "symbol": "NVDA",
+            "type": "COMPRA (IOL)",
+            "entry_price": 13440.0,
+            "exit_price": 0,
+            "qty": 61.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-27 13:47:29.713"
+        },
+        {
+            "symbol": "MELI",
+            "type": "COMPRA (IOL)",
+            "entry_price": 23525.35714285,
+            "exit_price": 0,
+            "qty": 28.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-27 14:25:56.48"
+        },
+        {
+            "symbol": "PBR",
+            "type": "COMPRA (IOL)",
+            "entry_price": 31920.0,
+            "exit_price": 0,
+            "qty": 17.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-27 14:27:07.977"
+        },
+        {
+            "symbol": "PYPL",
+            "type": "COMPRA (IOL)",
+            "entry_price": 9500.0,
+            "exit_price": 0,
+            "qty": 46.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-27 14:27:37.467"
+        },
+        {
+            "symbol": "GOOGL",
+            "type": "COMPRA (IOL)",
+            "entry_price": 9185.0,
+            "exit_price": 0,
+            "qty": 39.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-27 14:28:14.167"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "COMPRA (IOL)",
+            "entry_price": 2755.0,
+            "exit_price": 0,
+            "qty": 106.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-27 14:28:49.327"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "VENTA (IOL)",
+            "entry_price": 2755.0,
+            "exit_price": 2732.5,
+            "qty": 106.0,
+            "profit_pct": -0.8166969147005432,
+            "profit_amount": -2385.0,
+            "date": "2026-04-27 16:37:08.33"
+        },
+        {
+            "symbol": "MELI",
+            "type": "VENTA (IOL)",
+            "entry_price": 23525.35714285,
+            "exit_price": 23295.35714285,
+            "qty": 28.0,
+            "profit_pct": -0.977668473228277,
+            "profit_amount": -6440.0,
+            "date": "2026-04-27 16:37:28.797"
+        },
+        {
+            "symbol": "PYPL",
+            "type": "VENTA (IOL)",
+            "entry_price": 9500.0,
+            "exit_price": 9390.0,
+            "qty": 46.0,
+            "profit_pct": -1.1578947368421022,
+            "profit_amount": -5060.0,
+            "date": "2026-04-27 16:38:04.04"
+        },
+        {
+            "symbol": "MSFT",
+            "type": "COMPRA (IOL)",
+            "entry_price": 21400.0,
+            "exit_price": 0,
+            "qty": 1.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-27 17:46:48.307"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "COMPRA (IOL)",
+            "entry_price": 2740.0,
+            "exit_price": 0,
+            "qty": 181.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-28 11:20:29.46"
+        },
+        {
+            "symbol": "TSLA",
+            "type": "VENTA (IOL)",
+            "entry_price": 37360.0,
+            "exit_price": 37700.0,
+            "qty": 30.0,
+            "profit_pct": 0.9100642398286896,
+            "profit_amount": 10200.0,
+            "date": "2026-04-28 12:54:44.09"
+        },
+        {
+            "symbol": "NVDA",
+            "type": "VENTA (IOL)",
+            "entry_price": 13440.0,
+            "exit_price": 13170.0,
+            "qty": 61.0,
+            "profit_pct": -2.00892857142857,
+            "profit_amount": -16470.0,
+            "date": "2026-04-28 12:54:58.127"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "VENTA (IOL)",
+            "entry_price": 2740.0,
+            "exit_price": 2713.78453038,
+            "qty": 181.0,
+            "profit_pct": -0.9567689642335786,
+            "profit_amount": -4745.0000012200035,
+            "date": "2026-04-28 12:55:18.47"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "COMPRA (IOL)",
+            "entry_price": 2710.0,
+            "exit_price": 0,
+            "qty": 148.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-28 12:56:03.71"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "COMPRA (IOL)",
+            "entry_price": 2710.0,
+            "exit_price": 0,
+            "qty": 120.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-28 12:56:19.58"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "COMPRA (IOL)",
+            "entry_price": 2710.0,
+            "exit_price": 0,
+            "qty": 486.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-28 12:56:27.777"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "COMPRA (IOL)",
+            "entry_price": 2710.0,
+            "exit_price": 0,
+            "qty": 4.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-28 12:56:37.52"
+        },
+        {
+            "symbol": "GOOGL",
+            "type": "VENTA (IOL)",
+            "entry_price": 9185.0,
+            "exit_price": 9078.07692307,
+            "qty": 39.0,
+            "profit_pct": -1.1641053557974845,
+            "profit_amount": -4170.000000269973,
+            "date": "2026-04-28 13:05:43.92"
+        },
+        {
+            "symbol": "GOOGL",
+            "type": "COMPRA (IOL)",
+            "entry_price": 9110.0,
+            "exit_price": 0,
+            "qty": 5.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-28 13:16:30.55"
+        },
+        {
+            "symbol": "PBR",
+            "type": "VENTA (IOL)",
+            "entry_price": 31920.0,
+            "exit_price": 32020.0,
+            "qty": 17.0,
+            "profit_pct": 0.31328320802004317,
+            "profit_amount": 1700.0,
+            "date": "2026-04-28 13:48:26.663"
+        },
+        {
+            "symbol": "NVDA",
+            "type": "COMPRA (IOL)",
+            "entry_price": 13380.0,
+            "exit_price": 0,
+            "qty": 2.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-28 15:47:01.353"
+        },
+        {
+            "symbol": "INTC",
+            "type": "COMPRA (IOL)",
+            "entry_price": 27860.0,
+            "exit_price": 0,
+            "qty": 4.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 12:30:24.43"
+        },
+        {
+            "symbol": "INTC",
+            "type": "VENTA",
+            "entry_price": 27760.0,
+            "exit_price": 27780.0,
+            "qty": 12.0,
+            "profit_pct": 0.07204610951008217,
+            "profit_amount": 240.0,
+            "date": "2026-04-29 13:02:16"
+        },
+        {
+            "symbol": "INTC",
+            "type": "VENTA (IOL)",
+            "entry_price": 27860.0,
+            "exit_price": 27760.0,
+            "qty": 12.0,
+            "profit_pct": -0.3589375448671883,
+            "profit_amount": -1200.0,
+            "date": "2026-04-29 13:02:16.18"
+        },
+        {
+            "symbol": "NVDA",
+            "type": "COMPRA (IOL)",
+            "entry_price": 13140.0,
+            "exit_price": 0,
+            "qty": 2.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 13:08:32.667"
+        },
+        {
+            "symbol": "GOOGL",
+            "type": "VENTA (Externa)",
+            "entry_price": 9110.0,
+            "exit_price": 9030.0,
+            "qty": 19.0,
+            "profit_pct": -0.8781558726673966,
+            "profit_amount": -1520.0,
+            "date": "2026-04-29 13:15:16"
+        },
+        {
+            "symbol": "GOOGL",
+            "type": "VENTA (IOL)",
+            "entry_price": 9110.0,
+            "exit_price": 9045.0,
+            "qty": 19.0,
+            "profit_pct": -0.7135016465422583,
+            "profit_amount": -1235.0,
+            "date": "2026-04-29 13:14:23.48"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "VENTA",
+            "entry_price": 2710.0,
+            "exit_price": 2715.0,
+            "qty": 66.0,
+            "profit_pct": 0.1845018450184588,
+            "profit_amount": 330.0,
+            "date": "2026-04-29 13:25:30"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "VENTA (IOL)",
+            "entry_price": 2710.0,
+            "exit_price": 2715.0,
+            "qty": 66.0,
+            "profit_pct": 0.1845018450184588,
+            "profit_amount": 330.0,
+            "date": "2026-04-29 13:25:30.463"
+        },
+        {
+            "symbol": "NU",
+            "type": "VENTA",
+            "entry_price": 10700.0,
+            "exit_price": 10560.0,
+            "qty": 11.0,
+            "profit_pct": -1.3084112149532756,
+            "profit_amount": -1540.0,
+            "date": "2026-04-29 13:37:22.473"
+        },
+        {
+            "symbol": "INTC",
+            "type": "COMPRA (Manual)",
+            "entry_price": 27840.0,
+            "exit_price": 0,
+            "qty": 2,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 13:46:13"
+        },
+        {
+            "symbol": "INTC",
+            "type": "VENTA (Externa)",
+            "entry_price": 27840.0,
+            "exit_price": 27840.0,
+            "qty": 2,
+            "profit_pct": 0.0,
+            "profit_amount": 0.0,
+            "date": "2026-04-29 13:46:34"
+        },
+        {
+            "symbol": "INTC",
+            "type": "COMPRA",
+            "entry_price": 28120.0,
+            "exit_price": 0,
+            "qty": 1.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 13:49:31.193"
+        },
+        {
+            "symbol": "INTC",
+            "type": "COMPRA",
+            "entry_price": 27840.0,
+            "exit_price": 0,
+            "qty": 2.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 13:45:55.213"
+        },
+        {
+            "symbol": "INTC",
+            "type": "COMPRA",
+            "entry_price": 27840.0,
+            "exit_price": 0,
+            "qty": 2.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 13:46:13.257"
+        },
+        {
+            "symbol": "INTC",
+            "type": "COMPRA",
+            "entry_price": 27840.0,
+            "exit_price": 0,
+            "qty": 2.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 13:46:42.527"
+        },
+        {
+            "symbol": "TSLA",
+            "type": "COMPRA (IOL)",
+            "entry_price": 37120.0,
+            "exit_price": 0,
+            "qty": 5.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 15:45:31.073"
+        },
+        {
+            "symbol": "KO",
+            "type": "COMPRA",
+            "entry_price": 23590.0,
+            "exit_price": 0,
+            "qty": 8.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 15:45:36.01"
+        },
+        {
+            "symbol": "GOOGL",
+            "type": "COMPRA",
+            "entry_price": 9055.0,
+            "exit_price": 0,
+            "qty": 22.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-29 16:13:55.867"
+        },
+        {
+            "symbol": "AAPL",
+            "type": "VENTA",
+            "entry_price": 20160.0,
+            "exit_price": 19940.0,
+            "qty": 1.0,
+            "profit_pct": -1.0912698412698374,
+            "profit_amount": -220.0,
+            "date": "2026-04-30 08:01:36.243"
+        },
+        {
+            "symbol": "NVDA",
+            "type": "VENTA",
+            "entry_price": 13140.0,
+            "exit_price": 12880.0,
+            "qty": 2.0,
+            "profit_pct": -1.9786910197869156,
+            "profit_amount": -520.0,
+            "date": "2026-04-30 08:01:44.667"
+        },
+        {
+            "symbol": "KO",
+            "type": "VENTA",
+            "entry_price": 23590.0,
+            "exit_price": 23340.0,
+            "qty": 13.0,
+            "profit_pct": -1.0597710894446832,
+            "profit_amount": -3250.0,
+            "date": "2026-04-30 10:31:42.14"
+        },
+        {
+            "symbol": "INTC",
+            "type": "VENTA",
+            "entry_price": 27840.0,
+            "exit_price": 27520.0,
+            "qty": 7.0,
+            "profit_pct": -1.1494252873563204,
+            "profit_amount": -2240.0,
+            "date": "2026-04-30 10:31:43.41"
+        },
+        {
+            "symbol": "META",
+            "type": "VENTA",
+            "entry_price": 41940.0,
+            "exit_price": 37320.0,
+            "qty": 7.0,
+            "profit_pct": -11.015736766809725,
+            "profit_amount": -32340.0,
+            "date": "2026-04-30 10:37:10.897"
+        },
+        {
+            "symbol": "META",
+            "type": "COMPRA",
+            "entry_price": 37480.0,
+            "exit_price": 0,
+            "qty": 262.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-30 10:37:38.247"
+        },
+        {
+            "symbol": "TSLA",
+            "type": "VENTA",
+            "entry_price": 37120.0,
+            "exit_price": 36612.0,
+            "qty": 5.0,
+            "profit_pct": -1.368534482758621,
+            "profit_amount": -2540.0,
+            "date": "2026-04-30 10:38:13.903"
+        },
+        {
+            "symbol": "GOOGL",
+            "type": "VENTA",
+            "entry_price": 9055.0,
+            "exit_price": 9410.0,
+            "qty": 22.0,
+            "profit_pct": 3.9204859193815667,
+            "profit_amount": 7810.0,
+            "date": "2026-04-30 10:41:29.633"
+        },
+        {
+            "symbol": "META",
+            "type": "VENTA",
+            "entry_price": 37480.0,
+            "exit_price": 37366.25954198,
+            "qty": 262.0,
+            "profit_pct": -0.30346973858058623,
+            "profit_amount": -29800.000001240478,
+            "date": "2026-04-30 11:13:26.97"
+        },
+        {
+            "symbol": "GOOGL",
+            "type": "COMPRA",
+            "entry_price": 9445.0,
+            "exit_price": 0,
+            "qty": 112.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-30 11:20:19.81"
+        },
+        {
+            "symbol": "GOOGL",
+            "type": "COMPRA",
+            "entry_price": 9450.0,
+            "exit_price": 0,
+            "qty": 101.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-30 11:20:58.113"
+        },
+        {
+            "symbol": "META",
+            "type": "COMPRA",
+            "entry_price": 37380.0,
+            "exit_price": 0,
+            "qty": 226.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-30 11:30:53.29"
+        },
+        {
+            "symbol": "GOOGL",
+            "type": "VENTA",
+            "entry_price": 9450.0,
+            "exit_price": 9370.0,
+            "qty": 213.0,
+            "profit_pct": -0.846560846560851,
+            "profit_amount": -17040.0,
+            "date": "2026-04-30 11:38:58.017"
+        },
+        {
+            "symbol": "META",
+            "type": "VENTA (Externa)",
+            "entry_price": 37380.0,
+            "exit_price": 37520.0,
+            "qty": 226.0,
+            "profit_pct": 0.3745318352059934,
+            "profit_amount": 31640.0,
+            "date": "2026-04-30 12:29:13"
+        },
+        {
+            "symbol": "META",
+            "type": "VENTA (IOL)",
+            "entry_price": 37380.0,
+            "exit_price": 37620.0,
+            "qty": 226.0,
+            "profit_pct": 0.6420545746388395,
+            "profit_amount": 54240.0,
+            "date": "2026-04-30 12:28:47.537"
+        },
+        {
+            "symbol": "PBR",
+            "type": "COMPRA (Manual)",
+            "entry_price": 32340.0,
+            "exit_price": 0,
+            "qty": 6,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-30 12:33:00"
+        },
+        {
+            "symbol": "META",
+            "type": "COMPRA (Manual)",
+            "entry_price": 37840.0,
+            "exit_price": 0,
+            "qty": 5,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-30 12:33:24"
+        },
+        {
+            "symbol": "META",
+            "type": "COMPRA (Manual)",
+            "entry_price": 38040.0,
+            "exit_price": 0,
+            "qty": 5,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-30 12:53:33"
+        },
+        {
+            "symbol": "META",
+            "type": "COMPRA (Manual)",
+            "entry_price": 38040.0,
+            "exit_price": 0,
+            "qty": 5,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-30 12:53:42"
+        },
+        {
+            "symbol": "META",
+            "type": "COMPRA (Manual)",
+            "entry_price": 38040.0,
+            "exit_price": 0,
+            "qty": 5,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-30 12:53:48"
+        },
+        {
+            "symbol": "META",
+            "type": "COMPRA (Manual)",
+            "entry_price": 37840.0,
+            "exit_price": 0,
+            "qty": 1,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-04-30 13:32:55"
+        },
+        {
+            "symbol": "META",
+            "type": "SELL",
+            "entry_price": 37840.0,
+            "exit_price": 38420.0,
+            "qty": 68.0,
+            "profit_pct": 1.5327695560253707,
+            "profit_amount": 39440.0,
+            "steps": 1,
+            "date": "2026-04-30 15:05:45"
+        },
+        {
+            "symbol": "TSLA",
+            "type": "SELL",
+            "entry_price": 37840.0,
+            "exit_price": 37840.0,
+            "qty": 25.0,
+            "profit_pct": 0.0,
+            "profit_amount": 0.0,
+            "steps": 1,
+            "date": "2026-04-30 16:50:01"
         }
     ],
     "opportunities": {
         "AMZN": {
-            "score": 8.9,
-            "metrics": {
-                "technical": 9.0,
-                "fundamental": 8.4,
-                "news": 9.6
-            },
-            "price": 2710.0,
-            "timestamp": "12:56:24"
-        },
-        "MELI": {
-            "score": 6.1,
-            "metrics": {
-                "technical": 3.0,
-                "fundamental": 10.0,
-                "news": 8.1
-            },
-            "price": 22460.0,
-            "timestamp": "15:50:53"
-        },
-        "PYPL": {
-            "score": 4.8,
-            "metrics": {
-                "technical": 3.0,
-                "fundamental": 5.4,
-                "news": 8.2
-            },
-            "price": 9325.0,
-            "timestamp": "15:50:58"
-        },
-        "NVDA": {
-            "score": 9.4,
+            "score": 8.4,
             "metrics": {
                 "technical": 10,
-                "fundamental": 10.0,
-                "news": 7.1
+                "fundamental": 5.0,
+                "news": 9.7
             },
-            "price": 13410.0,
-            "timestamp": "15:48:29"
+            "price": 2755.0,
+            "timestamp": "12:28:38"
+        },
+        "MELI": {
+            "score": 3.9,
+            "metrics": {
+                "technical": 3.0,
+                "fundamental": 5,
+                "news": 4.7
+            },
+            "price": 22400.0,
+            "timestamp": "12:28:38"
+        },
+        "PYPL": {
+            "score": 4.6,
+            "metrics": {
+                "technical": 3.0,
+                "fundamental": 5,
+                "news": 8.0
+            },
+            "price": 9345.0,
+            "timestamp": "12:28:38"
+        },
+        "NVDA": {
+            "score": 6.2,
+            "metrics": {
+                "technical": 8.5,
+                "fundamental": 5.0,
+                "news": 2.0
+            },
+            "price": 12500.0,
+            "timestamp": "12:28:27"
         },
         "META": {
-            "score": 8.2,
+            "score": 7.3,
             "metrics": {
-                "technical": 9.0,
-                "fundamental": 10.0,
-                "news": 3.5
+                "technical": 10,
+                "fundamental": 5.0,
+                "news": 4.2
             },
-            "price": 42120.0,
-            "timestamp": "15:50:42"
+            "price": 38660.0,
+            "timestamp": "15:46:35"
         },
         "TSLA": {
-            "score": 8.2,
+            "score": 7.0,
             "metrics": {
-                "technical": 9.0,
-                "fundamental": 8.0,
-                "news": 6.6
+                "technical": 8.0,
+                "fundamental": 5.0,
+                "news": 7.4
             },
-            "price": 37920.0,
-            "timestamp": "15:50:47"
+            "price": 38120.0,
+            "timestamp": "12:28:26"
         },
         "GOOGL": {
-            "score": 8.9,
+            "score": 6.9,
             "metrics": {
-                "technical": 9.0,
-                "fundamental": 8.4,
-                "news": 9.4
+                "technical": 8.5,
+                "fundamental": 5.0,
+                "news": 5.8
             },
-            "price": 9110.0,
-            "timestamp": "13:16:28"
+            "price": 9565.0,
+            "timestamp": "12:59:51"
         },
         "PBR": {
-            "score": 8.2,
+            "score": 8.3,
             "metrics": {
                 "technical": 9.0,
                 "fundamental": 6.0,
-                "news": 9.7
+                "news": 9.9
             },
-            "price": 31960.0,
-            "timestamp": "15:51:04"
+            "price": 32340.0,
+            "timestamp": "12:32:23"
         },
         "KO": {
-            "score": 8.6,
+            "score": 7.1,
             "metrics": {
-                "technical": 9.0,
+                "technical": 6.0,
                 "fundamental": 7.2,
+                "news": 9.8
+            },
+            "price": 23650.0,
+            "timestamp": "12:28:38"
+        },
+        "NU": {
+            "score": 9.5,
+            "metrics": {
+                "technical": 10,
+                "fundamental": 10.0,
+                "news": 7.7
+            },
+            "price": 10760.0,
+            "timestamp": "14:56:05"
+        },
+        "AMD": {
+            "score": 4.7,
+            "metrics": {
+                "technical": 6.0,
+                "fundamental": 4.8,
+                "news": 1.3
+            },
+            "price": 53025.0,
+            "timestamp": "12:28:38"
+        },
+        "INTC": {
+            "score": 7.6,
+            "metrics": {
+                "technical": 8.5,
+                "fundamental": 5.0,
+                "news": 9.2
+            },
+            "price": 28300.0,
+            "timestamp": "12:28:27"
+        },
+        "MSFT": {
+            "score": 4.9,
+            "metrics": {
+                "technical": 3.0,
+                "fundamental": 5.0,
+                "news": 9.4
+            },
+            "price": 20030.0,
+            "timestamp": "14:53:15"
+        },
+        "AAPL": {
+            "score": 8.2,
+            "metrics": {
+                "technical": 9.5,
+                "fundamental": 5.0,
                 "news": 9.6
             },
-            "price": 23720.0,
-            "timestamp": "15:51:09"
+            "price": 20100.0,
+            "timestamp": "12:52:43"
         }
     },
     "balance": 0,
     "excluded_symbols": [],
-    "last_reset_date": "2026-04-28",
+    "last_reset_date": "2026-05-01",
     "balances": {
         "t0": 0,
         "t1": 0,
-        "t2": 0
-    }
+        "t2": 0,
+        "total": 0,
+        "total_pesos": 0,
+        "activos_valorizados": 0,
+        "oficial": 1415,
+        "total_usd": 0.0
+    },
+    "system_info": {
+        "last_start": "2026-05-01 12:10:38",
+        "status": "stopped",
+        "last_shutdown": "2026-05-01 12:13:30",
+        "last_equity_snapshot": "2026-05-01 12:24:19"
+    },
+    "equity_history": [
+        {
+            "timestamp": "2026-05-01 10:24",
+            "value": 13696179.870000001
+        },
+        {
+            "timestamp": "2026-05-01 11:24",
+            "value": 13696179.870000001
+        },
+        {
+            "timestamp": "2026-05-01 12:24",
+            "value": 13696179.870000001
+        }
+    ]
 }

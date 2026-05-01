@@ -17,11 +17,14 @@ class TrailingEngine:
         # Check if we hit the current TP target
         if current_price >= current_tp:
             new_step += 1
-            # The hit price becomes the new base
-            base_price = current_tp 
+            # El precio de impacto real se convierte en la base si es mayor al TP teórico
+            # Esto evita que el SL se quede 'atrapado' abajo en saltos bruscos
+            base_price = max(current_price, current_tp)
             
             # Reset SL based on the Subida de Piso % (trailing_sl_pct)
-            new_sl = base_price * trailing_sl_pct
+            potential_sl = base_price * trailing_sl_pct
+            # NUNCA bajar el SL, solo subirlo
+            new_sl = max(current_sl, potential_sl)
             
             # Reset TP based on the Siguiente Escalón % (trailing_tp_pct)
             new_tp = base_price * trailing_tp_pct

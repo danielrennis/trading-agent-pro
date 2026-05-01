@@ -29,12 +29,21 @@ class TechnicalAgent:
                 df = yf.download(yf_symbol, period=period, interval=interval, progress=False, threads=False)
                 
                 if df is not None and not df.empty and len(df) > 10:
-                    # Reset index and ensure columns are flat and lowercase
                     df = df.copy()
+                    
+                    # Handle MultiIndex columns from yfinance
                     if isinstance(df.columns, pd.MultiIndex):
                         df.columns = df.columns.get_level_values(0)
                     
+                    # Ensure columns are unique and lowercase
                     df.columns = [str(c).lower() for c in df.columns]
+                    df = df.loc[:, ~df.columns.duplicated()]
+                    
+                    # Convert to Series to avoid dimensionality errors in 'ta' library
+                    for col in df.columns:
+                        if isinstance(df[col], pd.DataFrame):
+                            df[col] = df[col].iloc[:, 0]
+                            
                     df.index.name = 'datetime'
                     df.dropna(inplace=True)
                     

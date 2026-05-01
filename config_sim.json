@@ -1,0 +1,18 @@
+{
+    "strategy": {
+        "initial_sl_pct": 0.98,
+        "initial_tp_pct": 1.02,
+        "trailing_sl_pct": 0.99,
+        "trailing_tp_pct": 1.01,
+        "risk_balance_pct": 0.1,
+        "min_buy_score": 9.0,
+        "fixed_investment_amount": 1000000
+    },
+    "symbols": [
+        "SIMUL"
+    ],
+    "watchlist": [
+        "SIMUL"
+    ],
+    "trading_paused": false
+}

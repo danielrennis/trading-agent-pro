@@ -107,13 +107,9 @@ class Orchestrator:
             
             # Cálculo de USD Histórico usando Dólar Oficial de cada fecha (Abril 2026)
             # 12/04: ~1398, 14/04: ~1400, 24/04: ~1410, 29/04: ~1414, 30/04: ~1415
-            total_ars = 0
             total_usd_hist = 0
             for _, row in depositos.iterrows():
-                monto_raw = str(row['Monto']).replace(".", "").replace(",", ".")
-                monto = float(monto_raw)
-                total_ars += monto
-                
+                monto = float(str(row['Monto']).replace(".", "").replace(",", "."))
                 fecha = str(row['Concert.'])
                 rate = 1415 # Default
                 if "12/04" in fecha: rate = 1398
@@ -123,19 +119,15 @@ class Orchestrator:
                 elif "30/04" in fecha: rate = 1415
                 total_usd_hist += monto / rate
             
-            # Si el valor de ARS o USD cambió, actualizar config
-            current_ars = self.config.get("strategy", {}).get("total_invested", 0)
-            current_usd = self.config.get("strategy", {}).get("total_invested_usd", 0)
-            
-            if total_ars > 0 and (total_ars != current_ars or total_usd_hist != current_usd):
-                if "strategy" not in self.config: self.config["strategy"] = {}
+            # Si el valor cambió, actualizar config
+            if total_ars > 0 and total_ars != self.config.get("strategy", {}).get("total_invested", 0):
                 self.config["strategy"]["total_invested"] = total_ars
                 self.config["strategy"]["total_invested_usd"] = total_usd_hist
                 self.config["strategy"]["usd_type"] = "Oficial"
                 with open(self.config_file, 'w') as f:
                     json.dump(self.config, f, indent=4)
-                print(f"✅ Inversión total actualizada automáticamente desde archivo: ${total_ars:,.2f} (u$d {total_usd_hist:,.2f})", flush=True)
-                self.telegram.send_message(f"🔄 *Configuración Actualizada*\nSe detectaron nuevos movimientos.\nARS: ${total_ars:,.2f}\nUSD: u$d {total_usd_hist:,.2f}")
+                print(f"✅ Inversión total actualizada automáticamente desde archivo: ${total_ars:,.2f}", flush=True)
+                self.telegram.send_message(f"🔄 *Configuración Actualizada*\nSe detectaron nuevos movimientos. La inversión total ahora es: ${total_ars:,.2f}")
         except Exception as e:
             print(f"⚠️ Error procesando archivo de movimientos: {e}")
 

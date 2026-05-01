@@ -7,10 +7,9 @@
         "risk_balance_pct": 0.1,
         "min_buy_score": 9.5,
         "fixed_investment_amount": 1000000,
-        "total_invested": 12300000.0,
+        "total_invested": 12300000,
         "eod_strategy": "selective",
-        "eod_profit_threshold": 1.5,
-        "total_invested_usd": 8744.178821865033
+        "eod_profit_threshold": 1.5
     },
     "symbols": [
         "NVDA",
