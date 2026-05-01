@@ -251,19 +251,19 @@
                         {/* GLOBAL PERFORMANCE BAR - FILA 1 (3 FICHAS) */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                             <div className="glass p-5 rounded-[2rem] border border-indigo-500/20 bg-indigo-500/[0.02]">
-                                <span className="text-[13px] font-black text-indigo-300 uppercase tracking-[0.4em] mb-1 block font-code">Inversión Inicial</span>
+                                <span className="text-[13px] font-medium text-indigo-300 uppercase tracking-[0.4em] mb-1 block font-code">Inversión Inicial</span>
                                 <div className="text-4xl font-black text-white font-code tracking-tighter text-right">${Math.round(config.strategy?.total_invested || 0).toLocaleString()}</div>
                                 <div className="text-[13px] font-bold text-emerald-400 font-code mt-1 text-right">u$d {Math.round(config.strategy?.total_invested_usd || 0).toLocaleString()} <span className="text-[10px] text-slate-400">(Hist.)</span></div>
                             </div>
                             
                             <div className="glass p-5 rounded-[2rem] border border-cyan-500/20 bg-cyan-500/[0.02]">
-                                <span className="text-[13px] font-black text-cyan-300 uppercase tracking-[0.4em] mb-1 block font-code">Patrimonio Real</span>
+                                <span className="text-[13px] font-medium text-cyan-300 uppercase tracking-[0.4em] mb-1 block font-code">Patrimonio Real</span>
                                 <div className="text-4xl font-black text-white font-code tracking-tighter text-right">${Math.round(status.balances?.total_pesos || 0).toLocaleString()}</div>
                                 <div className="text-[13px] font-bold text-emerald-400 font-code mt-1 text-right">u$d {Math.round(status.balances?.total_usd || 0).toLocaleString()} (Hoy)</div>
                             </div>
 
                             <div className={`glass p-5 rounded-[2rem] border ${status.balances?.total_pesos >= config.strategy?.total_invested ? 'border-emerald-500/20 bg-emerald-500/[0.02]' : 'border-rose-500/20 bg-rose-500/[0.02]'}`}>
-                                <span className="text-[13px] font-black uppercase tracking-[0.4em] mb-1 block font-code text-slate-300">Rendimiento Global</span>
+                                <span className="text-[13px] font-medium uppercase tracking-[0.4em] mb-1 block font-code text-slate-300">Rendimiento Global</span>
                                 <div className={`text-4xl font-black font-code tracking-tighter text-right ${status.balances?.total_pesos >= config.strategy?.total_invested ? 'text-emerald-400' : 'text-rose-400'}`}>
                                     {(((status.balances?.total_pesos || 0) / (config.strategy?.total_invested || 1) - 1) * 100).toFixed(2)}%
                                 </div>
