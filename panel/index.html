@@ -341,7 +341,7 @@
                         </div>
 
                         <div className="grid grid-cols-1 gap-6">
-                            {Object.entries(status.positions || {}).map(([sym, pos]) => {
+                            {Object.entries(status.positions || {}).sort((a, b) => a[0].localeCompare(b[0])).map(([sym, pos]) => {
                                 const current = pos.current_price || pos.entry_price;
                                 const win = current >= pos.entry_price;
                                 const totalInvested = pos.entry_price * pos.qty * (pos.multiplier || 1);
