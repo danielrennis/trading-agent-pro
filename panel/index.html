@@ -422,24 +422,33 @@
                                 </div>
 
                                 {editConfig && (
-                                    <div className="grid grid-cols-2 gap-6">
-                                        <div className="bg-slate-950/40 p-5 rounded-3xl border border-slate-900/50 border-blue-500/30">
-                                            <label className="text-[12px] font-black text-blue-400 uppercase mb-2 block tracking-widest">💰 Inversión por Trade ($)</label>
-                                            <input type="number" step="10000" value={editConfig.strategy?.fixed_investment_amount || 0} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, fixed_investment_amount: parseInt(e.target.value)}})} className="w-full bg-slate-900 p-4 rounded-xl text-white font-code text-2xl outline-none border border-slate-800 focus:border-blue-500 shadow-inner" />
+                                    <div className="flex flex-col gap-8">
+                                        {/* BLOQUE DE VALORES NUMÉRICOS */}
+                                        <div className="grid grid-cols-2 gap-6">
+                                            <div className="bg-slate-950/40 p-5 rounded-3xl border border-slate-900/50 border-blue-500/30">
+                                                <label className="text-[12px] font-black text-blue-400 uppercase mb-2 block tracking-widest">💰 Inversión por Trade ($)</label>
+                                                <input type="number" step="10000" value={editConfig.strategy?.fixed_investment_amount || 0} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, fixed_investment_amount: parseInt(e.target.value)}})} className="w-full bg-slate-900 p-4 rounded-xl text-white font-code text-2xl outline-none border border-slate-800 focus:border-blue-500 shadow-inner" />
+                                            </div>
+                                            <div className="bg-slate-950/40 p-5 rounded-3xl border border-slate-900/50">
+                                                <label className="text-[12px] font-black text-slate-400 uppercase mb-2 block tracking-widest">🛑 Stop Loss (%)</label>
+                                                <input type="number" step="0.1" value={Math.round((1 - (editConfig.strategy?.initial_sl_pct || 0.98)) * 1000)/10} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, initial_sl_pct: 1 - (e.target.value/100)}})} className="w-full bg-slate-900 p-4 rounded-xl text-white font-code text-2xl outline-none border border-slate-800 focus:border-indigo-500" />
+                                            </div>
+                                            <div className="bg-slate-950/40 p-5 rounded-3xl border border-slate-900/50">
+                                                <label className="text-[12px] font-black text-slate-400 uppercase mb-2 block tracking-widest">🎯 Take Profit (%)</label>
+                                                <input type="number" step="0.1" value={Math.round(((editConfig.strategy?.initial_tp_pct || 1.015) - 1) * 1000)/10} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, initial_tp_pct: 1 + (e.target.value/100)}})} className="w-full bg-slate-900 p-4 rounded-xl text-white font-code text-2xl outline-none border border-slate-800 focus:border-emerald-500" />
+                                            </div>
+                                            <div className="bg-slate-950/40 p-5 rounded-3xl border border-slate-900/50 border-cyan-500/20">
+                                                <label className="text-[12px] font-black text-cyan-400 uppercase mb-2 block tracking-widest">📡 Sensibilidad Radar (Min Score)</label>
+                                                <input type="number" step="0.1" value={editConfig.strategy?.min_buy_score || 0} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, min_buy_score: parseFloat(e.target.value)}})} className="w-full bg-slate-900 p-4 rounded-xl text-white font-code text-2xl outline-none border border-slate-800 focus:border-cyan-500" />
+                                            </div>
+                                            <div className="bg-slate-950/40 p-5 rounded-3xl border border-slate-900/50 border-rose-500/20 col-span-2">
+                                                <label className="text-[12px] font-black text-rose-400 uppercase mb-2 block tracking-widest">⏱️ Umbral Profit EOD (%)</label>
+                                                <input type="number" step="0.1" value={editConfig.strategy?.eod_profit_threshold || 1.5} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, eod_profit_threshold: parseFloat(e.target.value)}})} className="w-full bg-slate-900 p-4 rounded-xl text-white font-code text-2xl outline-none border border-slate-800 focus:border-rose-500" />
+                                            </div>
                                         </div>
-                                        <div className="bg-slate-950/40 p-5 rounded-3xl border border-slate-900/50">
-                                            <label className="text-[12px] font-black text-slate-400 uppercase mb-2 block tracking-widest">🛑 Stop Loss (%)</label>
-                                            <input type="number" step="0.1" value={Math.round((1 - (editConfig.strategy?.initial_sl_pct || 0.98)) * 1000)/10} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, initial_sl_pct: 1 - (e.target.value/100)}})} className="w-full bg-slate-900 p-4 rounded-xl text-white font-code text-2xl outline-none border border-slate-800 focus:border-indigo-500" />
-                                        </div>
-                                        <div className="bg-slate-950/40 p-5 rounded-3xl border border-slate-900/50">
-                                            <label className="text-[12px] font-black text-slate-400 uppercase mb-2 block tracking-widest">🎯 Take Profit (%)</label>
-                                            <input type="number" step="0.1" value={Math.round(((editConfig.strategy?.initial_tp_pct || 1.015) - 1) * 1000)/10} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, initial_tp_pct: 1 + (e.target.value/100)}})} className="w-full bg-slate-900 p-4 rounded-xl text-white font-code text-2xl outline-none border border-slate-800 focus:border-emerald-500" />
-                                        </div>
-                                        <div className="bg-slate-950/40 p-5 rounded-3xl border border-slate-900/50 border-cyan-500/20">
-                                            <label className="text-[12px] font-black text-cyan-400 uppercase mb-2 block tracking-widest">📡 Sensibilidad Radar (Min Score)</label>
-                                            <input type="number" step="0.1" value={editConfig.strategy?.min_buy_score || 0} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, min_buy_score: parseFloat(e.target.value)}})} className="w-full bg-slate-900 p-4 rounded-xl text-white font-code text-2xl outline-none border border-slate-800 focus:border-cyan-500" />
-                                        </div>
-                                        <div className="bg-slate-950/40 p-6 rounded-3xl border border-slate-900/50 col-span-2">
+
+                                        {/* BLOQUE EOD SELECTOR (ABAJO) */}
+                                        <div className="bg-slate-950/40 p-6 rounded-3xl border border-slate-900/50">
                                             <label className="text-[13px] font-black text-slate-400 uppercase mb-4 block tracking-widest font-code">🛡️ Control de Riesgo EOD (End of Day)</label>
                                             <div className="grid grid-cols-3 gap-3 mb-6">
                                                 {[
@@ -478,13 +487,10 @@
                                                 )}
                                             </div>
                                         </div>
-                                        <div className="bg-slate-950/40 p-5 rounded-3xl border border-slate-900/50">
-                                            <label className="text-[12px] font-black text-slate-400 uppercase mb-2 block tracking-widest">Umbral Profit EOD (%)</label>
-                                            <input type="number" step="0.1" value={editConfig.strategy?.eod_profit_threshold || 1.5} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, eod_profit_threshold: parseFloat(e.target.value)}})} className="w-full bg-slate-900 p-4 rounded-xl text-white font-code text-xl outline-none border border-slate-800 focus:border-rose-500" />
-                                        </div>
                                     </div>
                                 )}
                             </div>
+
 
 
                             {/* RADAR DE OPORTUNIDADES REDISEÑADO */}
