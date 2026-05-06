@@ -1,16 +1,19 @@
 {
+    "authorized_instance": "MAC MINI",
     "strategy": {
-        "initial_sl_pct": 0.99,
-        "initial_tp_pct": 1.015,
-        "trailing_sl_pct": 0.995,
-        "trailing_tp_pct": 1.01,
+        "initial_sl_pct": 0.98,
+        "initial_tp_pct": 1.02,
+        "trailing_sl_pct": 0.988,
+        "trailing_tp_pct": 1.012,
         "risk_balance_pct": 0.1,
         "min_buy_score": 9.5,
         "fixed_investment_amount": 1000000,
         "total_invested": 12300000.0,
         "eod_strategy": "selective",
         "eod_profit_threshold": 1.5,
-        "total_invested_usd": 8744.178821865033
+        "total_invested_usd": 8744.178821865033,
+        "buy_order_type": "market",
+        "usd_type": "Oficial"
     },
     "symbols": [
         "NVDA",
@@ -32,9 +35,12 @@
         "KO",
         "NU",
         "AMD",
-        "INTC"
+        "INTC",
+        "SPY",
+        "ARM",
+        "BABA"
     ],
     "trading_paused": false,
     "auto_buy": true,
-    "trading_mode": "agresivo"
+    "trading_mode": "normal"
 }

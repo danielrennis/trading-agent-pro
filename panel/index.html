@@ -123,6 +123,8 @@
                     const res = await fetch('/api/status');
                     const data = await res.json();
                     setStatus(data);
+                    // No cerramos la notificación aquí para dejar que el auto-hide actúe 
+                    // o si es una carga inicial no hay notificación.
                 } catch (e) { console.error(e); }
             };
 
@@ -143,6 +145,18 @@
                 });
                 setNotification({ show: true, message: "✅ Configuración guardada y aplicada.", type: "success" });
                 fetchConfig();
+            };
+
+            const restartBot = async () => {
+                setNotification({ show: true, message: "Reiniciando orquestador...", type: "info" });
+                try {
+                    const res = await fetch('/api/restart', { method: 'POST' });
+                    const data = await res.json();
+                    setNotification({ show: true, message: data.message, type: data.status === 'success' ? 'success' : 'error' });
+                    setTimeout(() => { fetchStatus(); fetchConfig(); }, 2000);
+                } catch (e) {
+                    setNotification({ show: true, message: "Error en la conexión", type: "error" });
+                }
             };
 
             const syncHistory = async () => {
@@ -177,9 +191,19 @@
 
             useEffect(() => {
                 fetchStatus(); fetchConfig();
-                const interval = setInterval(fetchStatus, 5000);
+                const interval = setInterval(fetchStatus, 5000); // Bajamos frecuencia para evitar spam
                 return () => clearInterval(interval);
             }, []);
+
+            // Auto-hide notifications
+            useEffect(() => {
+                if (notification.show) {
+                    const timer = setTimeout(() => {
+                        setNotification(n => ({ ...n, show: false }));
+                    }, 4000);
+                    return () => clearTimeout(timer);
+                }
+            }, [notification.show]);
 
             useEffect(() => {
                 const anyPending = Object.values(status.positions || {}).some(p => p.pending_sl);
@@ -211,20 +235,31 @@
                             <div>
                                 <h1 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 tracking-tighter uppercase italic font-code">Trading Agent <span className="text-white not-italic">Pro</span></h1>
                                 <div className="flex items-center gap-3 mt-1 text-slate-500 font-bold uppercase tracking-[0.2em] text-[9px] font-code">
-                                    <span className="flex h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse"></span>
-                                    Sistema de Alta Frecuencia Activo
+                                    <span className={`flex h-1.5 w-1.5 rounded-full ${status.instance?.is_authorized ? 'bg-green-500 animate-pulse' : 'bg-yellow-500'}`}></span>
+                                    {status.instance?.is_authorized ? 'Sistema de Alta Frecuencia Activo' : 'MODO OBSERVADOR (Lectura)'}
+                                    <span className="mx-1 text-slate-700">|</span>
+                                    <span className="text-blue-400/80">{status.instance?.current || 'CARGANDO...'}</span>
+                                    {!status.instance?.is_authorized && (
+                                        <button 
+                                            onClick={async () => {
+                                                const res = await fetch('/api/authorize_me', { method: 'POST' });
+                                                const data = await res.json();
+                                                setNotification({ show: true, message: data.message, type: 'success' });
+                                                fetchStatus();
+                                            }}
+                                            className="ml-2 px-2 py-0.5 rounded bg-blue-500/20 border border-blue-500/40 text-blue-300 hover:bg-blue-500/40 transition-all"
+                                        >
+                                            TOMAR CONTROL
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                             <div className="flex gap-4">
                                 <button 
-                                    onClick={() => {
-                                        setNotification({ show: true, message: "Actualizando datos...", type: "info" });
-                                        fetchStatus();
-                                        fetchConfig();
-                                    }}
+                                    onClick={restartBot}
                                     className="px-8 py-4 rounded-2xl font-black uppercase text-[10px] border border-blue-500/30 text-blue-400 bg-blue-500/5 hover:bg-blue-500/10 transition-all font-code tracking-widest shadow-xl"
                                 >
-                                    🔄 REFRESCAR
+                                    🔄 REINICIAR BOT
                                 </button>
                                 <button 
                                     onClick={async () => {
@@ -316,6 +351,40 @@
                             </div>
                         </div>
                     </header>
+                    
+                    {/* INSTANCE CONTROL BANNER */}
+                    {status.instance && status.instance.current !== status.instance.authorized && (
+                        <div className="bg-amber-500 p-8 rounded-[3rem] mb-8 flex justify-between items-center shadow-2xl animate-pulse">
+                            <div className="flex items-center gap-6">
+                                <div className="bg-white/20 p-4 rounded-3xl">
+                                    <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 className="text-3xl font-black text-white uppercase tracking-tighter font-code">Modo Observador</h3>
+                                    <p className="text-amber-100 text-lg font-bold uppercase tracking-widest font-code">
+                                        Control: {status.instance.authorized} | Tú eres: {status.instance.current}
+                                    </p>
+                                </div>
+                            </div>
+                            <button 
+                                onClick={async () => {
+                                    if(confirm("¿Quieres que esta instancia tome el mando? Se bloquearán las demás.")) {
+                                        const res = await fetch('/api/take_control', { method: 'POST' });
+                                        const data = await res.json();
+                                        if (data.status === 'success') {
+                                            alert("Control tomado con éxito.");
+                                            window.location.reload();
+                                        }
+                                    }
+                                }}
+                                className="bg-white text-amber-600 px-10 py-5 rounded-2xl font-black text-xl uppercase tracking-widest shadow-xl hover:scale-105 transition font-code"
+                            >
+                                Tomar Control Aquí
+                            </button>
+                        </div>
+                    )}
 
                     {/* ALERTS */}
                     {Object.entries(status.positions || {}).filter(([_, p]) => p.pending_sl).map(([sym, p]) => (
@@ -357,7 +426,7 @@
                                         <div className="flex-1 min-w-[250px]">
                                             <div className="flex items-center gap-4 mb-3">
                                                 <span className="text-6xl font-black tracking-tighter uppercase italic font-code text-white">{sym}</span>
-                                                <span className={`text-[12px] px-3 py-1 font-black rounded-xl font-code border ${pos.step > 0 ? 'bg-yellow-400/20 text-yellow-400 border-yellow-400/30' : 'bg-slate-800 text-slate-500 border-slate-700'}`}>
+                                                <span className={`text-[12px] px-3 py-1 font-black rounded-xl font-code border ${pos.step > 0 ? 'bg-yellow-400/20 text-yellow-400 border-yellow-400/30 shadow-[0_0_15px_rgba(250,204,21,0.1)]' : 'bg-slate-800 text-slate-500 border-slate-700'}`}>
                                                     {pos.step > 1 ? '🔥' : '🧊'} SALTO: {pos.step || 0}
                                                 </span>
                                             </div>
@@ -372,16 +441,32 @@
                                         </div>
 
                                         {/* TRAILING PROGRESS */}
-                                        <div className="flex-[1.5] px-10">
+                                        <div className="flex-[1.5] px-10 relative">
                                             <div className="flex justify-between text-[11px] text-slate-500 font-black uppercase mb-3 font-code tracking-widest">
                                                 <span>Stop Loss: ${Math.round(pos.sl).toLocaleString()}</span>
                                                 <span>Take Profit: ${Math.round(pos.tp).toLocaleString()}</span>
                                             </div>
                                             <div className="h-4 bg-slate-950 rounded-full relative overflow-hidden border border-slate-900 shadow-inner">
                                                 <div className="absolute top-0 bottom-0 left-0 bg-gradient-to-r from-rose-500/20 via-transparent to-emerald-500/20 w-full"></div>
-                                                <div className="absolute top-0 bottom-0 w-2 bg-blue-400 shadow-[0_0_20px_#60a5fa] transition-all duration-500" style={{ left: `${Math.min(Math.max(((current - pos.sl) / (pos.tp - pos.sl)) * 100, 0), 100)}%` }}></div>
+                                                <div className="absolute top-0 bottom-0 w-2.5 bg-blue-400 shadow-[0_0_25px_#60a5fa] transition-all duration-1000 ease-in-out" style={{ left: `${Math.min(Math.max(((current - pos.sl) / (pos.tp - pos.sl)) * 100, 0), 100)}%` }}>
+                                                    <div className="absolute inset-0 bg-white opacity-40 animate-pulse"></div>
+                                                    {/* INDICADOR DE PRECIO REAL FLOTANTE */}
+                                                    <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap z-50">
+                                                        <div className="flex flex-col items-center">
+                                                            <div className="w-0.5 h-2 bg-blue-400/50 mb-1"></div>
+                                                            <div className="bg-slate-900/90 backdrop-blur-md border border-blue-500/40 px-3 py-1 rounded-xl shadow-2xl">
+                                                                <span className="text-[11px] font-black text-blue-300 font-code tracking-tighter">
+                                                                    ${current.toLocaleString()}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className="text-center text-sm font-black text-blue-400 font-code mt-2 tracking-[0.3em] uppercase">Cotización: ${current.toLocaleString()}</div>
+                                            <div className="flex justify-between items-center mt-2">
+                                                <div className="text-sm font-black text-blue-400 font-code tracking-[0.2em] uppercase">Cotización: ${current.toLocaleString()}</div>
+                                                {pos.step > 0 && <div className="text-[10px] font-black text-yellow-400/80 font-code animate-pulse italic">Escalón {pos.step} alcanzado</div>}
+                                            </div>
                                         </div>
 
                                         {/* RENDIMIENTO NETO */}
@@ -450,6 +535,14 @@
                                                 <label className="text-[12px] font-black text-slate-400 uppercase mb-2 block tracking-widest">🎯 Take Profit (%)</label>
                                                 <input type="number" step="0.1" value={Math.round(((editConfig.strategy?.initial_tp_pct || 1.015) - 1) * 1000)/10} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, initial_tp_pct: 1 + (e.target.value/100)}})} className="w-full bg-slate-900 p-4 rounded-xl text-white font-code text-2xl outline-none border border-slate-800 focus:border-emerald-500" />
                                             </div>
+                                            <div className="bg-slate-950/40 p-5 rounded-3xl border border-slate-900/50 border-orange-500/30">
+                                                <label className="text-[12px] font-black text-orange-400 uppercase mb-2 block tracking-widest">📉 Trailing SL (%)</label>
+                                                <input type="number" step="0.01" value={Math.round((1 - (editConfig.strategy?.trailing_sl_pct || 0.988)) * 10000)/100} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, trailing_sl_pct: 1 - (e.target.value/100)}})} className="w-full bg-slate-900 p-4 rounded-xl text-white font-code text-2xl outline-none border border-slate-800 focus:border-orange-500 shadow-inner" />
+                                            </div>
+                                            <div className="bg-slate-950/40 p-5 rounded-3xl border border-slate-900/50 border-emerald-500/30">
+                                                <label className="text-[12px] font-black text-emerald-400 uppercase mb-2 block tracking-widest">📈 Trailing TP (%)</label>
+                                                <input type="number" step="0.01" value={Math.round(((editConfig.strategy?.trailing_tp_pct || 1.012) - 1) * 10000)/100} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, trailing_tp_pct: 1 + (e.target.value/100)}})} className="w-full bg-slate-900 p-4 rounded-xl text-white font-code text-2xl outline-none border border-slate-800 focus:border-emerald-500 shadow-inner" />
+                                            </div>
                                             <div className="bg-slate-950/40 p-5 rounded-3xl border border-slate-900/50 border-cyan-500/20">
                                                 <label className="text-[12px] font-black text-cyan-400 uppercase mb-2 block tracking-widest">📡 Sensibilidad Radar (Min Score)</label>
                                                 <input type="number" step="0.1" value={editConfig.strategy?.min_buy_score || 0} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, min_buy_score: parseFloat(e.target.value)}})} className="w-full bg-slate-900 p-4 rounded-xl text-white font-code text-2xl outline-none border border-slate-800 focus:border-cyan-500" />
@@ -457,6 +550,26 @@
                                             <div className="bg-slate-950/40 p-5 rounded-3xl border border-slate-900/50 border-rose-500/20 col-span-2">
                                                 <label className="text-[12px] font-black text-rose-400 uppercase mb-2 block tracking-widest">⏱️ Umbral Profit EOD (%)</label>
                                                 <input type="number" step="0.1" value={editConfig.strategy?.eod_profit_threshold || 1.5} onChange={e => setEditConfig({...editConfig, strategy: {...editConfig.strategy, eod_profit_threshold: parseFloat(e.target.value)}})} className="w-full bg-slate-900 p-4 rounded-xl text-white font-code text-2xl outline-none border border-slate-800 focus:border-rose-500" />
+                                            </div>
+
+                                            {/* SELECTOR TIPO DE ORDEN DE COMPRA */}
+                                            <div className="bg-slate-950/40 p-6 rounded-3xl border border-slate-900/50 border-blue-500/20 col-span-2">
+                                                <label className="text-[13px] font-black text-blue-400 uppercase mb-4 block tracking-widest font-code">🛒 Ejecución de Compra</label>
+                                                <div className="grid grid-cols-2 gap-3">
+                                                    {[
+                                                        {id: 'limit', label: '🎯 LÍMITE', desc: 'Prioriza precio exacto'},
+                                                        {id: 'market', label: '🚀 MERCADO', desc: 'Prioriza ejecución inmediata'}
+                                                    ].map(opt => (
+                                                        <button 
+                                                            key={opt.id}
+                                                            onClick={() => setEditConfig({...editConfig, strategy: {...editConfig.strategy, buy_order_type: opt.id}})}
+                                                            className={`p-4 rounded-2xl text-[12px] font-black uppercase tracking-tighter transition-all border ${editConfig.strategy?.buy_order_type === opt.id ? 'bg-blue-500/20 border-blue-500 text-blue-400 shadow-lg shadow-blue-500/10' : 'bg-slate-900 border-slate-800 text-slate-600 hover:border-slate-700'}`}
+                                                        >
+                                                            <div className="text-[14px]">{opt.label}</div>
+                                                            <div className="text-[10px] opacity-60 font-medium lowercase tracking-normal mt-1">{opt.desc}</div>
+                                                        </button>
+                                                    ))}
+                                                </div>
                                             </div>
                                         </div>
 

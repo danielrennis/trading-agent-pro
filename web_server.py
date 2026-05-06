@@ -39,8 +39,9 @@ def restart_orchestrator():
     
     # 3. Iniciar nuevo orquestador
     import sys
-    cmd = [sys.executable, "orchestrator.py"]
-    ORCHESTRATOR_PROC = subprocess.Popen(cmd)
+    cmd = [sys.executable, "-u", "orchestrator.py"]
+    log_file = open("orchestrator.log", "a")
+    ORCHESTRATOR_PROC = subprocess.Popen(cmd, stdout=log_file, stderr=log_file)
     return True
 
 @app.post("/api/restart")
@@ -55,14 +56,54 @@ async def read_index():
     with open("panel/index.html", "r") as f:
         return f.read()
 
+import socket
 @app.get("/api/status")
 async def get_status():
+    status = {"positions": {}, "opportunities": {}, "history": [], "balance": 0, "instance": {}}
+    hostname = socket.gethostname().split('.')[0].upper().replace('-', ' ')
+    my_id = os.getenv("INSTANCE_NAME", hostname)
+    
+    authorized_id = "UNKNOWN"
+    if os.path.exists(CONFIG_FILE):
+        try:
+            with open(CONFIG_FILE, "r") as f:
+                cfg = json.load(f)
+                authorized_id = cfg.get("authorized_instance", "UNKNOWN")
+        except: pass
+
+    status["instance"] = {
+        "current": my_id,
+        "authorized": authorized_id,
+        "is_authorized": my_id == authorized_id
+    }
+    
     if os.path.exists(STATE_FILE):
         try:
             with open(STATE_FILE, "r") as f:
-                return json.load(f)
+                state = json.load(f)
+                for k, v in state.items():
+                    if k != "instance":
+                        status[k] = v
         except: pass
-    return {"positions": {}, "opportunities": {}, "history": [], "balance": 0}
+    return status
+
+@app.post("/api/authorize_me")
+async def authorize_me():
+    hostname = socket.gethostname().split('.')[0].upper().replace('-', ' ')
+    my_id = os.getenv("INSTANCE_NAME", hostname)
+    
+    if os.path.exists(CONFIG_FILE):
+        with open(CONFIG_FILE, "r") as f:
+            config = json.load(f)
+        
+        config["authorized_instance"] = my_id
+        
+        with open(CONFIG_FILE, "w") as f:
+            json.dump(config, f, indent=4)
+            
+        restart_orchestrator()
+        return {"status": "success", "message": f"Instancia '{my_id}' ahora tiene el control."}
+    return {"status": "error", "message": "No se pudo actualizar la configuración."}
 
 @app.get("/api/config")
 async def get_config():
@@ -129,6 +170,19 @@ async def pause_trading():
         json.dump(config, f, indent=4)
     stop_orchestrator()
     return {"status": "success", "message": "Trading pausado y proceso detenido."}
+
+@app.post("/api/take_control")
+async def take_control():
+    my_id = os.getenv("INSTANCE_NAME", "UNKNOWN")
+    if os.path.exists(CONFIG_FILE):
+        with open(CONFIG_FILE, "r") as f:
+            config = json.load(f)
+        config["authorized_instance"] = my_id
+        with open(CONFIG_FILE, "w") as f:
+            json.dump(config, f, indent=4)
+        restart_orchestrator()
+        return {"status": "success", "message": f"Control tomado por {my_id}"}
+    return {"status": "error", "message": "Config not found"}
 
 @app.post("/api/resume")
 async def resume_trading():
@@ -277,14 +331,15 @@ async def manual_buy(symbol: str):
     for s, p in state.get("positions", {}).items():
         total_equity += p["qty"] * p.get("current_price", p["entry_price"])
     
-    risk_pct = config["strategy"].get("risk_balance_pct", 0.1)
     fixed_amount = config["strategy"].get("fixed_investment_amount", 0)
     
-    if fixed_amount > 0:
-        target_amount = fixed_amount
+    # Si el usuario no configuró un monto fijo, usa un límite alto para que se tome el saldo disponible
+    if fixed_amount <= 0:
+        target_amount = 999999999
     else:
-        target_amount = total_equity * risk_pct
+        target_amount = fixed_amount
         
+    # El monto real será el monto fijo, pero nunca más del 95% del efectivo disponible (para cubrir comisiones y variaciones)
     amount = min(target_amount, balance * 0.95)
     
     # Obtener precio actual
@@ -298,9 +353,20 @@ async def manual_buy(symbol: str):
     if qty <= 0:
         return {"status": "error", "message": f"Monto insuficiente (${amount:.0f}) para comprar {symbol}. Saldo CI: ${balance:.0f}"}
 
-    # Ejecutar compra (Redondeo BYMA)
-    buy_price = int(current_price) if current_price > 100 else round(current_price, 2)
-    res = iol.place_order(symbol, qty, buy_price, action="comprar", validity="t0")
+    # Determinar precio basado en configuración (Mercado o Límite)
+    order_type = config.get("strategy", {}).get("buy_order_type", "limit")
+    if order_type == "market":
+        buy_price = 0
+        order_desc = "A MERCADO"
+    else:
+        # Ejecutar compra (Redondeo BYMA)
+        buy_price = int(current_price) if current_price > 100 else round(current_price, 2)
+        order_desc = f"LÍMITE a ${buy_price}"
+
+    # Log detallado para depuración de monto 0
+    print(f"DEBUG MANUAL BUY: {symbol} | Qty: {qty} | Price: {current_price} | OrderType: {order_type}", flush=True)
+    
+    res = iol.place_order(symbol, qty, current_price if buy_price == 0 else buy_price, action="comprar", validity="t0", order_type_str=order_type)
     
     if isinstance(res, dict) and "numeroOperacion" in res:
         # Registrar en estado local
@@ -328,7 +394,7 @@ async def manual_buy(symbol: str):
         with open(STATE_FILE, "w") as f:
             json.dump(state, f, indent=4)
             
-        return {"status": "success", "message": f"Orden de COMPRA enviada: {qty} {symbol} a ${buy_price}"}
+        return {"status": "success", "message": f"Orden de COMPRA enviada ({order_desc}): {qty} {symbol}"}
     
     err_msg = res.get("message", "Error desconocido") if isinstance(res, dict) else str(res)
     return {"status": "error", "message": f"Broker rechazó la orden: {err_msg}"}
@@ -380,6 +446,52 @@ async def add_symbol(symbol: str):
             
     return {"status": "error", "message": "No se pudo acceder a la configuración."}
 
+@app.get("/calendar", response_class=HTMLResponse)
+async def get_calendar_page():
+    with open("panel/earnings.html", "r") as f:
+        return f.read()
+
+@app.get("/api/earnings_calendar")
+async def get_earnings_calendar():
+    import yfinance as yf
+    from datetime import datetime
+    
+    # Lista completa solicitada
+    full_watchlist = [
+        "AAPL", "TSLA", "NVDA", "AMZN", "AMD", "META", "MSFT", "GOOG", "INTC", "ORCL", "BABA",
+        "NU", "MELI", "GGAL", "YPF", "PBR", "VIST", "PAM", "KO", "PEP", "SPY", "ALUA.BA", "TGNO4.BA"
+    ]
+    
+    def fetch_earnings(symbol):
+        try:
+            ticker = yf.Ticker(symbol)
+            cal = ticker.calendar
+            e_date, eps = "N/A", "N/A"
+            
+            if cal and isinstance(cal, dict):
+                dates = cal.get('Earnings Date', [])
+                if dates:
+                    d = dates[0]
+                    e_date = d.strftime("%Y-%m-%d") if hasattr(d, 'strftime') else str(d)
+                eps = cal.get('Earnings Average', "N/A")
+            
+            return {
+                "symbol": symbol,
+                "earnings_date": e_date,
+                "eps": eps
+            }
+        except:
+            return {"symbol": symbol, "earnings_date": "N/A", "eps": "N/A"}
+
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        results = list(executor.map(fetch_earnings, full_watchlist))
+        
+    # Ordenar cronológicamente
+    results.sort(key=lambda x: x['earnings_date'] if x['earnings_date'] != "N/A" else "9999-12-31")
+    return results
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=3000)
+run(app, host="0.0.0.0", port=3000)

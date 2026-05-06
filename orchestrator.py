@@ -9,6 +9,7 @@ from agents.strategy_agent import StrategyAgent
 from core.iol_client import IOLClient
 from core.trailing_engine import TrailingEngine
 from core.telegram_client import TelegramClient
+from core.bot_logger import log_bot, log_sync, log_trade
 import pandas as pd
 
 class Orchestrator:
@@ -124,17 +125,24 @@ class Orchestrator:
                 total_usd_hist += monto / rate
             
             # Si el valor de ARS o USD cambió, actualizar config
-            current_ars = self.config.get("strategy", {}).get("total_invested", 0)
-            current_usd = self.config.get("strategy", {}).get("total_invested_usd", 0)
+            # RECARGA DE SEGURIDAD: Evitar pisar cambios del panel web
+            with open(self.config_file, 'r') as f:
+                current_disk_config = json.load(f)
+            
+            current_ars = current_disk_config.get("strategy", {}).get("total_invested", 0)
+            current_usd = current_disk_config.get("strategy", {}).get("total_invested_usd", 0)
             
             if total_ars > 0 and (total_ars != current_ars or total_usd_hist != current_usd):
-                if "strategy" not in self.config: self.config["strategy"] = {}
-                self.config["strategy"]["total_invested"] = total_ars
-                self.config["strategy"]["total_invested_usd"] = total_usd_hist
-                self.config["strategy"]["usd_type"] = "Oficial"
+                if "strategy" not in current_disk_config: current_disk_config["strategy"] = {}
+                current_disk_config["strategy"]["total_invested"] = total_ars
+                current_disk_config["strategy"]["total_invested_usd"] = total_usd_hist
+                current_disk_config["strategy"]["usd_type"] = "Oficial"
+                
                 with open(self.config_file, 'w') as f:
-                    json.dump(self.config, f, indent=4)
-                print(f"✅ Inversión total actualizada automáticamente desde archivo: ${total_ars:,.2f} (u$d {total_usd_hist:,.2f})", flush=True)
+                    json.dump(current_disk_config, f, indent=4)
+                
+                self.config = current_disk_config # Sincronizar memoria
+                print(f"✅ Inversión total actualizada automáticamente: ${total_ars:,.2f}", flush=True)
                 self.telegram.send_message(f"🔄 *Configuración Actualizada*\nSe detectaron nuevos movimientos.\nARS: ${total_ars:,.2f}\nUSD: u$d {total_usd_hist:,.2f}")
         except Exception as e:
             print(f"⚠️ Error procesando archivo de movimientos: {e}")
@@ -180,7 +188,7 @@ class Orchestrator:
 
     def can_trade(self):
         now = datetime.now().time()
-        is_market_open = dtime(11, 0) <= now <= dtime(17, 0)
+        is_market_open = dtime(10, 30) <= now <= dtime(17, 0)
         is_paused = self.config.get("trading_paused", False)
         return is_market_open and not is_paused
 
@@ -189,6 +197,67 @@ class Orchestrator:
             portfolio = self.iol.get_portfolio()
             if not portfolio or "activos" not in portfolio: return
             
+            # 1. Conciliación Agresiva de Historial (Captura ventas/compras externas o pasadas)
+            ops_history = self.iol.get_operations(state="terminadas")
+            today_str = datetime.now().strftime("%Y-%m-%d")
+            
+            with self.state_lock:
+                current_history_dates = [h.get("date") for h in self.state.get("history", [])]
+                
+                for op in ops_history:
+                    if today_str not in op.get("fechaOrden", ""): continue
+                    
+                    op_id = op.get("numero")
+                    op_date = op.get("fechaOperada", op.get("fechaOrden")).replace('T', ' ')
+                    
+                    # Evitar duplicados (por fecha/hora exacta o ID si lo tuviéramos guardado)
+                    if any(op_date in h_date for h_date in current_history_dates):
+                        continue
+
+                    sym = op.get("simbolo")
+                    tipo = op.get("tipo")
+                    
+                    if tipo == "Venta":
+                        # Intentar encontrar el precio de entrada en el historial previo
+                        # (Si no se encuentra, se usa el precio operado como fallback con profit 0)
+                        entry_price = 0
+                        for h in reversed(self.state["history"]):
+                            if h["symbol"] == sym and "COMPRA" in h["type"]:
+                                entry_price = h["entry_price"]
+                                break
+                        
+                        exit_price = op.get("precioOperado", 0)
+                        qty = op.get("cantidadOperada", 0)
+                        profit_pct = ((exit_price / entry_price) - 1) * 100 if entry_price > 0 else 0
+                        
+                        self.state["history"].append({
+                            "symbol": sym,
+                            "type": f"VENTA ({op.get('plazo', 'Sincro')})",
+                            "entry_price": entry_price,
+                            "exit_price": exit_price,
+                            "qty": qty,
+                            "profit_pct": profit_pct,
+                            "profit_amount": (exit_price - entry_price) * qty if entry_price > 0 else 0,
+                            "date": op_date,
+                            "op_id": op_id
+                        })
+                        log_sync(f"Reconciliada VENTA externa: {sym} @ ${exit_price:,.2f}")
+                    
+                    elif tipo == "Compra":
+                        self.state["history"].append({
+                            "symbol": sym,
+                            "type": f"COMPRA ({op.get('plazo', 'Sincro')})",
+                            "entry_price": op.get("precioOperado", 0),
+                            "exit_price": 0,
+                            "qty": op.get("cantidadOperada", 0),
+                            "profit_pct": 0,
+                            "profit_amount": 0,
+                            "date": op_date,
+                            "op_id": op_id
+                        })
+                        log_sync(f"Reconciliada COMPRA externa: {sym} @ ${op.get('precioOperado'):,.2f}")
+
+            # 2. Sincronización de Posiciones Abiertas
             real_positions = {}
             for act in portfolio["activos"]:
                 sym = act["titulo"]["simbolo"]
@@ -204,27 +273,40 @@ class Orchestrator:
                     self.state["last_reset_date"] = today
 
                 state_pos = self.state.get("positions", {})
+                
+                # Eliminar posiciones que ya no están en IOL
                 to_remove = [sym for sym in state_pos if sym not in real_positions]
                 for sym in to_remove:
                     if sym not in self.active_sl_threads:
                         del state_pos[sym]
+                        log_sync(f"Posición {sym} removida por sincronización (ya no existe en IOL)")
                     
+                # Agregar/Actualizar posiciones desde IOL
                 for sym, act in real_positions.items():
                     if sym not in state_pos:
                         avg_price = act.get("ppc", act.get("ultimoPrecio", 0))
-                        isl_pct = self.config.get("strategy", {}).get("initial_sl_pct", 0.99)
-                        itp_pct = self.config.get("strategy", {}).get("initial_tp_pct", 1.02)
+                        isl_pct = self.config["strategy"].get("initial_sl_pct", 0.98)
+                        itp_pct = self.config["strategy"].get("initial_tp_pct", 1.05)
                         
                         state_pos[sym] = {
-                            "entry_price": avg_price, "current_price": act.get("ultimoPrecio", avg_price),
-                            "qty": act["cantidad"], "sl": avg_price * isl_pct, "tp": avg_price * itp_pct,
-                            "step": 0, "buy_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                            "entry_price": avg_price,
+                            "current_price": act.get("ultimoPrecio", avg_price),
+                            "qty": act["cantidad"],
+                            "sl": avg_price * isl_pct,
+                            "tp": avg_price * itp_pct,
+                            "step": 0,
+                            "buy_time": f"SINCRO ({datetime.now().strftime('%d/%m %H:%M')})"
                         }
+                        log_sync(f"Nueva posición detectada en IOL: {sym} x {act['cantidad']}")
                     else:
                         state_pos[sym]["qty"] = act["cantidad"]
-                        if "ultimoPrecio" in act: state_pos[sym]["current_price"] = act["ultimoPrecio"]
+                        state_pos[sym]["current_price"] = act.get("ultimoPrecio", state_pos[sym]["current_price"])
+
                 self.state["positions"] = state_pos
-        except Exception as e: print(f"Error syncing portfolio: {e}")
+                self._save_state_locked()
+
+        except Exception as e:
+            log_sync(f"Error crítico en _sync_portfolio: {e}")
 
     def run(self):
         print("🚀 Starting Trading Orchestrator...", flush=True)
@@ -263,7 +345,35 @@ class Orchestrator:
                         self.state["history"] = new_state.get("history", self.state["history"])
 
                 self.watchlist = self.config.get("watchlist", [])
+                
+                # VALIDACIÓN DE INSTANCIA AUTORIZADA
+                my_id = os.getenv("INSTANCE_NAME", "UNKNOWN")
+                authorized_id = self.config.get("authorized_instance", "UNKNOWN")
+                
+                if my_id != authorized_id:
+                    print(f"⚠️ INSTANCIA NO AUTORIZADA: Yo soy '{my_id}' pero la autorizada es '{authorized_id}'.")
+                    print("🛑 Entrando en modo OBSERVADOR. No se realizarán operaciones ni logins.")
+                    with self.state_lock:
+                        self.state["last_error"] = f"Modo Observador: Instancia autorizada es {authorized_id}"
+                    time.sleep(30) # Esperar antes de re-chequear
+                    continue # Saltarse el ciclo de trading/login
+
                 self.trading_enabled = self.can_trade()
+                
+                # SEGURIDAD: Validar login antes de intentar sincronizar
+                if not self.iol.access_token:
+                    if not self.iol.login():
+                        print("❌ FALLA DE AUTENTICACIÓN: Pausando bot para evitar bloqueo de cuenta.")
+                        with open("config.json", "r") as f:
+                            cfg = json.load(f)
+                        cfg["trading_paused"] = True
+                        with open("config.json", "w") as f:
+                            json.dump(cfg, f, indent=4)
+                        self.trading_enabled = False
+                        with self.state_lock:
+                            self.state["last_error"] = "Error de Login (401). Trading Pausado."
+                        return # Abortar ciclo
+                
                 self._sync_portfolio()
                 
                 try:
@@ -324,6 +434,13 @@ class Orchestrator:
         strategy = StrategyAgent(symbol)
         decision = strategy.get_decision()
         
+        # Actualizar siempre el Radar con el precio y score más reciente, se tenga o no la posición
+        if decision and "final_score" in decision:
+            self.state["opportunities"][symbol] = {
+                "score": decision["final_score"], "metrics": decision["metrics"],
+                "price": current_price, "timestamp": datetime.now().strftime("%H:%M:%S")
+            }
+
         if pos:
             pos['current_price'] = current_price
             if decision and "technical_details" in decision: pos['technical'] = decision["technical_details"]
@@ -343,8 +460,14 @@ class Orchestrator:
                         initial_sl_pct = self.config["strategy"].get("initial_sl_pct", 0.99)
                         new_sl = pos['entry_price'] * initial_sl_pct
                         if abs(new_sl - pos['sl']) > 0.1: # Evitar micro-ajustes por redondeo
-                            print(f"🔄 [MODO] Ajustando SL inicial de {symbol} por cambio de estrategia: ${pos['sl']:.2f} -> ${new_sl:.2f}", flush=True)
+                            print(f"🔄 [MODO] Ajustando SL inicial de {symbol}: ${pos['sl']:.2f} -> ${new_sl:.2f}", flush=True)
                             pos['sl'] = new_sl
+                            
+                        initial_tp_pct = self.config["strategy"].get("initial_tp_pct", 1.015)
+                        new_tp = pos['entry_price'] * initial_tp_pct
+                        if abs(new_tp - pos['tp']) > 0.1:
+                            print(f"🔄 [MODO] Ajustando TP inicial de {symbol}: ${pos['tp']:.2f} -> ${new_tp:.2f}", flush=True)
+                            pos['tp'] = new_tp
 
                     # Priorizar valores globales del config para permitir ajustes en vivo sobre posiciones abiertas
                     tsl_val = self.config["strategy"].get("trailing_sl_pct", pos.get('strategy_snapshot', {}).get('trailing_sl_pct', 0.988))
@@ -358,18 +481,13 @@ class Orchestrator:
                         self._save_state()
                         self.telegram.send_message(f"📈 *ESCALÓN* {symbol}: SL ${pos['sl']:.2f}")
         else:
-            if decision and "final_score" in decision:
-                self.state["opportunities"][symbol] = {
-                    "score": decision["final_score"], "metrics": decision["metrics"],
-                    "price": current_price, "timestamp": datetime.now().strftime("%H:%M:%S")
-                }
-                if self.trading_enabled and self.config.get("auto_buy", True) and decision['decision'] == "BUY":
-                    excluded = self.state.get("excluded_symbols", [])
-                    if symbol not in excluded:
-                        self._execute_buy(symbol, decision, current_price)
-                    else:
-                        print(f"⏩ {symbol} está excluido por hoy. Ignorando compra.")
-                self._save_state()
+            if self.trading_enabled and self.config.get("auto_buy", True) and decision and decision['decision'] == "BUY":
+                excluded = self.state.get("excluded_symbols", [])
+                if symbol not in excluded:
+                    self._execute_buy(symbol, decision, current_price)
+                else:
+                    print(f"⏩ {symbol} está excluido por hoy. Ignorando compra.")
+            self._save_state()
 
     def _execute_sl_worker(self, symbol, pos, current_price):
         self.active_sl_threads.add(symbol)
@@ -403,13 +521,13 @@ class Orchestrator:
                 return
 
             # Usar Precio de Mercado (0) para asegurar la venta inmediata en SL
-            print(f"🛑 Attempting MARKET SELL for {symbol}...", flush=True)
-            res = self.iol.place_order(symbol, pos['qty'], 0, action="vender", validity="t0")
+            log_trade(symbol, "VENTA", pos['qty'], current_price, f"STOP LOSS / EXIT alcanzado. SL: ${pos['sl']}")
+            res = self.iol.place_order(symbol, pos['qty'], current_price, action="vender", validity="t0", order_type_str="market")
             
             # Si falla T0 (plazo no disponible), probamos T2
             if isinstance(res, dict) and "error" in res:
                 print(f"⚠️ T0 failed for {symbol}, retrying MARKET in T2...", flush=True)
-                res = self.iol.place_order(symbol, pos['qty'], 0, action="vender", validity="t2")
+                res = self.iol.place_order(symbol, pos['qty'], current_price, action="vender", validity="t2", order_type_str="market")
 
             if isinstance(res, dict) and "numeroOperacion" in res:
                 with self.state_lock:
@@ -443,22 +561,31 @@ class Orchestrator:
         if decision['final_score'] >= min_score:
             balance = self.iol.get_balance()
             
-            # Calcular Equidad Total (Efectivo + Valor de Acciones) para un riesgo real
-            total_equity = balance
-            for s, p in self.state.get("positions", {}).items():
-                total_equity += p["qty"] * p.get("current_price", p["entry_price"])
+            fixed_amount = self.config["strategy"].get("fixed_investment_amount", 0)
+            risk_pct = self.config["strategy"].get("risk_balance_pct", 0.1)
             
-            risk_pct = self.config["strategy"]["risk_balance_pct"]
-            target_amount = total_equity * risk_pct
-            
-            # El monto real de compra no puede exceder el efectivo disponible (menos margen para comisiones)
-            amount = min(target_amount, balance * 0.95)
+            if fixed_amount > 0:
+                target_amount = fixed_amount
+            else:
+                target_amount = balance * risk_pct
+
+            # El monto final es el objetivo, limitado solo por el saldo real disponible (con 2% de margen para comisiones)
+            amount = min(target_amount, balance * 0.98)
             
             qty = int(amount / current_price)
             if qty > 0:
-                # Round to integer for safety in BYMA for prices > 100
-                buy_price = int(current_price) if current_price > 100 else round(current_price, 2)
-                res = self.iol.place_order(symbol, qty, buy_price, action="comprar", validity="t0")
+                # Determinar precio basado en configuración (Mercado o Límite)
+                order_type = self.config.get("strategy", {}).get("buy_order_type", "limit")
+                
+                if order_type == "market":
+                    buy_price = 0
+                    log_trade(symbol, "COMPRA", qty, current_price, f"MERCADO | Score: {decision['score']}")
+                else:
+                    # Round to integer for safety in BYMA for prices > 100
+                    buy_price = int(current_price) if current_price > 100 else round(current_price, 2)
+                    log_trade(symbol, "COMPRA", qty, buy_price, f"LÍMITE | Score: {decision['score']}")
+
+                res = self.iol.place_order(symbol, qty, current_price if buy_price == 0 else buy_price, action="comprar", validity="t0", order_type_str=order_type)
                 if isinstance(res, dict) and "numeroOperacion" in res:
                     with self.state_lock:
                         strategy_params = self.config["strategy"].copy()
@@ -469,6 +596,7 @@ class Orchestrator:
                             "sl": current_price * strategy_params.get("initial_sl_pct", 0.99),
                             "tp": current_price * strategy_params.get("initial_tp_pct", 1.02),
                             "buy_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                            "buy_score": decision['final_score'],
                             "strategy_snapshot": {
                                 "initial_sl_pct": strategy_params.get("initial_sl_pct", 0.99),
                                 "initial_tp_pct": strategy_params.get("initial_tp_pct", 1.02),
@@ -476,8 +604,18 @@ class Orchestrator:
                                 "trailing_tp_pct": strategy_params.get("trailing_tp_pct", 1.01)
                             }
                         }
+                        # También guardar en historial para auditoría
+                        self.state["history"].append({
+                            "symbol": symbol,
+                            "type": "COMPRA (BOT)",
+                            "entry_price": current_price,
+                            "exit_price": 0,
+                            "qty": qty,
+                            "score": decision['final_score'],
+                            "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                        })
                     self._save_state()
-                    self.telegram.send_message(f"🎯 *COMPRA EJECUTADA* {symbol} a ${current_price}")
+                    self.telegram.send_message(f"🎯 *COMPRA EJECUTADA* {symbol}\n💰 Precio: ${current_price}\n📊 Score: *{decision['final_score']}* (Mín: {min_score})")
                 else:
                     print(f"❌ Compra fallida {symbol}: {res}", flush=True)
 

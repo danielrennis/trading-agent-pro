@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earnings Calendar Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --card: #141414;
+            --border: #222;
+            --text: #e0e0e0;
+            --text-dim: #888;
+            --red: #ff4d4d;
+            --orange: #ff9f43;
+            --green: #2ecc71;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .ticker-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ticker-card:hover {
+            transform: translateX(5px);
+            background: #1c1c1c;
+            border-color: #333;
+        }
+
+        .ticker-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #444;
+        }
+
+        .ticker-card.urgency-red::before { background: var(--red); }
+        .ticker-card.urgency-orange::before { background: var(--orange); }
+        .ticker-card.urgency-green::before { background: var(--green); }
+
+        .name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .date {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        .urgency-red .date { color: var(--red); font-weight: 600; }
+        .urgency-orange .date { color: var(--orange); font-weight: 600; }
+
+        .status-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #000;
+            padding: 8px 20px;
+            font-size: 10px;
+            color: #555;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .loading {
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 14px;
+            margin-top: 50px;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Earnings Calendar</h1>
+    <div id="list" class="list">
+        <div class="loading">Sincronizando datos...</div>
+    </div>
+    <div class="status-bar">
+        <span id="progress">Iniciando...</span>
+        <span id="eps"></span>
+    </div>
+
+    <script>
+        async function loadEarnings() {
+            try {
+                const res = await fetch('/api/earnings_calendar');
+                const data = await res.json();
+                render(data);
+            } catch (e) {
+                document.getElementById('list').innerHTML = '<div class="loading">Error al cargar datos</div>';
+            }
+        }
+
+        function render(data) {
+            const list = document.getElementById('list');
+            list.innerHTML = '';
+            
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'ticker-card';
+                
+                if (item.earnings_date && item.earnings_date !== 'N/A') {
+                    const diff = Math.floor((new Date(item.earnings_date) - new Date()) / (1000*60*60*24));
+                    if (diff <= 1) card.classList.add('urgency-red');
+                    else if (diff <= 7) card.classList.add('urgency-orange');
+                    else card.classList.add('urgency-green');
+                }
+
+                card.onclick = () => window.open(`https://www.tradingview.com/symbols/${item.symbol.split('.')[0]}/`, '_blank');
+                card.onmouseenter = () => document.getElementById('eps').innerText = `Est. EPS: ${item.eps || 'N/A'}`;
+
+                card.innerHTML = `
+                    <div class="name">${item.symbol}</div>
+                    <div class="date">${item.earnings_date || 'TBA'}</div>
+                `;
+                list.appendChild(card);
+            });
+            document.getElementById('progress').innerText = 'Sincronizado';
+        }
+
+        loadEarnings();
+        setInterval(loadEarnings, 60000 * 60); // Refrescar cada hora
+    </script>
+</body>
+</html>

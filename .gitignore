@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Logs and database
+*.log
+logs/
+*.sqlite
+*.json
+!config.json
+!panel/*.json
+
+# macOS
+.DS_Store
+
+# Node
+node_modules/
+package-lock.json
+
+# OS files
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/graph.json

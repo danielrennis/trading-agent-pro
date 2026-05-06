@@ -1,12 +1,25 @@
 import yfinance as yf
 from agents.technical_agent import TechnicalAgent
 from agents.news_agent import NewsAgent
+import json
+import os
 
 class StrategyAgent:
     def __init__(self, symbol: str):
         self.symbol = symbol
         self.tech_agent = TechnicalAgent(symbol)
         self.news_agent = NewsAgent(symbol)
+        self.config_path = "config.json"
+        
+    def _get_min_score(self):
+        try:
+            if os.path.exists(self.config_path):
+                with open(self.config_path, 'r') as f:
+                    config = json.load(f)
+                    return config.get("strategy", {}).get("min_buy_score", 9.5)
+        except:
+            pass
+        return 9.5
 
     def get_fundamental_score(self):
         """
@@ -87,10 +100,11 @@ class StrategyAgent:
         # Weighted final score
         final_score = (tech_score * 0.5) + (fund_score * 0.3) + (news_score * 0.2)
         
-        # El Agente ahora solo reporta el score. La decisión final la toma el orquestador
-        # basándose en los parámetros de riesgo configurados por el usuario.
+        # El Agente ahora usa el umbral de configuración para reportar la decisión visual
+        min_buy = self._get_min_score()
+        
         decision = "HOLD"
-        if final_score >= 5.1: # Threshold interno mínimo para mostrar como 'BUY' visualmente
+        if final_score >= min_buy:
             decision = "BUY"
         elif final_score <= 3.0:
             decision = "SELL"

@@ -1,109 +1,112 @@
 {
     "positions": {
-        "AAPL": {
-            "entry_price": 20170.0,
-            "current_price": 20350.0,
-            "qty": 22.0,
-            "sl": 20201.883,
-            "tp": 20755.5,
-            "step": 1,
-            "buy_time": "2026-04-30 12:59:07",
-            "technical": {
-                "daily_trend": "BULLISH",
-                "1h_rsi": 55.4,
-                "1h_stoch": 84.8,
-                "1d_ema200": 0
-            },
-            "profit_pct": 0.8924144769459685,
-            "pending_sl": false
-        },
         "NU": {
-            "entry_price": 10760.0,
-            "qty": 6.0,
+            "entry_price": 10630.0,
+            "qty": 437.0,
             "step": 0,
-            "sl": 10544.8,
-            "tp": 10921.4,
-            "buy_time": "2026-04-30 14:56:07",
+            "sl": 10417.4,
+            "tp": 10842.6,
+            "buy_time": "2026-05-04 12:48:34",
             "strategy_snapshot": {
                 "initial_sl_pct": 0.98,
-                "initial_tp_pct": 1.015,
+                "initial_tp_pct": 1.03,
                 "trailing_sl_pct": 0.988,
-                "trailing_tp_pct": 1.01
+                "trailing_tp_pct": 1.012
             },
-            "current_price": 10850.0,
+            "current_price": 10750.0,
             "technical": {
                 "daily_trend": "BEARISH",
-                "1h_rsi": 60.3,
-                "1h_stoch": 31.3,
+                "1h_rsi": 71.8,
+                "1h_stoch": 15.6,
                 "1d_ema200": 0
             },
-            "profit_pct": 0.8364312267657992
+            "profit_pct": 1.5992474129821188
         },
-        "META": {
-            "entry_price": 38660.0,
-            "current_price": 38260.0,
-            "qty": 75.0,
-            "sl": 37886.8,
-            "tp": 39239.899999999994,
+        "KO": {
+            "entry_price": 23490.0,
+            "current_price": 23470.0,
+            "qty": 69.0,
+            "sl": 23020.2,
+            "tp": 23959.8,
             "step": 0,
-            "buy_time": "2026-04-30 15:46:44",
+            "buy_time": "EXTERNO (05/05 12:02)",
             "technical": {
                 "daily_trend": "BULLISH",
-                "1h_rsi": 26.6,
-                "1h_stoch": 26.7,
+                "1h_rsi": 75.2,
+                "1h_stoch": 63.2,
                 "1d_ema200": 0
             },
-            "profit_pct": -1.03466114847387
+            "profit_pct": 0.7237122179651001
         },
-        "GOOGL": {
-            "entry_price": 9585.968,
-            "current_price": 9915.0,
-            "qty": 124.0,
-            "sl": 9865.425,
-            "tp": 10014.15,
-            "step": 1,
-            "buy_time": "2026-05-01 16:50:40",
-            "technical": {
-                "daily_trend": "BULLISH",
-                "1h_rsi": 55.4,
-                "1h_stoch": 84.8,
-                "1d_ema200": 0
-            },
-            "profit_pct": 3.4324337406509198,
-            "pending_sl": false
-        },
-        "PBR": {
-            "entry_price": 32340.0,
-            "current_price": 32920.0,
-            "qty": 6.0,
-            "sl": 32755.4,
-            "tp": 33249.2,
-            "step": 1,
-            "buy_time": "2026-05-01 16:50:40",
-            "technical": {
-                "daily_trend": "BULLISH",
-                "1h_rsi": 55.4,
-                "1h_stoch": 84.8,
-                "1d_ema200": 0
-            },
-            "profit_pct": 1.7934446505875057,
-            "pending_sl": false
-        },
-        "MSFT": {
-            "entry_price": 20189.91,
-            "current_price": 20370.0,
-            "qty": 111.0,
-            "sl": 19988.0109,
-            "tp": 20492.758649999996,
+        "BABA": {
+            "entry_price": 23360.0,
+            "current_price": 23300.0,
+            "qty": 80.0,
+            "sl": 22892.8,
+            "tp": 23827.2,
             "step": 0,
-            "buy_time": "2026-05-01 16:51:29",
+            "buy_time": "SINCRO (06/05 13:06)",
             "technical": {
                 "daily_trend": "BULLISH",
-                "1h_rsi": 62.5,
-                "1h_stoch": 62.2,
+                "1h_rsi": 71.8,
+                "1h_stoch": 15.6,
                 "1d_ema200": 0
             },
-            "profit_pct": 0.8919802019919931
+            "profit_pct": -0.12842465753424293
+        },
+        "AMZN": {
+            "entry_price": 2840.0,
+            "qty": 352.0,
+            "step": 0,
+            "sl": 2783.2,
+            "tp": 2896.8,
+            "buy_time": "2026-05-06 14:58:23",
+            "strategy_snapshot": {
+                "initial_sl_pct": 0.98,
+                "initial_tp_pct": 1.02,
+                "trailing_sl_pct": 0.988,
+                "trailing_tp_pct": 1.012
+            },
+            "current_price": 2827.5,
+            "technical": {
+                "daily_trend": "BULLISH",
+                "1h_rsi": 59.1,
+                "1h_stoch": 30.5,
+                "1d_ema200": 0
+            },
+            "profit_pct": 0.0
+        },
+        "MELI": {
+            "entry_price": 22760.0,
+            "current_price": 22830.0,
+            "qty": 42.0,
+            "sl": 22304.8,
+            "tp": 23215.2,
+            "step": 0,
+            "buy_time": "SINCRO (06/05 16:18)",
+            "technical": {
+                "daily_trend": "BULLISH",
+                "1h_rsi": 75.2,
+                "1h_stoch": 63.2,
+                "1d_ema200": 0
+            },
+            "profit_pct": -0.4393673110720586
+        },
+        "AAPL": {
+            "entry_price": 21055.948,
+            "current_price": 21300.0,
+            "qty": 116.0,
+            "sl": 20634.82904,
+            "tp": 21477.06696,
+            "step": 0,
+            "buy_time": "SINCRO (06/05 16:55)",
+            "technical": {
+                "daily_trend": "BULLISH",
+                "1h_rsi": 70.0,
+                "1h_stoch": 65.8,
+                "1d_ema200": 0
+            },
+            "profit_pct": 0.6841392275474867
         }
     },
     "history": [
@@ -1111,169 +1114,653 @@
             "profit_amount": 37740.0,
             "steps": 1,
             "date": "2026-05-01 16:50:42"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "SINCRO (IOL)",
+            "entry_price": 2820.0,
+            "exit_price": 0,
+            "qty": 14.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-05 10:33:18"
+        },
+        {
+            "symbol": "KO",
+            "type": "SINCRO (IOL)",
+            "entry_price": 23490.0,
+            "exit_price": 0,
+            "qty": 27.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-05 12:02:21"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "SINCRO (IOL)",
+            "entry_price": 2855.0,
+            "exit_price": 0,
+            "qty": 27.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-05 12:39:51"
+        },
+        {
+            "symbol": "AAPL",
+            "type": "VENTA (a24horas)",
+            "entry_price": 20160.0,
+            "exit_price": 20860.0,
+            "qty": 25.0,
+            "profit_pct": 3.472222222222232,
+            "profit_amount": 17500.0,
+            "date": "2026-05-05 12:52:39",
+            "op_id": 172854267
+        },
+        {
+            "symbol": "AMZN",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 2855.0,
+            "exit_price": 0,
+            "qty": 356.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-05 12:42:29",
+            "op_id": 172850866
+        },
+        {
+            "symbol": "AMZN",
+            "type": "VENTA (a24horas)",
+            "entry_price": 2855.0,
+            "exit_price": 2845.0,
+            "qty": 14.0,
+            "profit_pct": -0.3502626970227629,
+            "profit_amount": -140.0,
+            "date": "2026-05-05 12:25:19",
+            "op_id": 172846880
+        },
+        {
+            "symbol": "KO",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 23490.0,
+            "exit_price": 0,
+            "qty": 27.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-05 12:02:06",
+            "op_id": 172839700
+        },
+        {
+            "symbol": "PBR",
+            "type": "VENTA (a24horas)",
+            "entry_price": 32340.0,
+            "exit_price": 32360.0,
+            "qty": 44.0,
+            "profit_pct": 0.061842918985766104,
+            "profit_amount": 880.0,
+            "date": "2026-05-05 10:38:35",
+            "op_id": 172809474
+        },
+        {
+            "symbol": "AMZN",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 2820.0,
+            "exit_price": 0,
+            "qty": 14.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-05 10:30:13",
+            "op_id": 172804450
+        },
+        {
+            "symbol": "INTC",
+            "type": "VENTA (a24horas)",
+            "entry_price": 27840.0,
+            "exit_price": 30960.0,
+            "qty": 68.0,
+            "profit_pct": 11.206896551724132,
+            "profit_amount": 212160.0,
+            "date": "2026-05-05 10:34:24",
+            "op_id": 172800208
+        },
+        {
+            "symbol": "AMZN",
+            "type": "VENTA (a24horas)",
+            "entry_price": 2820.0,
+            "exit_price": 2825.0,
+            "qty": 356.0,
+            "profit_pct": 0.17730496453900457,
+            "profit_amount": 1780.0,
+            "date": "2026-05-05 13:37:38",
+            "op_id": 172865866
+        },
+        {
+            "symbol": "AAPL",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 21000.0,
+            "exit_price": 0,
+            "qty": 8.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-05 13:43:56",
+            "op_id": 172866527
+        },
+        {
+            "symbol": "AAPL",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 20990.0,
+            "exit_price": 0,
+            "qty": 1.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-05 13:37:43",
+            "op_id": 172865814
+        },
+        {
+            "symbol": "NU",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 10720.0,
+            "exit_price": 0,
+            "qty": 93.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-05 13:52:36",
+            "op_id": 172869423
+        },
+        {
+            "symbol": "AAPL",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 21040.0,
+            "exit_price": 0,
+            "qty": 47.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-05 13:54:38",
+            "op_id": 172869548
+        },
+        {
+            "symbol": "AAPL",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 21030.0,
+            "exit_price": 0,
+            "qty": 13.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-05 13:55:33",
+            "op_id": 172868032
+        },
+        {
+            "symbol": "AMD",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 53500.0,
+            "exit_price": 0,
+            "qty": 1.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-05 15:52:55",
+            "op_id": 172897471
+        },
+        {
+            "symbol": "AMD",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 53225.0,
+            "exit_price": 0,
+            "qty": 15.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-05 15:52:06",
+            "op_id": 172894354
+        },
+        {
+            "symbol": "AMD",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 53225.0,
+            "exit_price": 0,
+            "qty": 18.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-05 15:47:09",
+            "op_id": 172894294
+        },
+        {
+            "symbol": "AAPL",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 21090.0,
+            "exit_price": 0,
+            "qty": 47.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-05 15:37:45",
+            "op_id": 172892095
+        },
+        {
+            "symbol": "AMD",
+            "type": "SELL",
+            "entry_price": 53233.088,
+            "exit_price": 52700.0,
+            "qty": 34.0,
+            "profit_pct": -1.0014222733049083,
+            "profit_amount": -18124.992000000115,
+            "steps": 0,
+            "date": "2026-05-05 16:35:12"
+        },
+        {
+            "symbol": "AMD",
+            "type": "COMPRA (Manual)",
+            "entry_price": 52800.0,
+            "exit_price": 0,
+            "qty": 18,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-05 16:37:30"
+        },
+        {
+            "symbol": "AMD",
+            "type": "COMPRA (Manual)",
+            "entry_price": 52800.0,
+            "exit_price": 0,
+            "qty": 15,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-05 16:37:37"
+        },
+        {
+            "symbol": "AMD",
+            "type": "COMPRA (Manual)",
+            "entry_price": 52800.0,
+            "exit_price": 0,
+            "qty": 1,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-05 16:37:54"
+        },
+        {
+            "symbol": "AMD",
+            "type": "VENTA (inmediata)",
+            "entry_price": 52800.0,
+            "exit_price": 52800.0,
+            "qty": 34.0,
+            "profit_pct": 0.0,
+            "profit_amount": 0.0,
+            "date": "2026-05-05 16:35:15",
+            "op_id": 172906559
+        },
+        {
+            "symbol": "GOOGL",
+            "type": "COMPRA (Manual)",
+            "entry_price": 10020.0,
+            "exit_price": 0,
+            "qty": 99,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-06 11:06:19"
+        },
+        {
+            "symbol": "KO",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 23390.0,
+            "exit_price": 0,
+            "qty": 42.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-06 11:36:12",
+            "op_id": 173005742
+        },
+        {
+            "symbol": "NU",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 10700.0,
+            "exit_price": 0,
+            "qty": 93.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-06 11:36:27",
+            "op_id": 173005825
+        },
+        {
+            "symbol": "INTC",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 32120.0,
+            "exit_price": 0,
+            "qty": 31.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-06 11:37:38",
+            "op_id": 173005697
+        },
+        {
+            "symbol": "AMD",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 60625.0,
+            "exit_price": 0,
+            "qty": 16.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-06 11:50:58",
+            "op_id": 173008997
+        },
+        {
+            "symbol": "AMD",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 61550.0,
+            "exit_price": 0,
+            "qty": 16.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-06 13:06:06",
+            "op_id": 173036222
+        },
+        {
+            "symbol": "BABA",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 23360.0,
+            "exit_price": 0,
+            "qty": 42.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-06 13:06:21",
+            "op_id": 173036298
+        },
+        {
+            "symbol": "INTC",
+            "type": "SELL",
+            "entry_price": 32120.0,
+            "exit_price": 32900.0,
+            "qty": 31.0,
+            "profit_pct": 2.428393524283945,
+            "profit_amount": 24180.0,
+            "steps": 1,
+            "date": "2026-05-06 13:10:45"
+        },
+        {
+            "symbol": "INTC",
+            "type": "VENTA (inmediata)",
+            "entry_price": 32120.0,
+            "exit_price": 32900.0,
+            "qty": 31.0,
+            "profit_pct": 2.428393524283945,
+            "profit_amount": 24180.0,
+            "date": "2026-05-06 13:10:49",
+            "op_id": 173037567
+        },
+        {
+            "symbol": "BABA",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 23352.10526315,
+            "exit_price": 0,
+            "qty": 38.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-06 13:14:03",
+            "op_id": 173036543
+        },
+        {
+            "symbol": "AMZN",
+            "type": "COMPRA (Manual)",
+            "entry_price": 2840.0,
+            "exit_price": 0,
+            "qty": 352,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-06 14:58:23"
+        },
+        {
+            "symbol": "AMZN",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 2840.0,
+            "exit_price": 0,
+            "qty": 352.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-06 14:58:24",
+            "op_id": 173066074
+        },
+        {
+            "symbol": "NU",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 10730.0,
+            "exit_price": 0,
+            "qty": 2.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-06 15:02:21",
+            "op_id": 173066596
+        },
+        {
+            "symbol": "MELI",
+            "type": "COMPRA (inmediata)",
+            "entry_price": 22760.0,
+            "exit_price": 0,
+            "qty": 42.0,
+            "profit_pct": 0,
+            "profit_amount": 0,
+            "date": "2026-05-06 16:18:54",
+            "op_id": 173085218
+        },
+        {
+            "symbol": "AMD",
+            "type": "SELL",
+            "entry_price": 60625.0,
+            "exit_price": 61675.0,
+            "qty": 32.0,
+            "profit_pct": 1.7319587628865873,
+            "profit_amount": 33600.0,
+            "steps": 1,
+            "date": "2026-05-06 16:51:49"
+        },
+        {
+            "symbol": "AMD",
+            "type": "VENTA (inmediata)",
+            "entry_price": 61550.0,
+            "exit_price": 61675.0,
+            "qty": 32.0,
+            "profit_pct": 0.2030869212022779,
+            "profit_amount": 4000.0,
+            "date": "2026-05-06 16:51:52",
+            "op_id": 173094277
+        },
+        {
+            "symbol": "AAPL",
+            "type": "SELL",
+            "entry_price": 20990.0,
+            "exit_price": 21330.0,
+            "qty": 116.0,
+            "profit_pct": 1.619818961410191,
+            "profit_amount": 39440.0,
+            "steps": 0,
+            "date": "2026-05-06 16:55:19"
         }
     ],
     "opportunities": {
-        "AMZN": {
-            "score": 8.5,
-            "metrics": {
-                "technical": 10,
-                "fundamental": 5.0,
-                "news": 9.8
-            },
-            "price": 2755.0,
-            "timestamp": "16:56:15"
-        },
         "MELI": {
-            "score": 3.9,
+            "score": 6.9,
             "metrics": {
-                "technical": 1.5,
+                "technical": 7.5,
                 "fundamental": 5.0,
-                "news": 8.0
+                "news": 8.1
             },
-            "price": 22400.0,
-            "timestamp": "16:56:41"
+            "price": 22660.0,
+            "timestamp": "18:52:07"
         },
         "PYPL": {
-            "score": 3.9,
+            "score": 4.9,
             "metrics": {
                 "technical": 3.0,
                 "fundamental": 5.0,
-                "news": 4.5
+                "news": 9.3
             },
-            "price": 9345.0,
-            "timestamp": "16:56:41"
+            "price": 8595.0,
+            "timestamp": "18:52:00"
         },
         "NVDA": {
-            "score": 5.4,
+            "score": 7.9,
+            "metrics": {
+                "technical": 9.0,
+                "fundamental": 5.0,
+                "news": 9.3
+            },
+            "price": 12840.0,
+            "timestamp": "18:52:09"
+        },
+        "META": {
+            "score": 3.9,
+            "metrics": {
+                "technical": 1.0,
+                "fundamental": 5.0,
+                "news": 9.6
+            },
+            "price": 38020.0,
+            "timestamp": "18:52:17"
+        },
+        "TSLA": {
+            "score": 7.2,
+            "metrics": {
+                "technical": 7.5,
+                "fundamental": 5.0,
+                "news": 9.6
+            },
+            "price": 39500.0,
+            "timestamp": "18:52:01"
+        },
+        "GOOGL": {
+            "score": 7.1,
+            "metrics": {
+                "technical": 7.5,
+                "fundamental": 5.0,
+                "news": 9.3
+            },
+            "price": 10110.0,
+            "timestamp": "18:52:07"
+        },
+        "PBR": {
+            "score": 6.7,
             "metrics": {
                 "technical": 6.5,
                 "fundamental": 5.0,
-                "news": 3.3
+                "news": 9.7
             },
-            "price": 12500.0,
-            "timestamp": "16:56:15"
-        },
-        "META": {
-            "score": 7.3,
-            "metrics": {
-                "technical": 10,
-                "fundamental": 5.0,
-                "news": 4.2
-            },
-            "price": 38660.0,
-            "timestamp": "15:46:35"
-        },
-        "TSLA": {
-            "score": 7.3,
-            "metrics": {
-                "technical": 10,
-                "fundamental": 5.0,
-                "news": 4.1
-            },
-            "price": 38120.0,
-            "timestamp": "16:56:41"
-        },
-        "GOOGL": {
-            "score": 6.9,
-            "metrics": {
-                "technical": 8.5,
-                "fundamental": 5.0,
-                "news": 5.8
-            },
-            "price": 9565.0,
-            "timestamp": "12:59:51"
-        },
-        "PBR": {
-            "score": 8.3,
-            "metrics": {
-                "technical": 9.0,
-                "fundamental": 6.0,
-                "news": 9.9
-            },
-            "price": 32340.0,
-            "timestamp": "12:32:23"
-        },
-        "KO": {
-            "score": 8.5,
-            "metrics": {
-                "technical": 10,
-                "fundamental": 5.0,
-                "news": 9.8
-            },
-            "price": 23650.0,
-            "timestamp": "16:56:41"
-        },
-        "NU": {
-            "score": 9.5,
-            "metrics": {
-                "technical": 10,
-                "fundamental": 10.0,
-                "news": 7.7
-            },
-            "price": 10760.0,
-            "timestamp": "14:56:05"
+            "price": 30820.0,
+            "timestamp": "18:52:01"
         },
         "AMD": {
-            "score": 4.9,
+            "score": 7.0,
             "metrics": {
-                "technical": 6.0,
-                "fundamental": 5.0,
-                "news": 2.1
+                "technical": 7.5,
+                "fundamental": 4.8,
+                "news": 9.2
             },
-            "price": 53025.0,
-            "timestamp": "16:56:41"
+            "price": 61600.0,
+            "timestamp": "18:52:02"
         },
         "INTC": {
             "score": 6.8,
             "metrics": {
-                "technical": 8.0,
+                "technical": 7.5,
                 "fundamental": 5.0,
-                "news": 6.5
+                "news": 7.6
             },
-            "price": 28300.0,
-            "timestamp": "16:56:42"
+            "price": 34000.0,
+            "timestamp": "18:52:00"
         },
         "MSFT": {
-            "score": 4.5,
+            "score": 3.8,
             "metrics": {
                 "technical": 3.0,
                 "fundamental": 5.0,
-                "news": 7.7
+                "news": 4.1
             },
-            "price": 20370.0,
-            "timestamp": "16:50:59"
+            "price": 20500.0,
+            "timestamp": "18:52:00"
         },
         "AAPL": {
-            "score": 8.2,
+            "score": 7.8,
             "metrics": {
-                "technical": 9.5,
+                "technical": 9.0,
+                "fundamental": 5.0,
+                "news": 8.8
+            },
+            "price": 21200.0,
+            "timestamp": "18:52:08"
+        },
+        "SPY": {
+            "score": 6.0,
+            "metrics": {
+                "technical": 7.5,
+                "fundamental": 5.0,
+                "news": 3.6
+            },
+            "price": 54250.0,
+            "timestamp": "18:52:02"
+        },
+        "NU": {
+            "score": 6.4,
+            "metrics": {
+                "technical": 3.0,
+                "fundamental": 10.0,
+                "news": 9.5
+            },
+            "price": 10800.0,
+            "timestamp": "18:51:59"
+        },
+        "AMZN": {
+            "score": 7.9,
+            "metrics": {
+                "technical": 9.0,
+                "fundamental": 5.0,
+                "news": 9.7
+            },
+            "price": 2840.0,
+            "timestamp": "18:52:08"
+        },
+        "KO": {
+            "score": 7.2,
+            "metrics": {
+                "technical": 7.5,
+                "fundamental": 5.0,
+                "news": 9.7
+            },
+            "price": 23660.0,
+            "timestamp": "18:52:08"
+        },
+        "ARM": {
+            "score": 5.7,
+            "metrics": {
+                "technical": 7.5,
+                "fundamental": 4.8,
+                "news": 2.6
+            },
+            "price": 13480.0,
+            "timestamp": "18:52:00"
+        },
+        "BABA": {
+            "score": 8.4,
+            "metrics": {
+                "technical": 10,
                 "fundamental": 5.0,
                 "news": 9.6
             },
-            "price": 20100.0,
-            "timestamp": "12:52:43"
+            "price": 23330.0,
+            "timestamp": "18:52:00"
         }
     },
-    "balance": 265.83,
+    "balance": 2058662.28,
     "excluded_symbols": [],
-    "last_reset_date": "2026-05-01",
+    "last_reset_date": "2026-05-06",
     "balances": {
-        "t0": 265.83,
-        "t1": 6625829.87,
-        "t2": 6625829.87,
+        "t0": 2058662.28,
+        "t1": 2058662.28,
+        "t2": 2058662.28,
         "total": 0,
-        "total_pesos": 13696179.870000001,
-        "activos_valorizados": 7070350.0,
-        "disponible_total": 6625829.87,
+        "total_pesos": 14664782.28,
+        "activos_valorizados": 12606120.0,
+        "disponible_total": 2058662.28,
         "oficial": 1415,
-        "total_usd": 9679.279060070672
+        "total_usd": 10363.803731448763
     },
     "system_info": {
-        "last_start": "2026-05-01 12:42:04",
+        "last_start": "2026-05-06 16:42:14",
         "status": "running",
-        "last_shutdown": "2026-05-01 12:42:03",
-        "last_equity_snapshot": "2026-05-01 16:25:02"
+        "last_shutdown": "2026-05-06 16:42:12",
+        "last_equity_snapshot": "2026-05-06 18:06:44"
     },
     "equity_history": [
         {
@@ -1303,6 +1790,219 @@
         {
             "timestamp": "2026-05-01 16:25",
             "value": 13696179.870000001
+        },
+        {
+            "timestamp": "2026-05-01 17:25",
+            "value": 13696179.870000001
+        },
+        {
+            "timestamp": "2026-05-01 18:25",
+            "value": 13696179.870000001
+        },
+        {
+            "timestamp": "2026-05-01 19:26",
+            "value": 13696179.870000001
+        },
+        {
+            "timestamp": "2026-05-01 20:26",
+            "value": 0
+        },
+        {
+            "timestamp": "2026-05-04 07:36",
+            "value": 13696179.870000001
+        },
+        {
+            "timestamp": "2026-05-04 08:37",
+            "value": 7070683.63
+        },
+        {
+            "timestamp": "2026-05-04 09:37",
+            "value": 7070683.63
+        },
+        {
+            "timestamp": "2026-05-04 10:37",
+            "value": 7049471.470000001
+        },
+        {
+            "timestamp": "2026-05-04 11:38",
+            "value": 7010289.8
+        },
+        {
+            "timestamp": "2026-05-04 12:38",
+            "value": 12294753.74
+        },
+        {
+            "timestamp": "2026-05-04 13:40",
+            "value": 0
+        },
+        {
+            "timestamp": "2026-05-04 14:40",
+            "value": 13591130.32
+        },
+        {
+            "timestamp": "2026-05-04 15:41",
+            "value": 13593052.629999999
+        },
+        {
+            "timestamp": "2026-05-04 16:41",
+            "value": 13582112.629999999
+        },
+        {
+            "timestamp": "2026-05-05 01:19",
+            "value": 13565002.629999999
+        },
+        {
+            "timestamp": "2026-05-05 02:21",
+            "value": 13565002.629999999
+        },
+        {
+            "timestamp": "2026-05-05 03:25",
+            "value": 0
+        },
+        {
+            "timestamp": "2026-05-05 04:41",
+            "value": 0
+        },
+        {
+            "timestamp": "2026-05-05 05:45",
+            "value": 13565002.629999999
+        },
+        {
+            "timestamp": "2026-05-05 06:45",
+            "value": 0
+        },
+        {
+            "timestamp": "2026-05-05 07:46",
+            "value": 13565002.629999999
+        },
+        {
+            "timestamp": "2026-05-05 08:47",
+            "value": 13565002.629999999
+        },
+        {
+            "timestamp": "2026-05-05 09:47",
+            "value": 13565002.629999999
+        },
+        {
+            "timestamp": "2026-05-05 10:49",
+            "value": 10039605.49
+        },
+        {
+            "timestamp": "2026-05-05 11:49",
+            "value": 10050870.49
+        },
+        {
+            "timestamp": "2026-05-05 12:49",
+            "value": 8863174.7
+        },
+        {
+            "timestamp": "2026-05-05 13:50",
+            "value": 8741034.83
+        },
+        {
+            "timestamp": "2026-05-05 14:51",
+            "value": 13670894.469999999
+        },
+        {
+            "timestamp": "2026-05-05 15:54",
+            "value": 13636247.76
+        },
+        {
+            "timestamp": "2026-05-05 16:56",
+            "value": 13604951.66
+        },
+        {
+            "timestamp": "2026-05-05 17:57",
+            "value": 0
+        },
+        {
+            "timestamp": "2026-05-05 18:57",
+            "value": 13612581.66
+        },
+        {
+            "timestamp": "2026-05-05 19:57",
+            "value": 13612581.66
+        },
+        {
+            "timestamp": "2026-05-05 20:58",
+            "value": 13612581.66
+        },
+        {
+            "timestamp": "2026-05-05 21:58",
+            "value": 13612581.66
+        },
+        {
+            "timestamp": "2026-05-05 23:13",
+            "value": 13613241.4
+        },
+        {
+            "timestamp": "2026-05-06 00:13",
+            "value": 13613241.4
+        },
+        {
+            "timestamp": "2026-05-06 01:13",
+            "value": 13613241.4
+        },
+        {
+            "timestamp": "2026-05-06 02:14",
+            "value": 13613241.4
+        },
+        {
+            "timestamp": "2026-05-06 03:15",
+            "value": 13613241.4
+        },
+        {
+            "timestamp": "2026-05-06 04:15",
+            "value": 13613241.4
+        },
+        {
+            "timestamp": "2026-05-06 05:15",
+            "value": 0
+        },
+        {
+            "timestamp": "2026-05-06 06:15",
+            "value": 0
+        },
+        {
+            "timestamp": "2026-05-06 07:15",
+            "value": 13613241.4
+        },
+        {
+            "timestamp": "2026-05-06 08:15",
+            "value": 13613241.4
+        },
+        {
+            "timestamp": "2026-05-06 10:11",
+            "value": 0
+        },
+        {
+            "timestamp": "2026-05-06 11:21",
+            "value": 12647589.77
+        },
+        {
+            "timestamp": "2026-05-06 13:04",
+            "value": 13652649.39
+        },
+        {
+            "timestamp": "2026-05-06 14:05",
+            "value": 13606823.64
+        },
+        {
+            "timestamp": "2026-05-06 15:05",
+            "value": 13614847.22
+        },
+        {
+            "timestamp": "2026-05-06 16:05",
+            "value": 13637157.22
+        },
+        {
+            "timestamp": "2026-05-06 17:06",
+            "value": 14664782.28
+        },
+        {
+            "timestamp": "2026-05-06 18:06",
+            "value": 14664782.28
         }
-    ]
+    ],
+    "last_error": "Modo Observador: Instancia autorizada es MACBOOK"
 }

@@ -13,9 +13,17 @@ class TechnicalAgent:
         yf_symbols_to_try = []
         
         # Estrategia de búsqueda de símbolos
-        if self.symbol in ["MSFT", "AAPL", "AMZN", "META", "GOOGL", "TSLA", "MELI", "KO", "PYPL", "BABA", "NVDA", "AMD"]:
-            yf_symbols_to_try.append(self.symbol + ".BA") # Primero el CEDEAR
-            yf_symbols_to_try.append(self.symbol)         # Luego el original de USA
+        cedears = ["MSFT", "AAPL", "AMZN", "META", "GOOGL", "TSLA", "MELI", "KO", "PYPL", "BABA", "NVDA", "AMD"]
+        
+        if self.symbol in cedears:
+            if interval == "1d":
+                # Para tendencia diaria usamos el original de USA (más data histórica y volumen)
+                yf_symbols_to_try.append(self.symbol)
+                yf_symbols_to_try.append(self.symbol + ".BA")
+            else:
+                # Para intraday (1h) usamos el CEDEAR para reflejar precio local
+                yf_symbols_to_try.append(self.symbol + ".BA")
+                yf_symbols_to_try.append(self.symbol)
         elif not self.symbol.endswith(".BA") and len(self.symbol) > 3:
             yf_symbols_to_try.append(self.symbol + ".BA")
             yf_symbols_to_try.append(self.symbol)
@@ -94,9 +102,17 @@ class TechnicalAgent:
         df_1d_ind = self._add_indicators(df_1d)
         last_1d = df_1d_ind.iloc[-1]
         
-        # EMA200 o EMA50 como fallback
-        ema_trend = last_1d.get('ema200', last_1d.get('ema50'))
-        daily_bullish = last_1d['close'] > ema_trend if ema_trend is not None else True
+        # EMA200 o EMA50 como fallback. Si no hay suficiente data, asumimos Neutral/False
+        ema200 = last_1d.get('ema200')
+        ema50 = last_1d.get('ema50')
+        
+        if ema200 is not None and ema200 > 0:
+            daily_bullish = last_1d['close'] > ema200
+        elif ema50 is not None and ema50 > 0:
+            daily_bullish = last_1d['close'] > ema50
+        else:
+            daily_bullish = False # Por seguridad, si no hay medias, no es alcista
+            
         daily_trend_str = "BULLISH" if daily_bullish else "BEARISH"
 
         # 2. Horario (Triggers)
